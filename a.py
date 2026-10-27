@@ -11,55 +11,36 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.engine import URL
 
 
+from urllib.parse import quote
+from sqlalchemy import create_engine
+
 # ============================================================
-# CONFIGURATION — FILL IN YOUR HOSTS
+# POSTGRESQL CONNECTION CONFIGURATION
 # ============================================================
 
 SQL_USERNAME = "python_user"
 
-DEV_HOST = "FILL_IN_DEV_HOST"
-PROD_HOST = "FILL_IN_PROD_HOST"
+# Enter the actual password from your original working code.
+SQL_PASSWORD = "YOUR_ACTUAL_PASSWORD"
 
+# DEV PostgreSQL
+DEV_HOST = "YOUR_DEV_HOST"
 DEV_PORT = 5432
-PROD_PORT = 5432
-
 DEV_DATABASE = "warehouse"
+
+# PROD PostgreSQL
+PROD_HOST = "YOUR_PROD_HOST"
+PROD_PORT = 5432
 PROD_DATABASE = "warehouse"
 
-RAW_SCHEMA = "raw"
-DEV_TARGET_SCHEMA = "nesna"
-PROD_TARGET_SCHEMA = "nesna"
-MAPPING_SCHEMA = "staging"
 
-BACKUP_SCHEMA = "nesna_dev_migration_backup"
-
-OUTPUT_DIR = Path("results")
-OUTPUT_DIR.mkdir(exist_ok=True)
-
-# Five-table pilot.
-PILOT_TABLES = {
-    "permcontract",
-    "permcontractfield",
-    "permcontractdisbursement",
-    "permledger",
-    "permnote",
-}
-
-
-# ============================================================
-# CONNECTIONS
-# ============================================================
-
-def make_engine(host, port, database, password):
-    if not host or host.startswith("FILL_IN"):
-        raise RuntimeError("Fill in DEV_HOST and PROD_HOST first.")
-
-    # Preserve the original python_user + encoded-password approach.
-    encoded_password = quote(password, safe="")
+def make_engine(host, port, database):
+    encoded_password = quote(SQL_PASSWORD, safe="")
+    encoded_username = quote(SQL_USERNAME, safe="")
 
     connection_string = (
         f"postgresql+psycopg2://"
-        f"{SQL_USERNAME}:{encoded_password}"
+        f"{encoded_username}:{encoded_password}"
         f"@{host}:{port}/{database}"
     )
 
@@ -71,22 +52,34 @@ def make_engine(host, port, database, password):
 
 
 def connect_databases():
-    password = getpass.getpass(
-        "PostgreSQL python_user password: "
-    )
+    if SQL_PASSWORD == "YOUR_ACTUAL_PASSWORD":
+        raise RuntimeError("Configure SQL_PASSWORD first.")
+
+    if DEV_HOST == "YOUR_DEV_HOST":
+        raise RuntimeError("Configure DEV_HOST first.")
+
+    if PROD_HOST == "YOUR_PROD_HOST":
+        raise RuntimeError("Configure PROD_HOST first.")
+
+    if (
+        DEV_HOST == PROD_HOST
+        and DEV_PORT == PROD_PORT
+        and DEV_DATABASE == PROD_DATABASE
+    ):
+        raise RuntimeError(
+            "DEV and PROD cannot point to the same database."
+        )
 
     dev = make_engine(
         DEV_HOST,
         DEV_PORT,
         DEV_DATABASE,
-        password,
     )
 
     prod = make_engine(
         PROD_HOST,
         PROD_PORT,
         PROD_DATABASE,
-        password,
     )
 
     return dev, prod
