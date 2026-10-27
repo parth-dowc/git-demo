@@ -722,24 +722,22 @@ def load_one(dev, prod, target):
             )
 
         # Exact multiset comparison, including duplicate rows.
+                # Verify every loaded row, including duplicate occurrences.
         difference = connection.execute(text(
             f"""
             SELECT EXISTS (
-                (
-                    SELECT {target_columns}
-                    FROM {target_table}
-                    EXCEPT ALL
-                    SELECT {select_columns}
-                    FROM nesna_pilot_stage
-                )
-                UNION ALL
-                (
-                    SELECT {select_columns}
-                    FROM nesna_pilot_stage
-                    EXCEPT ALL
-                    SELECT {target_columns}
-                    FROM {target_table}
-                )
+                SELECT {target_columns}
+                FROM {target_table}
+                EXCEPT ALL
+                SELECT {select_columns}
+                FROM nesna_pilot_stage
+            )
+            OR EXISTS (
+                SELECT {select_columns}
+                FROM nesna_pilot_stage
+                EXCEPT ALL
+                SELECT {target_columns}
+                FROM {target_table}
             )
             """
         )).scalar_one()
