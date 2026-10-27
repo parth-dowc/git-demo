@@ -1,0 +1,385 @@
+{
+  "generated_at": "2026-10-27T14:34:36.697882+00:00",
+  "tables": [
+    {
+      "target": "permcontract",
+      "source": "perm__Contract",
+      "mapping_source": "perm.contract",
+      "selected_columns": [
+        {
+          "source": "ContractId",
+          "target": "ContractId",
+          "cast": null
+        },
+        {
+          "source": "EarningMethodInd",
+          "target": "EarningMethodInd",
+          "cast": null
+        },
+        {
+          "source": "fxCoBuyerId",
+          "target": "fxCoBuyerId",
+          "cast": null
+        },
+        {
+          "source": "fxCustomerId",
+          "target": "fxCustomerId",
+          "cast": null
+        },
+        {
+          "source": "fxSoldByUserId",
+          "target": "fxSoldByUserId",
+          "cast": null
+        },
+        {
+          "source": "ExternalUser",
+          "target": "externaluser",
+          "cast": null
+        }
+      ],
+      "surplus_raw_columns": [
+        "RemovedFromSource",
+        "fxProductId",
+        "ProductTypeInd",
+        "fxPlanId",
+        "fxTermId",
+        "fxLimitId",
+        "ClassCode",
+        "DateEffective",
+        "DateExpires",
+        "ClaimStartDate",
+        "ContractPurchasePrice",
+        "fxSoldByDealerId",
+        "fxLienHolderId",
+        "ContractNumber",
+        "ContractSuffix",
+        "ContractStatusInd",
+        "CoveredItemPurchasePrice",
+        "CoveredItemNumber",
+        "fxVINMasterId",
+        "PurchaseTypeInd",
+        "VehiclePurchaseTypeInd",
+        "WaitDays",
+        "EarningWaitMonths",
+        "fxAgentAtSellId",
+        "fxDealerGroupAtSellId",
+        "PlanExpireTimeTypeInd",
+        "VehicleInServiceDate",
+        "VehiclePurchaseDate",
+        "DefaultTransferFee",
+        "ExtendExpirationByWait",
+        "HasPendingEarningsUpdate",
+        "fxBatchId",
+        "IsException",
+        "RewardNumber",
+        "fxFactorTableId",
+        "fxSoldInDepartmentId",
+        "fxFullyPostedPostingHistoryId",
+        "FormCode",
+        "DealerPackAmount",
+        "RewardsHaveBeenConverted",
+        "AlternateContractNumber",
+        "WasExpiredManually",
+        "ManualDateExpires",
+        "fxDeductibleId",
+        "TermMonths",
+        "TermMiles",
+        "LowerFinanceMonths",
+        "UpperFinanceMonths",
+        "WaitMiles",
+        "Odometer",
+        "FinanceTypeInd",
+        "FinanceAmount",
+        "FinanceMonths",
+        "ReimbursementAmount",
+        "MSRP",
+        "PlanExpireUsageTypeInd",
+        "ScheduleStartInd",
+        "ClaimStartUsage",
+        "UsageExpires",
+        "CurrentRenewal",
+        "GracePeriod",
+        "MaxRenewals",
+        "StopRenewal",
+        "IsRenewable",
+        "RateCode",
+        "ContractPurchasePriceSalesTax",
+        "CoverageCostSalesTax",
+        "SalesTaxDetail",
+        "IsCustomerSalesTaxExempt",
+        "Obligor",
+        "ObligorTypeInd",
+        "MaxFinanceOfItemValue",
+        "MaxInsuranceDeductible",
+        "MaxLateCharges",
+        "MaxLatePayment",
+        "MaxSubrogatedDeductible",
+        "GAPSellerPayout",
+        "ClaimWaitTypeInd",
+        "MaxFinanceOfItemValueForClaims",
+        "InitialLoadDate",
+        "LastLoadDate",
+        "RecordChecksum",
+        "LastChange"
+      ],
+      "raw_column_count": 89,
+      "required_column_count": 6,
+      "dev_nesna_column_count": 6,
+      "prod_nesna_column_count": 6,
+      "dev_prod_schema_match": true,
+      "raw_rows": 379821,
+      "dev_nesna_rows": 379821,
+      "prod_nesna_rows": 387499
+    },
+    {
+      "target": "permcontractdisbursement",
+      "source": "perm__ContractDisbursement",
+      "mapping_source": "perm.contractdisbursement",
+      "selected_columns": [
+        {
+          "source": "ContractDisbursementId",
+          "target": "ContractDisbursementId",
+          "cast": null
+        },
+        {
+          "source": "fxContractId",
+          "target": "fxContractId",
+          "cast": null
+        },
+        {
+          "source": "DisbursementTypeInd",
+          "target": "DisbursementTypeInd",
+          "cast": null
+        },
+        {
+          "source": "DisbursementRefundTypeInd",
+          "target": "DisbursementRefundTypeInd",
+          "cast": null
+        },
+        {
+          "source": "fxDisbursementGroupId",
+          "target": "fxDisbursementGroupId",
+          "cast": null
+        },
+        {
+          "source": "fxDisbursementCodeId",
+          "target": "fxDisbursementCodeId",
+          "cast": null
+        },
+        {
+          "source": "SourceDescription",
+          "target": "SourceDescription",
+          "cast": null
+        },
+        {
+          "source": "fxDisbursementLabelId",
+          "target": "fxDisbursementLabelId",
+          "cast": null
+        }
+      ],
+      "surplus_raw_columns": [
+        "RemovedFromSource",
+        "fxAmendmentId",
+        "fxRelatedSurchargeId",
+        "fxRelatedAdjustmentId",
+        "fxRelatedDeductibleId",
+        "IsRenewable",
+        "IsCededReserve",
+        "fxRelatedExceptionFeeId",
+        "fxNoChargeBackGroupId",
+        "InitialLoadDate",
+        "LastLoadDate",
+        "RecordChecksum",
+        "LastChange",
+        "EarningMethodInd",
+        "fxFactorTableId"
+      ],
+      "raw_column_count": 23,
+      "required_column_count": 8,
+      "dev_nesna_column_count": 8,
+      "prod_nesna_column_count": 8,
+      "dev_prod_schema_match": true,
+      "raw_rows": 5280876,
+      "dev_nesna_rows": 5280876,
+      "prod_nesna_rows": 5388004
+    },
+    {
+      "target": "permcontractfield",
+      "source": "perm__ContractField",
+      "mapping_source": "perm.contractfield",
+      "selected_columns": [
+        {
+          "source": "fxContractId",
+          "target": "fxContractId",
+          "cast": null
+        },
+        {
+          "source": "fxFieldId",
+          "target": "fxFieldId",
+          "cast": null
+        },
+        {
+          "source": "StringValue",
+          "target": "StringValue",
+          "cast": null
+        }
+      ],
+      "surplus_raw_columns": [
+        "ContractFieldId",
+        "RemovedFromSource",
+        "NumberValue",
+        "DateValue",
+        "fxRegionId",
+        "InitialLoadDate",
+        "LastLoadDate",
+        "RecordChecksum",
+        "LastChange"
+      ],
+      "raw_column_count": 12,
+      "required_column_count": 3,
+      "dev_nesna_column_count": 3,
+      "prod_nesna_column_count": 3,
+      "dev_prod_schema_match": true,
+      "raw_rows": 1748905,
+      "dev_nesna_rows": 0,
+      "prod_nesna_rows": 0
+    },
+    {
+      "target": "permledger",
+      "source": "perm__Ledger",
+      "mapping_source": "perm.ledger",
+      "selected_columns": [
+        {
+          "source": "LedgerId",
+          "target": "LedgerId",
+          "cast": null
+        },
+        {
+          "source": "fxRelatedContractId",
+          "target": "fxRelatedContractId",
+          "cast": null
+        }
+      ],
+      "surplus_raw_columns": [
+        "RemovedFromSource",
+        "fxAdminCompanyId",
+        "fxCurrentAccountHolderId",
+        "fxOriginalAccountHolderId",
+        "fxInsurerId",
+        "fxBalanceTypeId",
+        "Amount",
+        "CurrentAmount",
+        "fxCashTransactionId",
+        "fxPostingHistoryId",
+        "fxEnteredById",
+        "EnteredDate",
+        "LedgerDate",
+        "LedgerTypeInd",
+        "RelatedLedgerTypeInd",
+        "LowersAdminCompanyBalance",
+        "fxRelatedClaimId",
+        "fxRelatedLedgerId",
+        "fxRelatedCancelId",
+        "fxRelatedReinstatementId",
+        "fxRelatedAmendmentId",
+        "fxRelatedContractDisbursementId",
+        "fxRelatedReinstatementDisbursementId",
+        "Description",
+        "InitialLoadDate",
+        "LastLoadDate",
+        "RecordChecksum",
+        "LastChange"
+      ],
+      "raw_column_count": 30,
+      "required_column_count": 2,
+      "dev_nesna_column_count": 2,
+      "prod_nesna_column_count": 2,
+      "dev_prod_schema_match": true,
+      "raw_rows": 7227897,
+      "dev_nesna_rows": 7227897,
+      "prod_nesna_rows": 7380439
+    },
+    {
+      "target": "permnote",
+      "source": "perm__Note",
+      "mapping_source": "perm.note",
+      "selected_columns": [
+        {
+          "source": "NoteId",
+          "target": "NoteId",
+          "cast": null
+        },
+        {
+          "source": "RemovedFromSource",
+          "target": "RemovedFromSource",
+          "cast": "integer"
+        },
+        {
+          "source": "fxAccountHolderId",
+          "target": "fxAccountHolderId",
+          "cast": null
+        },
+        {
+          "source": "fxLedgerId",
+          "target": "fxLedgerId",
+          "cast": null
+        },
+        {
+          "source": "fxClaimId",
+          "target": "fxClaimId",
+          "cast": null
+        },
+        {
+          "source": "Note",
+          "target": "Note",
+          "cast": null
+        },
+        {
+          "source": "fxEnteredById",
+          "target": "fxEnteredById",
+          "cast": null
+        },
+        {
+          "source": "EnteredDate",
+          "target": "EnteredDate",
+          "cast": null
+        },
+        {
+          "source": "NoteTypeInd",
+          "target": "NoteTypeInd",
+          "cast": null
+        },
+        {
+          "source": "WarningNoteLevelInd",
+          "target": "WarningNoteLevelInd",
+          "cast": null
+        },
+        {
+          "source": "ExpirationDate",
+          "target": "ExpirationDate",
+          "cast": null
+        }
+      ],
+      "surplus_raw_columns": [
+        "fxBatchId",
+        "fxCriterionGroupId",
+        "fxVINClassificationTableId",
+        "fxBatchContractId",
+        "fxClaimInquiryId",
+        "NoteSourceInd",
+        "InitialLoadDate",
+        "LastLoadDate",
+        "RecordChecksum",
+        "LastChange"
+      ],
+      "raw_column_count": 21,
+      "required_column_count": 11,
+      "dev_nesna_column_count": 11,
+      "prod_nesna_column_count": 11,
+      "dev_prod_schema_match": true,
+      "raw_rows": 7604233,
+      "dev_nesna_rows": 7604233,
+      "prod_nesna_rows": 7632984
+    }
+  ]
+}

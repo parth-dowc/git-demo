@@ -1,0 +1,5100 @@
+{
+  "generated_at": "2026-10-27T15:46:03.200780+00:00",
+  "mode": "READ_ONLY_DISCOVERY",
+  "expected_table_count": 66,
+  "inventory_provided": false,
+  "tables": [
+    {
+      "raw_table": "2025_ITD_Nesna_Reinsurance_balances",
+      "status": "MISSING_MAPPING",
+      "errors": [
+        "Expected exactly one mapping; found 0."
+      ],
+      "mapping_candidates": []
+    },
+    {
+      "raw_table": "SSASAccountHolderDimension",
+      "status": "MISSING_MAPPING",
+      "errors": [
+        "Expected exactly one mapping; found 0."
+      ],
+      "mapping_candidates": []
+    },
+    {
+      "raw_table": "SSASContractDimension",
+      "status": "MISSING_MAPPING",
+      "errors": [
+        "Expected exactly one mapping; found 0."
+      ],
+      "mapping_candidates": []
+    },
+    {
+      "raw_table": "SSASDealerDimension",
+      "status": "MISSING_MAPPING",
+      "errors": [
+        "Expected exactly one mapping; found 0."
+      ],
+      "mapping_candidates": []
+    },
+    {
+      "raw_table": "SSASDisbursementDimension",
+      "status": "MISSING_MAPPING",
+      "errors": [
+        "Expected exactly one mapping; found 0."
+      ],
+      "mapping_candidates": []
+    },
+    {
+      "mapping_ms": "class.vinmaster",
+      "mapping_pg": "vinmaster",
+      "status": "BLOCKED",
+      "errors": [
+        "Missing DEV NESNA table: vinmaster",
+        "Missing PROD NESNA table: vinmaster"
+      ],
+      "warnings": [],
+      "selected_columns": [],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "class__vinmaster",
+      "raw_table": "class__VINMaster",
+      "dev_nesna_table": null,
+      "prod_nesna_table": null
+    },
+    {
+      "mapping_ms": "contract.ContractField",
+      "mapping_pg": "contract_contractfield",
+      "status": "BLOCKED",
+      "errors": [
+        "Missing DEV NESNA table: contract_contractfield",
+        "Missing PROD NESNA table: contract_contractfield"
+      ],
+      "warnings": [],
+      "selected_columns": [],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "contract__ContractField",
+      "raw_table": "contract__ContractField",
+      "dev_nesna_table": null,
+      "prod_nesna_table": null
+    },
+    {
+      "raw_table": "daily_treasury_ratesytd2026",
+      "status": "MISSING_MAPPING",
+      "errors": [
+        "Expected exactly one mapping; found 0."
+      ],
+      "mapping_candidates": []
+    },
+    {
+      "raw_table": "dim__AccountHolder",
+      "status": "MISSING_MAPPING",
+      "errors": [
+        "Expected exactly one mapping; found 0."
+      ],
+      "mapping_candidates": []
+    },
+    {
+      "mapping_ms": "dim.cancel",
+      "mapping_pg": "dimcancel",
+      "status": "BLOCKED",
+      "errors": [
+        "Unmapped destination columns: EnteredDate"
+      ],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "CancelId",
+          "target": "CancelId",
+          "transform": null,
+          "expression": "CancelId",
+          "resolved_source": "CancelId",
+          "resolved_target": "CancelId"
+        },
+        {
+          "source": "EnteredByUser",
+          "target": "EnteredByUser",
+          "transform": null,
+          "expression": "EnteredByUser",
+          "resolved_source": "EnteredByUser",
+          "resolved_target": "EnteredByUser"
+        }
+      ],
+      "surplus_raw_columns": [
+        "CancelKey",
+        "CancelType",
+        "CancelMethod",
+        "CancelReason",
+        "CancelReasonCode",
+        "CancelRefundPercent",
+        "CancelReinsuranceMultiplier",
+        "CancelDate",
+        "CancelOdometer",
+        "IsDefaultUnknownRecord",
+        "ActiveRecord",
+        "ActiveRecordStartDate",
+        "ActiveRecordEndDate",
+        "RecordChecksum",
+        "EtlBatchDimensionPackageId",
+        "EnteredDate",
+        "ReceivedDate",
+        "CancelMethodType",
+        "CancelMethodGroup",
+        "ValidToDate",
+        "ValidToMiles",
+        "PayDealerPortion"
+      ],
+      "expected_raw_table": "dim__cancel",
+      "raw_table": "dim__Cancel",
+      "dev_nesna_table": "dimcancel",
+      "prod_nesna_table": "dimcancel",
+      "raw_column_count": 24,
+      "dev_nesna_column_count": 3,
+      "prod_nesna_column_count": 3,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 2,
+      "surplus_raw_column_count": 22
+    },
+    {
+      "mapping_ms": "dim.contracteventtype",
+      "mapping_pg": "dimcontracteventtype",
+      "status": "BLOCKED",
+      "errors": [
+        "Missing DEV NESNA table: dimcontracteventtype",
+        "Missing PROD NESNA table: dimcontracteventtype"
+      ],
+      "warnings": [],
+      "selected_columns": [],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "dim__contracteventtype",
+      "raw_table": "dim__ContractEventType",
+      "dev_nesna_table": null,
+      "prod_nesna_table": null
+    },
+    {
+      "raw_table": "dim__ContractField",
+      "status": "MISSING_MAPPING",
+      "errors": [
+        "Expected exactly one mapping; found 0."
+      ],
+      "mapping_candidates": []
+    },
+    {
+      "mapping_ms": "dim.Customer",
+      "mapping_pg": "dimcustomer",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "CustomerKey",
+          "target": "CustomerKey",
+          "transform": null,
+          "expression": "CustomerKey",
+          "resolved_source": "CustomerKey",
+          "resolved_target": "CustomerKey"
+        },
+        {
+          "source": "CustomerId",
+          "target": "CustomerId",
+          "transform": null,
+          "expression": "CustomerId",
+          "resolved_source": "CustomerId",
+          "resolved_target": "CustomerId"
+        },
+        {
+          "source": "CustomerName",
+          "target": "CustomerName",
+          "transform": null,
+          "expression": "CustomerName",
+          "resolved_source": "CustomerName",
+          "resolved_target": "CustomerName"
+        },
+        {
+          "source": "CustomerNumber",
+          "target": "CustomerNumber",
+          "transform": null,
+          "expression": "CustomerNumber",
+          "resolved_source": "CustomerNumber",
+          "resolved_target": "CustomerNumber"
+        },
+        {
+          "source": "CustomerFirstName",
+          "target": "CustomerFirstName",
+          "transform": null,
+          "expression": "CustomerFirstName",
+          "resolved_source": "CustomerFirstName",
+          "resolved_target": "CustomerFirstName"
+        },
+        {
+          "source": "CustomerLastName",
+          "target": "CustomerLastName",
+          "transform": null,
+          "expression": "CustomerLastName",
+          "resolved_source": "CustomerLastName",
+          "resolved_target": "CustomerLastName"
+        },
+        {
+          "source": "CustomerBusinessName",
+          "target": "CustomerBusinessName",
+          "transform": null,
+          "expression": "CustomerBusinessName",
+          "resolved_source": "CustomerBusinessName",
+          "resolved_target": "CustomerBusinessName"
+        },
+        {
+          "source": "CustomerAccountCode",
+          "target": "CustomerAccountCode",
+          "transform": null,
+          "expression": "CustomerAccountCode",
+          "resolved_source": "CustomerAccountCode",
+          "resolved_target": "CustomerAccountCode"
+        },
+        {
+          "source": "CustomerSystemCode",
+          "target": "CustomerSystemCode",
+          "transform": null,
+          "expression": "CustomerSystemCode",
+          "resolved_source": "CustomerSystemCode",
+          "resolved_target": "CustomerSystemCode"
+        },
+        {
+          "source": "CustomerTaxId",
+          "target": "CustomerTaxId",
+          "transform": null,
+          "expression": "CustomerTaxId",
+          "resolved_source": "CustomerTaxId",
+          "resolved_target": "CustomerTaxId"
+        },
+        {
+          "source": "CustomerStatus",
+          "target": "CustomerStatus",
+          "transform": null,
+          "expression": "CustomerStatus",
+          "resolved_source": "CustomerStatus",
+          "resolved_target": "CustomerStatus"
+        },
+        {
+          "source": "CustomerEmailAddress",
+          "target": "CustomerEmailAddress",
+          "transform": null,
+          "expression": "CustomerEmailAddress",
+          "resolved_source": "CustomerEmailAddress",
+          "resolved_target": "CustomerEmailAddress"
+        },
+        {
+          "source": "CustomerLegalName",
+          "target": "CustomerLegalName",
+          "transform": null,
+          "expression": "CustomerLegalName",
+          "resolved_source": "CustomerLegalName",
+          "resolved_target": "CustomerLegalName"
+        },
+        {
+          "source": "CustomerBillingAddressLine1",
+          "target": "CustomerBillingAddressLine1",
+          "transform": null,
+          "expression": "CustomerBillingAddressLine1",
+          "resolved_source": "CustomerBillingAddressLine1",
+          "resolved_target": "CustomerBillingAddressLine1"
+        },
+        {
+          "source": "CustomerBillingAddressLine2",
+          "target": "CustomerBillingAddressLine2",
+          "transform": null,
+          "expression": "CustomerBillingAddressLine2",
+          "resolved_source": "CustomerBillingAddressLine2",
+          "resolved_target": "CustomerBillingAddressLine2"
+        },
+        {
+          "source": "CustomerBillingCity",
+          "target": "CustomerBillingCity",
+          "transform": null,
+          "expression": "CustomerBillingCity",
+          "resolved_source": "CustomerBillingCity",
+          "resolved_target": "CustomerBillingCity"
+        },
+        {
+          "source": "CustomerBillingZipCode",
+          "target": "CustomerBillingZipCode",
+          "transform": null,
+          "expression": "CustomerBillingZipCode",
+          "resolved_source": "CustomerBillingZipCode",
+          "resolved_target": "CustomerBillingZipCode"
+        },
+        {
+          "source": "CustomerBillingPhone",
+          "target": "CustomerBillingPhone",
+          "transform": null,
+          "expression": "CustomerBillingPhone",
+          "resolved_source": "CustomerBillingPhone",
+          "resolved_target": "CustomerBillingPhone"
+        },
+        {
+          "source": "CustomerBillingExtension",
+          "target": "CustomerBillingExtension",
+          "transform": null,
+          "expression": "CustomerBillingExtension",
+          "resolved_source": "CustomerBillingExtension",
+          "resolved_target": "CustomerBillingExtension"
+        },
+        {
+          "source": "CustomerBillingFax",
+          "target": "CustomerBillingFax",
+          "transform": null,
+          "expression": "CustomerBillingFax",
+          "resolved_source": "CustomerBillingFax",
+          "resolved_target": "CustomerBillingFax"
+        },
+        {
+          "source": "CustomerBillingState",
+          "target": "CustomerBillingState",
+          "transform": null,
+          "expression": "CustomerBillingState",
+          "resolved_source": "CustomerBillingState",
+          "resolved_target": "CustomerBillingState"
+        },
+        {
+          "source": "IsDefaultUnknownRecord",
+          "target": "IsDefaultUnknownRecord",
+          "transform": "integer",
+          "expression": "cast(IsDefaultUnknownRecord as int) IsDefaultUnknownRecord",
+          "resolved_source": "IsDefaultUnknownRecord",
+          "resolved_target": "IsDefaultUnknownRecord"
+        },
+        {
+          "source": "ActiveRecord",
+          "target": "ActiveRecord",
+          "transform": "integer",
+          "expression": "cast(ActiveRecord as int) ActiveRecord",
+          "resolved_source": "ActiveRecord",
+          "resolved_target": "ActiveRecord"
+        },
+        {
+          "source": "ActiveRecordStartDate",
+          "target": "ActiveRecordStartDate",
+          "transform": null,
+          "expression": "ActiveRecordStartDate",
+          "resolved_source": "ActiveRecordStartDate",
+          "resolved_target": "ActiveRecordStartDate"
+        },
+        {
+          "source": "ActiveRecordEndDate",
+          "target": "ActiveRecordEndDate",
+          "transform": null,
+          "expression": "ActiveRecordEndDate",
+          "resolved_source": "ActiveRecordEndDate",
+          "resolved_target": "ActiveRecordEndDate"
+        },
+        {
+          "source": "CustomerPhysicalAddressLine1",
+          "target": "CustomerPhysicalAddressLine1",
+          "transform": null,
+          "expression": "CustomerPhysicalAddressLine1",
+          "resolved_source": "CustomerPhysicalAddressLine1",
+          "resolved_target": "CustomerPhysicalAddressLine1"
+        },
+        {
+          "source": "CustomerPhysicalAddressLine2",
+          "target": "CustomerPhysicalAddressLine2",
+          "transform": null,
+          "expression": "CustomerPhysicalAddressLine2",
+          "resolved_source": "CustomerPhysicalAddressLine2",
+          "resolved_target": "CustomerPhysicalAddressLine2"
+        },
+        {
+          "source": "CustomerPhysicalCity",
+          "target": "CustomerPhysicalCity",
+          "transform": null,
+          "expression": "CustomerPhysicalCity",
+          "resolved_source": "CustomerPhysicalCity",
+          "resolved_target": "CustomerPhysicalCity"
+        },
+        {
+          "source": "CustomerPhysicalZipCode",
+          "target": "CustomerPhysicalZipCode",
+          "transform": null,
+          "expression": "CustomerPhysicalZipCode",
+          "resolved_source": "CustomerPhysicalZipCode",
+          "resolved_target": "CustomerPhysicalZipCode"
+        },
+        {
+          "source": "CustomerPhysicalPhone",
+          "target": "CustomerPhysicalPhone",
+          "transform": null,
+          "expression": "CustomerPhysicalPhone",
+          "resolved_source": "CustomerPhysicalPhone",
+          "resolved_target": "CustomerPhysicalPhone"
+        },
+        {
+          "source": "CustomerPhysicalExtension",
+          "target": "CustomerPhysicalExtension",
+          "transform": null,
+          "expression": "CustomerPhysicalExtension",
+          "resolved_source": "CustomerPhysicalExtension",
+          "resolved_target": "CustomerPhysicalExtension"
+        },
+        {
+          "source": "CustomerPhysicalFax",
+          "target": "CustomerPhysicalFax",
+          "transform": null,
+          "expression": "CustomerPhysicalFax",
+          "resolved_source": "CustomerPhysicalFax",
+          "resolved_target": "CustomerPhysicalFax"
+        },
+        {
+          "source": "CustomerPhysicalState",
+          "target": "CustomerPhysicalState",
+          "transform": null,
+          "expression": "CustomerPhysicalState",
+          "resolved_source": "CustomerPhysicalState",
+          "resolved_target": "CustomerPhysicalState"
+        }
+      ],
+      "surplus_raw_columns": [
+        "CustomerMiddleName",
+        "RecordChecksum",
+        "EtlBatchDimensionPackageId"
+      ],
+      "expected_raw_table": "dim__Customer",
+      "raw_table": "dim__Customer",
+      "dev_nesna_table": "dimcustomer",
+      "prod_nesna_table": "dimcustomer",
+      "raw_column_count": 36,
+      "dev_nesna_column_count": 33,
+      "prod_nesna_column_count": 33,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 33,
+      "surplus_raw_column_count": 3
+    },
+    {
+      "raw_table": "do_not_call",
+      "status": "MISSING_MAPPING",
+      "errors": [
+        "Expected exactly one mapping; found 0."
+      ],
+      "mapping_candidates": []
+    },
+    {
+      "mapping_ms": "fact.contract",
+      "mapping_pg": "factcontract",
+      "status": "BLOCKED",
+      "errors": [
+        "Missing DEV NESNA table: factcontract",
+        "Missing PROD NESNA table: factcontract"
+      ],
+      "warnings": [],
+      "selected_columns": [],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "fact__contract",
+      "raw_table": "fact__Contract",
+      "dev_nesna_table": null,
+      "prod_nesna_table": null
+    },
+    {
+      "raw_table": "fact__ContractField",
+      "status": "MISSING_MAPPING",
+      "errors": [
+        "Expected exactly one mapping; found 0."
+      ],
+      "mapping_candidates": []
+    },
+    {
+      "mapping_ms": "incr.renewal",
+      "mapping_pg": "incrrenewal",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "fxAmendmentId",
+          "target": "fxAmendmentId",
+          "transform": null,
+          "expression": "fxAmendmentId",
+          "resolved_source": "fxAmendmentId",
+          "resolved_target": "fxAmendmentId"
+        },
+        {
+          "source": "RemovedFromSource",
+          "target": "RemovedFromSource",
+          "transform": "integer",
+          "expression": "cast(RemovedFromSource as int) RemovedFromSource",
+          "resolved_source": "RemovedFromSource",
+          "resolved_target": "RemovedFromSource"
+        },
+        {
+          "source": "fxPlanId",
+          "target": "fxPlanId",
+          "transform": null,
+          "expression": "fxPlanId",
+          "resolved_source": "fxPlanId",
+          "resolved_target": "fxPlanId"
+        },
+        {
+          "source": "fxTermId",
+          "target": "fxTermId",
+          "transform": null,
+          "expression": "fxTermId",
+          "resolved_source": "fxTermId",
+          "resolved_target": "fxTermId"
+        },
+        {
+          "source": "fxLimitId",
+          "target": "fxLimitId",
+          "transform": null,
+          "expression": "fxLimitId",
+          "resolved_source": "fxLimitId",
+          "resolved_target": "fxLimitId"
+        },
+        {
+          "source": "RenewNumber",
+          "target": "RenewNumber",
+          "transform": null,
+          "expression": "RenewNumber",
+          "resolved_source": "RenewNumber",
+          "resolved_target": "RenewNumber"
+        },
+        {
+          "source": "DateEffective",
+          "target": "DateEffective",
+          "transform": null,
+          "expression": "DateEffective",
+          "resolved_source": "DateEffective",
+          "resolved_target": "DateEffective"
+        },
+        {
+          "source": "DateExpires",
+          "target": "DateExpires",
+          "transform": null,
+          "expression": "DateExpires",
+          "resolved_source": "DateExpires",
+          "resolved_target": "DateExpires"
+        },
+        {
+          "source": "ExtendedMonths",
+          "target": "ExtendedMonths",
+          "transform": null,
+          "expression": "ExtendedMonths",
+          "resolved_source": "ExtendedMonths",
+          "resolved_target": "ExtendedMonths"
+        }
+      ],
+      "surplus_raw_columns": [
+        "RecordChecksum"
+      ],
+      "expected_raw_table": "incr__renewal",
+      "raw_table": "incr__Renewal",
+      "dev_nesna_table": "incrrenewal",
+      "prod_nesna_table": "incrrenewal",
+      "raw_column_count": 10,
+      "dev_nesna_column_count": 9,
+      "prod_nesna_column_count": 9,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 9,
+      "surplus_raw_column_count": 1
+    },
+    {
+      "mapping_ms": "perm.claimdetailcomponenthistory",
+      "mapping_pg": "permclaimdetailcomponenthistory",
+      "status": "BLOCKED",
+      "errors": [
+        "ValueError: Unsupported mapping expression: \"REPLACE (Description,'\\\\t\\\\t',' ') as rep7\""
+      ],
+      "warnings": [],
+      "selected_columns": [],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "perm__claimdetailcomponenthistory",
+      "raw_table": "perm__ClaimDetailComponentHistory",
+      "dev_nesna_table": "permclaimdetailcomponenthistory",
+      "prod_nesna_table": "permclaimdetailcomponenthistory",
+      "raw_column_count": 17,
+      "dev_nesna_column_count": 13,
+      "prod_nesna_column_count": 13,
+      "dev_prod_column_definition_match": true
+    },
+    {
+      "mapping_ms": "perm.claimdetailcomponentlaborhistory",
+      "mapping_pg": "permclaimdetailcomponentlaborhistory",
+      "status": "BLOCKED",
+      "errors": [
+        "ValueError: Unsupported mapping expression: 'cast(RemovedFromSource as int)RemovedFromSource'"
+      ],
+      "warnings": [],
+      "selected_columns": [],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "perm__claimdetailcomponentlaborhistory",
+      "raw_table": "perm__ClaimDetailComponentLaborHistory",
+      "dev_nesna_table": "permclaimdetailcomponentlaborhistory",
+      "prod_nesna_table": "permclaimdetailcomponentlaborhistory",
+      "raw_column_count": 25,
+      "dev_nesna_column_count": 23,
+      "prod_nesna_column_count": 23,
+      "dev_prod_column_definition_match": true
+    },
+    {
+      "mapping_ms": "perm.claimdetailcomponentmain",
+      "mapping_pg": "permclaimdetailcomponentmain",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "ClaimDetailComponentId",
+          "target": "ClaimDetailComponentId",
+          "transform": null,
+          "expression": "ClaimDetailComponentId",
+          "resolved_source": "ClaimDetailComponentId",
+          "resolved_target": "ClaimDetailComponentId"
+        },
+        {
+          "source": "RemovedFromSource",
+          "target": "RemovedFromSource",
+          "transform": "integer",
+          "expression": "cast(RemovedFromSource as int) RemovedFromSource",
+          "resolved_source": "RemovedFromSource",
+          "resolved_target": "RemovedFromSource"
+        },
+        {
+          "source": "fxClaimDetailId",
+          "target": "fxClaimDetailId",
+          "transform": null,
+          "expression": "fxClaimDetailId",
+          "resolved_source": "fxClaimDetailId",
+          "resolved_target": "fxClaimDetailId"
+        },
+        {
+          "source": "EnteredDate",
+          "target": "EnteredDate",
+          "transform": null,
+          "expression": "EnteredDate",
+          "resolved_source": "EnteredDate",
+          "resolved_target": "EnteredDate"
+        },
+        {
+          "source": "fxEnteredById",
+          "target": "fxEnteredById",
+          "transform": null,
+          "expression": "fxEnteredById",
+          "resolved_source": "fxEnteredById",
+          "resolved_target": "fxEnteredById"
+        },
+        {
+          "source": "fxCurrentHistoryId",
+          "target": "fxCurrentHistoryId",
+          "transform": null,
+          "expression": "fxCurrentHistoryId",
+          "resolved_source": "fxCurrentHistoryId",
+          "resolved_target": "fxCurrentHistoryId"
+        },
+        {
+          "source": "fxCurrentLaborHistoryId",
+          "target": "fxCurrentLaborHistoryId",
+          "transform": null,
+          "expression": "fxCurrentLaborHistoryId",
+          "resolved_source": "fxCurrentLaborHistoryId",
+          "resolved_target": "fxCurrentLaborHistoryId"
+        },
+        {
+          "source": "InitialLoadDate",
+          "target": "InitialLoadDate",
+          "transform": null,
+          "expression": "InitialLoadDate",
+          "resolved_source": "InitialLoadDate",
+          "resolved_target": "InitialLoadDate"
+        },
+        {
+          "source": "LastLoadDate",
+          "target": "LastLoadDate",
+          "transform": null,
+          "expression": "LastLoadDate",
+          "resolved_source": "LastLoadDate",
+          "resolved_target": "LastLoadDate"
+        }
+      ],
+      "surplus_raw_columns": [
+        "RecordChecksum",
+        "LastChange"
+      ],
+      "expected_raw_table": "perm__claimdetailcomponentmain",
+      "raw_table": "perm__ClaimDetailComponentMain",
+      "dev_nesna_table": "permclaimdetailcomponentmain",
+      "prod_nesna_table": "permclaimdetailcomponentmain",
+      "raw_column_count": 11,
+      "dev_nesna_column_count": 9,
+      "prod_nesna_column_count": 9,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 9,
+      "surplus_raw_column_count": 2
+    },
+    {
+      "mapping_ms": "perm.claimdetailcomponentparthistory",
+      "mapping_pg": "permclaimdetailcomponentparthistory",
+      "status": "BLOCKED",
+      "errors": [
+        "ValueError: Unsupported mapping expression: 'cast(RemovedFromSource as int)RemovedFromSource'"
+      ],
+      "warnings": [],
+      "selected_columns": [],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "perm__claimdetailcomponentparthistory",
+      "raw_table": "perm__ClaimDetailComponentPartHistory",
+      "dev_nesna_table": "permclaimdetailcomponentparthistory",
+      "prod_nesna_table": "permclaimdetailcomponentparthistory",
+      "raw_column_count": 34,
+      "dev_nesna_column_count": 30,
+      "prod_nesna_column_count": 30,
+      "dev_prod_column_definition_match": true
+    },
+    {
+      "mapping_ms": "perm.claimdetailcomponentpartmain",
+      "mapping_pg": "permclaimdetailcomponentpartmain",
+      "status": "BLOCKED",
+      "errors": [
+        "ValueError: Unsupported mapping expression: 'cast(RemovedFromSource as int)RemovedFromSource'"
+      ],
+      "warnings": [],
+      "selected_columns": [],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "perm__claimdetailcomponentpartmain",
+      "raw_table": "perm__ClaimDetailComponentPartMain",
+      "dev_nesna_table": "permclaimdetailcomponentpartmain",
+      "prod_nesna_table": "permclaimdetailcomponentpartmain",
+      "raw_column_count": 10,
+      "dev_nesna_column_count": 8,
+      "prod_nesna_column_count": 8,
+      "dev_prod_column_definition_match": true
+    },
+    {
+      "mapping_ms": "perm.claimdetailmain",
+      "mapping_pg": "permclaimdetailmain",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "ClaimDetailId",
+          "target": "ClaimDetailId",
+          "transform": null,
+          "expression": "ClaimDetailId",
+          "resolved_source": "ClaimDetailId",
+          "resolved_target": "ClaimDetailId"
+        },
+        {
+          "source": "RemovedFromSource",
+          "target": "RemovedFromSource",
+          "transform": "integer",
+          "expression": "cast(RemovedFromSource as int) RemovedFromSource",
+          "resolved_source": "RemovedFromSource",
+          "resolved_target": "RemovedFromSource"
+        },
+        {
+          "source": "fxClaimId",
+          "target": "fxClaimId",
+          "transform": null,
+          "expression": "fxClaimId",
+          "resolved_source": "fxClaimId",
+          "resolved_target": "fxClaimId"
+        },
+        {
+          "source": "EnteredDate",
+          "target": "EnteredDate",
+          "transform": null,
+          "expression": "EnteredDate",
+          "resolved_source": "EnteredDate",
+          "resolved_target": "EnteredDate"
+        },
+        {
+          "source": "fxEnteredById",
+          "target": "fxEnteredById",
+          "transform": null,
+          "expression": "fxEnteredById",
+          "resolved_source": "fxEnteredById",
+          "resolved_target": "fxEnteredById"
+        },
+        {
+          "source": "fxCurrentHistoryId",
+          "target": "fxCurrentHistoryId",
+          "transform": null,
+          "expression": "fxCurrentHistoryId",
+          "resolved_source": "fxCurrentHistoryId",
+          "resolved_target": "fxCurrentHistoryId"
+        },
+        {
+          "source": "InitialLoadDate",
+          "target": "InitialLoadDate",
+          "transform": null,
+          "expression": "InitialLoadDate",
+          "resolved_source": "InitialLoadDate",
+          "resolved_target": "InitialLoadDate"
+        },
+        {
+          "source": "LastLoadDate",
+          "target": "LastLoadDate",
+          "transform": null,
+          "expression": "LastLoadDate",
+          "resolved_source": "LastLoadDate",
+          "resolved_target": "LastLoadDate"
+        }
+      ],
+      "surplus_raw_columns": [
+        "RecordChecksum",
+        "LastChange"
+      ],
+      "expected_raw_table": "perm__claimdetailmain",
+      "raw_table": "perm__ClaimDetailMain",
+      "dev_nesna_table": "permclaimdetailmain",
+      "prod_nesna_table": "permclaimdetailmain",
+      "raw_column_count": 10,
+      "dev_nesna_column_count": 8,
+      "prod_nesna_column_count": 8,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 8,
+      "surplus_raw_column_count": 2
+    },
+    {
+      "mapping_ms": "perm.claimhistory",
+      "mapping_pg": "permclaimhistory",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "ClaimHistoryId",
+          "target": "ClaimHistoryId",
+          "transform": null,
+          "expression": "ClaimHistoryId",
+          "resolved_source": "ClaimHistoryId",
+          "resolved_target": "ClaimHistoryId"
+        },
+        {
+          "source": "fxClaimId",
+          "target": "fxClaimId",
+          "transform": null,
+          "expression": "fxClaimId",
+          "resolved_source": "fxClaimId",
+          "resolved_target": "fxClaimId"
+        },
+        {
+          "source": "ClaimInceptionDate",
+          "target": "ClaimInceptionDate",
+          "transform": null,
+          "expression": "ClaimInceptionDate",
+          "resolved_source": "ClaimInceptionDate",
+          "resolved_target": "ClaimInceptionDate"
+        },
+        {
+          "source": "ClaimSubstatusInd",
+          "target": "ClaimSubstatusInd",
+          "transform": null,
+          "expression": "ClaimSubstatusInd",
+          "resolved_source": "ClaimSubstatusInd",
+          "resolved_target": "ClaimSubstatusInd"
+        },
+        {
+          "source": "Amount",
+          "target": "Amount",
+          "transform": null,
+          "expression": "Amount",
+          "resolved_source": "Amount",
+          "resolved_target": "Amount"
+        },
+        {
+          "source": "AdjustmentAmount",
+          "target": "AdjustmentAmount",
+          "transform": null,
+          "expression": "AdjustmentAmount",
+          "resolved_source": "AdjustmentAmount",
+          "resolved_target": "AdjustmentAmount"
+        },
+        {
+          "source": "fxPaidToId",
+          "target": "fxPaidToId",
+          "transform": null,
+          "expression": "fxPaidToId",
+          "resolved_source": "fxPaidToId",
+          "resolved_target": "fxPaidToId"
+        },
+        {
+          "source": "fxOwnedById",
+          "target": "fxOwnedById",
+          "transform": null,
+          "expression": "fxOwnedById",
+          "resolved_source": "fxOwnedById",
+          "resolved_target": "fxOwnedById"
+        },
+        {
+          "source": "fxEnteredById",
+          "target": "fxEnteredById",
+          "transform": null,
+          "expression": "fxEnteredById",
+          "resolved_source": "fxEnteredById",
+          "resolved_target": "fxEnteredById"
+        },
+        {
+          "source": "EnteredDate",
+          "target": "EnteredDate",
+          "transform": null,
+          "expression": "EnteredDate",
+          "resolved_source": "EnteredDate",
+          "resolved_target": "EnteredDate"
+        },
+        {
+          "source": "fxPostingHistoryId",
+          "target": "fxPostingHistoryId",
+          "transform": null,
+          "expression": "fxPostingHistoryId",
+          "resolved_source": "fxPostingHistoryId",
+          "resolved_target": "fxPostingHistoryId"
+        },
+        {
+          "source": "CurrentVehiclePrice",
+          "target": "CurrentVehiclePrice",
+          "transform": null,
+          "expression": "CurrentVehiclePrice",
+          "resolved_source": "CurrentVehiclePrice",
+          "resolved_target": "CurrentVehiclePrice"
+        },
+        {
+          "source": "PayeeSummaryNote",
+          "target": "PayeeSummaryNote",
+          "transform": null,
+          "expression": "PayeeSummaryNote",
+          "resolved_source": "PayeeSummaryNote",
+          "resolved_target": "PayeeSummaryNote"
+        },
+        {
+          "source": "ClaimSummary",
+          "target": "ClaimSummary",
+          "transform": null,
+          "expression": "ClaimSummary",
+          "resolved_source": "ClaimSummary",
+          "resolved_target": "ClaimSummary"
+        },
+        {
+          "source": "Odometer",
+          "target": "Odometer",
+          "transform": null,
+          "expression": "Odometer",
+          "resolved_source": "Odometer",
+          "resolved_target": "Odometer"
+        },
+        {
+          "source": "fxRepairFacilityId",
+          "target": "fxRepairFacilityId",
+          "transform": null,
+          "expression": "fxRepairFacilityId",
+          "resolved_source": "fxRepairFacilityId",
+          "resolved_target": "fxRepairFacilityId"
+        },
+        {
+          "source": "RepairOrderNumber",
+          "target": "RepairOrderNumber",
+          "transform": null,
+          "expression": "RepairOrderNumber",
+          "resolved_source": "RepairOrderNumber",
+          "resolved_target": "RepairOrderNumber"
+        },
+        {
+          "source": "Deductible",
+          "target": "Deductible",
+          "transform": null,
+          "expression": "Deductible",
+          "resolved_source": "Deductible",
+          "resolved_target": "Deductible"
+        },
+        {
+          "source": "FullDeductible",
+          "target": "FullDeductible",
+          "transform": null,
+          "expression": "FullDeductible",
+          "resolved_source": "FullDeductible",
+          "resolved_target": "FullDeductible"
+        },
+        {
+          "source": "InitialLoadDate",
+          "target": "InitialLoadDate",
+          "transform": null,
+          "expression": "InitialLoadDate",
+          "resolved_source": "InitialLoadDate",
+          "resolved_target": "InitialLoadDate"
+        },
+        {
+          "source": "LastLoadDate",
+          "target": "LastLoadDate",
+          "transform": null,
+          "expression": "LastLoadDate",
+          "resolved_source": "LastLoadDate",
+          "resolved_target": "LastLoadDate"
+        },
+        {
+          "source": "RemovedFromSource",
+          "target": "RemovedFromSource",
+          "transform": null,
+          "expression": "RemovedFromSource",
+          "resolved_source": "RemovedFromSource",
+          "resolved_target": "RemovedFromSource"
+        },
+        {
+          "source": "ClaimStatusInd",
+          "target": "ClaimStatusInd",
+          "transform": null,
+          "expression": "ClaimStatusInd",
+          "resolved_source": "ClaimStatusInd",
+          "resolved_target": "ClaimStatusInd"
+        }
+      ],
+      "surplus_raw_columns": [
+        "fxRepairFacilityContactId",
+        "IsManualDeductible",
+        "LaborTaxRate",
+        "PartsTaxRate",
+        "LaborRate",
+        "PartWarrantyMonths",
+        "PartWarrantyMiles",
+        "HasLaborTax",
+        "HasPartTax",
+        "UseClaimLevelTaxCalculation",
+        "ContactName",
+        "ContactPhone",
+        "ContactExtension",
+        "ClaimStatusReason",
+        "RecordChecksum",
+        "LastChange"
+      ],
+      "expected_raw_table": "perm__claimhistory",
+      "raw_table": "perm__ClaimHistory",
+      "dev_nesna_table": "permclaimhistory",
+      "prod_nesna_table": "permclaimhistory",
+      "raw_column_count": 39,
+      "dev_nesna_column_count": 23,
+      "prod_nesna_column_count": 23,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 23,
+      "surplus_raw_column_count": 16
+    },
+    {
+      "mapping_ms": "perm.claimmain",
+      "mapping_pg": "claimcompo",
+      "status": "BLOCKED",
+      "errors": [
+        "Missing DEV NESNA table: claimcompo",
+        "Missing PROD NESNA table: claimcompo"
+      ],
+      "warnings": [],
+      "selected_columns": [],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "perm__claimmain",
+      "raw_table": "perm__ClaimMain",
+      "dev_nesna_table": null,
+      "prod_nesna_table": null
+    },
+    {
+      "mapping_ms": "perm.contract",
+      "mapping_pg": "permcontract",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "ContractId",
+          "target": "ContractId",
+          "transform": null,
+          "expression": "ContractId",
+          "resolved_source": "ContractId",
+          "resolved_target": "ContractId"
+        },
+        {
+          "source": "EarningMethodInd",
+          "target": "EarningMethodInd",
+          "transform": null,
+          "expression": "EarningMethodInd",
+          "resolved_source": "EarningMethodInd",
+          "resolved_target": "EarningMethodInd"
+        },
+        {
+          "source": "fxCoBuyerId",
+          "target": "fxCoBuyerId",
+          "transform": null,
+          "expression": "fxCoBuyerId",
+          "resolved_source": "fxCoBuyerId",
+          "resolved_target": "fxCoBuyerId"
+        },
+        {
+          "source": "fxCustomerId",
+          "target": "fxCustomerId",
+          "transform": null,
+          "expression": "fxCustomerId",
+          "resolved_source": "fxCustomerId",
+          "resolved_target": "fxCustomerId"
+        },
+        {
+          "source": "fxSoldByUserId",
+          "target": "fxSoldByUserId",
+          "transform": null,
+          "expression": "fxSoldByUserId",
+          "resolved_source": "fxSoldByUserId",
+          "resolved_target": "fxSoldByUserId"
+        },
+        {
+          "source": "ExternalUser",
+          "target": "ExternalUser",
+          "transform": null,
+          "expression": "ExternalUser",
+          "resolved_source": "ExternalUser",
+          "resolved_target": "externaluser"
+        }
+      ],
+      "surplus_raw_columns": [
+        "RemovedFromSource",
+        "fxProductId",
+        "ProductTypeInd",
+        "fxPlanId",
+        "fxTermId",
+        "fxLimitId",
+        "ClassCode",
+        "DateEffective",
+        "DateExpires",
+        "ClaimStartDate",
+        "ContractPurchasePrice",
+        "fxSoldByDealerId",
+        "fxLienHolderId",
+        "ContractNumber",
+        "ContractSuffix",
+        "ContractStatusInd",
+        "CoveredItemPurchasePrice",
+        "CoveredItemNumber",
+        "fxVINMasterId",
+        "PurchaseTypeInd",
+        "VehiclePurchaseTypeInd",
+        "WaitDays",
+        "EarningWaitMonths",
+        "fxAgentAtSellId",
+        "fxDealerGroupAtSellId",
+        "PlanExpireTimeTypeInd",
+        "VehicleInServiceDate",
+        "VehiclePurchaseDate",
+        "DefaultTransferFee",
+        "ExtendExpirationByWait",
+        "HasPendingEarningsUpdate",
+        "fxBatchId",
+        "IsException",
+        "RewardNumber",
+        "fxFactorTableId",
+        "fxSoldInDepartmentId",
+        "fxFullyPostedPostingHistoryId",
+        "FormCode",
+        "DealerPackAmount",
+        "RewardsHaveBeenConverted",
+        "AlternateContractNumber",
+        "WasExpiredManually",
+        "ManualDateExpires",
+        "fxDeductibleId",
+        "TermMonths",
+        "TermMiles",
+        "LowerFinanceMonths",
+        "UpperFinanceMonths",
+        "WaitMiles",
+        "Odometer",
+        "FinanceTypeInd",
+        "FinanceAmount",
+        "FinanceMonths",
+        "ReimbursementAmount",
+        "MSRP",
+        "PlanExpireUsageTypeInd",
+        "ScheduleStartInd",
+        "ClaimStartUsage",
+        "UsageExpires",
+        "CurrentRenewal",
+        "GracePeriod",
+        "MaxRenewals",
+        "StopRenewal",
+        "IsRenewable",
+        "RateCode",
+        "ContractPurchasePriceSalesTax",
+        "CoverageCostSalesTax",
+        "SalesTaxDetail",
+        "IsCustomerSalesTaxExempt",
+        "Obligor",
+        "ObligorTypeInd",
+        "MaxFinanceOfItemValue",
+        "MaxInsuranceDeductible",
+        "MaxLateCharges",
+        "MaxLatePayment",
+        "MaxSubrogatedDeductible",
+        "GAPSellerPayout",
+        "ClaimWaitTypeInd",
+        "MaxFinanceOfItemValueForClaims",
+        "InitialLoadDate",
+        "LastLoadDate",
+        "RecordChecksum",
+        "LastChange"
+      ],
+      "expected_raw_table": "perm__contract",
+      "raw_table": "perm__Contract",
+      "dev_nesna_table": "permcontract",
+      "prod_nesna_table": "permcontract",
+      "raw_column_count": 89,
+      "dev_nesna_column_count": 6,
+      "prod_nesna_column_count": 6,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 6,
+      "surplus_raw_column_count": 83
+    },
+    {
+      "mapping_ms": "perm.contractdisbursement",
+      "mapping_pg": "permcontractdisbursement",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "ContractDisbursementId",
+          "target": "ContractDisbursementId",
+          "transform": null,
+          "expression": "ContractDisbursementId",
+          "resolved_source": "ContractDisbursementId",
+          "resolved_target": "ContractDisbursementId"
+        },
+        {
+          "source": "fxContractId",
+          "target": "fxContractId",
+          "transform": null,
+          "expression": "fxContractId",
+          "resolved_source": "fxContractId",
+          "resolved_target": "fxContractId"
+        },
+        {
+          "source": "DisbursementTypeInd",
+          "target": "DisbursementTypeInd",
+          "transform": null,
+          "expression": "DisbursementTypeInd",
+          "resolved_source": "DisbursementTypeInd",
+          "resolved_target": "DisbursementTypeInd"
+        },
+        {
+          "source": "DisbursementRefundTypeInd",
+          "target": "DisbursementRefundTypeInd",
+          "transform": null,
+          "expression": "DisbursementRefundTypeInd",
+          "resolved_source": "DisbursementRefundTypeInd",
+          "resolved_target": "DisbursementRefundTypeInd"
+        },
+        {
+          "source": "fxDisbursementGroupId",
+          "target": "fxDisbursementGroupId",
+          "transform": null,
+          "expression": "fxDisbursementGroupId",
+          "resolved_source": "fxDisbursementGroupId",
+          "resolved_target": "fxDisbursementGroupId"
+        },
+        {
+          "source": "fxDisbursementCodeId",
+          "target": "fxDisbursementCodeId",
+          "transform": null,
+          "expression": "fxDisbursementCodeId",
+          "resolved_source": "fxDisbursementCodeId",
+          "resolved_target": "fxDisbursementCodeId"
+        },
+        {
+          "source": "SourceDescription",
+          "target": "SourceDescription",
+          "transform": null,
+          "expression": "SourceDescription",
+          "resolved_source": "SourceDescription",
+          "resolved_target": "SourceDescription"
+        },
+        {
+          "source": "fxDisbursementLabelId",
+          "target": "fxDisbursementLabelId",
+          "transform": null,
+          "expression": "fxDisbursementLabelId",
+          "resolved_source": "fxDisbursementLabelId",
+          "resolved_target": "fxDisbursementLabelId"
+        }
+      ],
+      "surplus_raw_columns": [
+        "RemovedFromSource",
+        "fxAmendmentId",
+        "fxRelatedSurchargeId",
+        "fxRelatedAdjustmentId",
+        "fxRelatedDeductibleId",
+        "IsRenewable",
+        "IsCededReserve",
+        "fxRelatedExceptionFeeId",
+        "fxNoChargeBackGroupId",
+        "InitialLoadDate",
+        "LastLoadDate",
+        "RecordChecksum",
+        "LastChange",
+        "EarningMethodInd",
+        "fxFactorTableId"
+      ],
+      "expected_raw_table": "perm__contractdisbursement",
+      "raw_table": "perm__ContractDisbursement",
+      "dev_nesna_table": "permcontractdisbursement",
+      "prod_nesna_table": "permcontractdisbursement",
+      "raw_column_count": 23,
+      "dev_nesna_column_count": 8,
+      "prod_nesna_column_count": 8,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 8,
+      "surplus_raw_column_count": 15
+    },
+    {
+      "mapping_ms": "perm.contractfield",
+      "mapping_pg": "permcontractfield",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "fxContractId",
+          "target": "fxContractId",
+          "transform": null,
+          "expression": "fxContractId",
+          "resolved_source": "fxContractId",
+          "resolved_target": "fxContractId"
+        },
+        {
+          "source": "fxFieldId",
+          "target": "fxFieldId",
+          "transform": null,
+          "expression": "fxFieldId",
+          "resolved_source": "fxFieldId",
+          "resolved_target": "fxFieldId"
+        },
+        {
+          "source": "StringValue",
+          "target": "StringValue",
+          "transform": null,
+          "expression": "StringValue",
+          "resolved_source": "StringValue",
+          "resolved_target": "StringValue"
+        }
+      ],
+      "surplus_raw_columns": [
+        "ContractFieldId",
+        "RemovedFromSource",
+        "NumberValue",
+        "DateValue",
+        "fxRegionId",
+        "InitialLoadDate",
+        "LastLoadDate",
+        "RecordChecksum",
+        "LastChange"
+      ],
+      "expected_raw_table": "perm__contractfield",
+      "raw_table": "perm__ContractField",
+      "dev_nesna_table": "permcontractfield",
+      "prod_nesna_table": "permcontractfield",
+      "raw_column_count": 12,
+      "dev_nesna_column_count": 3,
+      "prod_nesna_column_count": 3,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 3,
+      "surplus_raw_column_count": 9
+    },
+    {
+      "raw_table": "perm__ContractPDF",
+      "status": "MISSING_MAPPING",
+      "errors": [
+        "Expected exactly one mapping; found 0."
+      ],
+      "mapping_candidates": []
+    },
+    {
+      "mapping_ms": "perm.dealer",
+      "mapping_pg": "permdealer",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "DealerId",
+          "target": "DealerId",
+          "transform": null,
+          "expression": "DealerId",
+          "resolved_source": "DealerId",
+          "resolved_target": "DealerId"
+        },
+        {
+          "source": "fxDealerGroupId",
+          "target": "fxDealerGroupId",
+          "transform": null,
+          "expression": "fxDealerGroupId",
+          "resolved_source": "fxDealerGroupId",
+          "resolved_target": "fxDealerGroupId"
+        },
+        {
+          "source": "fxAgentId",
+          "target": "fxAgentId",
+          "transform": null,
+          "expression": "fxAgentId",
+          "resolved_source": "fxAgentId",
+          "resolved_target": "fxAgentId"
+        }
+      ],
+      "surplus_raw_columns": [
+        "RemovedFromSource",
+        "Number",
+        "InitialLoadDate",
+        "LastLoadDate",
+        "RecordChecksum",
+        "LastChange"
+      ],
+      "expected_raw_table": "perm__dealer",
+      "raw_table": "perm__Dealer",
+      "dev_nesna_table": "permdealer",
+      "prod_nesna_table": "permdealer",
+      "raw_column_count": 9,
+      "dev_nesna_column_count": 3,
+      "prod_nesna_column_count": 3,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 3,
+      "surplus_raw_column_count": 6
+    },
+    {
+      "mapping_ms": "perm.field",
+      "mapping_pg": "permfield",
+      "status": "BLOCKED",
+      "errors": [
+        "Missing DEV NESNA table: permfield",
+        "Missing PROD NESNA table: permfield"
+      ],
+      "warnings": [],
+      "selected_columns": [],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "perm__field",
+      "raw_table": "perm__Field",
+      "dev_nesna_table": null,
+      "prod_nesna_table": null
+    },
+    {
+      "mapping_ms": "perm.ledger",
+      "mapping_pg": "permledger",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "LedgerId",
+          "target": "LedgerId",
+          "transform": null,
+          "expression": "LedgerId",
+          "resolved_source": "LedgerId",
+          "resolved_target": "LedgerId"
+        },
+        {
+          "source": "fxRelatedContractId",
+          "target": "fxRelatedContractId",
+          "transform": null,
+          "expression": "fxRelatedContractId",
+          "resolved_source": "fxRelatedContractId",
+          "resolved_target": "fxRelatedContractId"
+        }
+      ],
+      "surplus_raw_columns": [
+        "RemovedFromSource",
+        "fxAdminCompanyId",
+        "fxCurrentAccountHolderId",
+        "fxOriginalAccountHolderId",
+        "fxInsurerId",
+        "fxBalanceTypeId",
+        "Amount",
+        "CurrentAmount",
+        "fxCashTransactionId",
+        "fxPostingHistoryId",
+        "fxEnteredById",
+        "EnteredDate",
+        "LedgerDate",
+        "LedgerTypeInd",
+        "RelatedLedgerTypeInd",
+        "LowersAdminCompanyBalance",
+        "fxRelatedClaimId",
+        "fxRelatedLedgerId",
+        "fxRelatedCancelId",
+        "fxRelatedReinstatementId",
+        "fxRelatedAmendmentId",
+        "fxRelatedContractDisbursementId",
+        "fxRelatedReinstatementDisbursementId",
+        "Description",
+        "InitialLoadDate",
+        "LastLoadDate",
+        "RecordChecksum",
+        "LastChange"
+      ],
+      "expected_raw_table": "perm__ledger",
+      "raw_table": "perm__Ledger",
+      "dev_nesna_table": "permledger",
+      "prod_nesna_table": "permledger",
+      "raw_column_count": 30,
+      "dev_nesna_column_count": 2,
+      "prod_nesna_column_count": 2,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 2,
+      "surplus_raw_column_count": 28
+    },
+    {
+      "mapping_ms": "perm.membershipuser",
+      "mapping_pg": "permmembershipuser",
+      "status": "BLOCKED",
+      "errors": [
+        "ValueError: Unsupported mapping expression: 'cast(RemovedFromSource as int)RemovedFromSource'"
+      ],
+      "warnings": [],
+      "selected_columns": [],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "perm__membershipuser",
+      "raw_table": "perm__MembershipUser",
+      "dev_nesna_table": "permmembershipuser",
+      "prod_nesna_table": "permmembershipuser",
+      "raw_column_count": 26,
+      "dev_nesna_column_count": 24,
+      "prod_nesna_column_count": 24,
+      "dev_prod_column_definition_match": true
+    },
+    {
+      "mapping_ms": "perm.note",
+      "mapping_pg": "permnote",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "NoteId",
+          "target": "NoteId",
+          "transform": null,
+          "expression": "NoteId",
+          "resolved_source": "NoteId",
+          "resolved_target": "NoteId"
+        },
+        {
+          "source": "RemovedFromSource",
+          "target": "RemovedFromSource",
+          "transform": "integer",
+          "expression": "cast(RemovedFromSource as int) RemovedFromSource",
+          "resolved_source": "RemovedFromSource",
+          "resolved_target": "RemovedFromSource"
+        },
+        {
+          "source": "fxAccountHolderId",
+          "target": "fxAccountHolderId",
+          "transform": null,
+          "expression": "fxAccountHolderId",
+          "resolved_source": "fxAccountHolderId",
+          "resolved_target": "fxAccountHolderId"
+        },
+        {
+          "source": "fxLedgerId",
+          "target": "fxLedgerId",
+          "transform": null,
+          "expression": "fxLedgerId",
+          "resolved_source": "fxLedgerId",
+          "resolved_target": "fxLedgerId"
+        },
+        {
+          "source": "fxClaimId",
+          "target": "fxClaimId",
+          "transform": null,
+          "expression": "fxClaimId",
+          "resolved_source": "fxClaimId",
+          "resolved_target": "fxClaimId"
+        },
+        {
+          "source": "Note",
+          "target": "Note",
+          "transform": null,
+          "expression": "Note",
+          "resolved_source": "Note",
+          "resolved_target": "Note"
+        },
+        {
+          "source": "fxEnteredById",
+          "target": "fxEnteredById",
+          "transform": null,
+          "expression": "fxEnteredById",
+          "resolved_source": "fxEnteredById",
+          "resolved_target": "fxEnteredById"
+        },
+        {
+          "source": "EnteredDate",
+          "target": "EnteredDate",
+          "transform": null,
+          "expression": "EnteredDate",
+          "resolved_source": "EnteredDate",
+          "resolved_target": "EnteredDate"
+        },
+        {
+          "source": "NoteTypeInd",
+          "target": "NoteTypeInd",
+          "transform": null,
+          "expression": "NoteTypeInd",
+          "resolved_source": "NoteTypeInd",
+          "resolved_target": "NoteTypeInd"
+        },
+        {
+          "source": "WarningNoteLevelInd",
+          "target": "WarningNoteLevelInd",
+          "transform": null,
+          "expression": "WarningNoteLevelInd",
+          "resolved_source": "WarningNoteLevelInd",
+          "resolved_target": "WarningNoteLevelInd"
+        },
+        {
+          "source": "ExpirationDate",
+          "target": "ExpirationDate",
+          "transform": null,
+          "expression": "ExpirationDate",
+          "resolved_source": "ExpirationDate",
+          "resolved_target": "ExpirationDate"
+        }
+      ],
+      "surplus_raw_columns": [
+        "fxBatchId",
+        "fxCriterionGroupId",
+        "fxVINClassificationTableId",
+        "fxBatchContractId",
+        "fxClaimInquiryId",
+        "NoteSourceInd",
+        "InitialLoadDate",
+        "LastLoadDate",
+        "RecordChecksum",
+        "LastChange"
+      ],
+      "expected_raw_table": "perm__note",
+      "raw_table": "perm__Note",
+      "dev_nesna_table": "permnote",
+      "prod_nesna_table": "permnote",
+      "raw_column_count": 21,
+      "dev_nesna_column_count": 11,
+      "prod_nesna_column_count": 11,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 11,
+      "surplus_raw_column_count": 10
+    },
+    {
+      "mapping_ms": "perm.[Plan]",
+      "mapping_pg": "permplan",
+      "status": "BLOCKED",
+      "errors": [
+        "Missing DEV/PROD destination column: Name",
+        "Unmapped destination columns: PlanName"
+      ],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "PlanId",
+          "target": "PlanId",
+          "transform": null,
+          "expression": "PlanId",
+          "resolved_source": "PlanId",
+          "resolved_target": "PlanId"
+        },
+        {
+          "source": "Name",
+          "target": "Name",
+          "transform": null,
+          "expression": "Name",
+          "resolved_source": "Name",
+          "resolved_target": null
+        },
+        {
+          "source": "fxProductId",
+          "target": "fxProductId",
+          "transform": null,
+          "expression": "fxProductId",
+          "resolved_source": "fxProductId",
+          "resolved_target": "fxProductId"
+        }
+      ],
+      "surplus_raw_columns": [
+        "RemovedFromSource",
+        "Code",
+        "Order",
+        "PurchaseTypeInd",
+        "AvailableVehiclePurchaseTypes",
+        "fxVINClassificationTableId",
+        "WaitDays",
+        "EarningWaitMonths",
+        "EarningMethodInd",
+        "DefaultTransferFee",
+        "PlanExpireTimeTypeInd",
+        "CancelRequestValidDays",
+        "CancelRequestValidMiles",
+        "ExtendExpirationByWait",
+        "Description",
+        "ReduceDisbursementByCancelFee",
+        "fxCancelFeeAccountHolderId",
+        "CancelFeeDisbursementTypeInd",
+        "MinimumTermMonths",
+        "MinimumTermMiles",
+        "MinFinanceOfMSRP",
+        "fxPlanSalesGroupId",
+        "fxDefaultDeductibleId",
+        "LimitDeductibleOptionToDefault",
+        "WaitMiles",
+        "MaxTermMonths",
+        "MaxFinanceOfMSRP",
+        "AvailableFinanceTypes",
+        "ReimbursementAmount",
+        "fxPPMScheduleId",
+        "ScheduleStartInd",
+        "PlanExpireUsageTypeInd",
+        "MaxRenewals",
+        "GracePeriod",
+        "fxUpgradePlanId",
+        "DateEffective",
+        "DateExpires",
+        "GAPSellerPayout",
+        "EarningsFromInServiceDate",
+        "InitialLoadDate",
+        "LastLoadDate",
+        "RecordChecksum",
+        "LastChange"
+      ],
+      "expected_raw_table": "perm__Plan",
+      "raw_table": "perm__Plan",
+      "dev_nesna_table": "permplan",
+      "prod_nesna_table": "permplan",
+      "raw_column_count": 46,
+      "dev_nesna_column_count": 3,
+      "prod_nesna_column_count": 3,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 3,
+      "surplus_raw_column_count": 43
+    },
+    {
+      "mapping_ms": "perm.product",
+      "mapping_pg": "permproduct",
+      "status": "BLOCKED",
+      "errors": [
+        "Missing DEV/PROD destination column: Name",
+        "Unmapped destination columns: ProductFullName"
+      ],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "ProductId",
+          "target": "ProductId",
+          "transform": null,
+          "expression": "ProductId",
+          "resolved_source": "ProductId",
+          "resolved_target": "ProductId"
+        },
+        {
+          "source": "ProductTypeInd",
+          "target": "ProductTypeInd",
+          "transform": null,
+          "expression": "ProductTypeInd",
+          "resolved_source": "ProductTypeInd",
+          "resolved_target": "ProductTypeInd"
+        },
+        {
+          "source": "Code",
+          "target": "Code",
+          "transform": null,
+          "expression": "Code",
+          "resolved_source": "Code",
+          "resolved_target": "Code"
+        },
+        {
+          "source": "Name",
+          "target": "Name",
+          "transform": null,
+          "expression": "Name",
+          "resolved_source": "Name",
+          "resolved_target": null
+        }
+      ],
+      "surplus_raw_columns": [
+        "RemovedFromSource",
+        "fxProgramId",
+        "fxInsurerId",
+        "fxClaimSettingId",
+        "ProductSubTypeInd",
+        "IsRenewable",
+        "fxFormId",
+        "fxProductSalesGroupId",
+        "Description",
+        "TermIsFinanceLengthBased",
+        "TermIsMileageBased",
+        "DateEffective",
+        "DateExpires",
+        "InitialLoadDate",
+        "LastLoadDate",
+        "RecordChecksum",
+        "LastChange"
+      ],
+      "expected_raw_table": "perm__product",
+      "raw_table": "perm__Product",
+      "dev_nesna_table": "permproduct",
+      "prod_nesna_table": "permproduct",
+      "raw_column_count": 21,
+      "dev_nesna_column_count": 4,
+      "prod_nesna_column_count": 4,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 4,
+      "surplus_raw_column_count": 17
+    },
+    {
+      "mapping_ms": "perm.ratebasedrule",
+      "mapping_pg": "permratebasedrule",
+      "status": "BLOCKED",
+      "errors": [
+        "ValueError: Unsupported mapping expression: 'cast(RemovedFromSource as int)RemovedFromSource'"
+      ],
+      "warnings": [],
+      "selected_columns": [],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "perm__ratebasedrule",
+      "raw_table": "perm__RateBasedRule",
+      "dev_nesna_table": "permratebasedrule",
+      "prod_nesna_table": "permratebasedrule",
+      "raw_column_count": 13,
+      "dev_nesna_column_count": 11,
+      "prod_nesna_column_count": 11,
+      "dev_prod_column_definition_match": true
+    },
+    {
+      "mapping_ms": "perm.RateBasedRuleGroup",
+      "mapping_pg": "ratebasedrulegroup",
+      "status": "BLOCKED",
+      "errors": [
+        "ValueError: Unsupported mapping expression: 'cast(RemovedFromSource as int)RemovedFromSource'"
+      ],
+      "warnings": [],
+      "selected_columns": [],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "perm__RateBasedRuleGroup",
+      "raw_table": "perm__RateBasedRuleGroup",
+      "dev_nesna_table": "ratebasedrulegroup",
+      "prod_nesna_table": "ratebasedrulegroup",
+      "raw_column_count": 8,
+      "dev_nesna_column_count": 4,
+      "prod_nesna_column_count": 4,
+      "dev_prod_column_definition_match": true
+    },
+    {
+      "mapping_ms": "perm.renewal",
+      "mapping_pg": "permrenewal",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "fxAmendmentId",
+          "target": "fxAmendmentId",
+          "transform": null,
+          "expression": "fxAmendmentId",
+          "resolved_source": "fxAmendmentId",
+          "resolved_target": "fxAmendmentId"
+        },
+        {
+          "source": "RemovedFromSource",
+          "target": "RemovedFromSource",
+          "transform": "integer",
+          "expression": "cast(RemovedFromSource as int) RemovedFromSource",
+          "resolved_source": "RemovedFromSource",
+          "resolved_target": "RemovedFromSource"
+        },
+        {
+          "source": "fxPlanId",
+          "target": "fxPlanId",
+          "transform": null,
+          "expression": "fxPlanId",
+          "resolved_source": "fxPlanId",
+          "resolved_target": "fxPlanId"
+        },
+        {
+          "source": "fxTermId",
+          "target": "fxTermId",
+          "transform": null,
+          "expression": "fxTermId",
+          "resolved_source": "fxTermId",
+          "resolved_target": "fxTermId"
+        },
+        {
+          "source": "fxLimitId",
+          "target": "fxLimitId",
+          "transform": null,
+          "expression": "fxLimitId",
+          "resolved_source": "fxLimitId",
+          "resolved_target": "fxLimitId"
+        },
+        {
+          "source": "RenewNumber",
+          "target": "RenewNumber",
+          "transform": null,
+          "expression": "RenewNumber",
+          "resolved_source": "RenewNumber",
+          "resolved_target": "RenewNumber"
+        },
+        {
+          "source": "DateEffective",
+          "target": "DateEffective",
+          "transform": null,
+          "expression": "DateEffective",
+          "resolved_source": "DateEffective",
+          "resolved_target": "DateEffective"
+        },
+        {
+          "source": "DateExpires",
+          "target": "DateExpires",
+          "transform": null,
+          "expression": "DateExpires",
+          "resolved_source": "DateExpires",
+          "resolved_target": "DateExpires"
+        },
+        {
+          "source": "ExtendedMonths",
+          "target": "ExtendedMonths",
+          "transform": null,
+          "expression": "ExtendedMonths",
+          "resolved_source": "ExtendedMonths",
+          "resolved_target": "ExtendedMonths"
+        },
+        {
+          "source": "InitialLoadDate",
+          "target": "InitialLoadDate",
+          "transform": null,
+          "expression": "InitialLoadDate",
+          "resolved_source": "InitialLoadDate",
+          "resolved_target": "InitialLoadDate"
+        },
+        {
+          "source": "LastLoadDate",
+          "target": "LastLoadDate",
+          "transform": null,
+          "expression": "LastLoadDate",
+          "resolved_source": "LastLoadDate",
+          "resolved_target": "LastLoadDate"
+        }
+      ],
+      "surplus_raw_columns": [
+        "RecordChecksum",
+        "LastChange"
+      ],
+      "expected_raw_table": "perm__renewal",
+      "raw_table": "perm__Renewal",
+      "dev_nesna_table": "permrenewal",
+      "prod_nesna_table": "permrenewal",
+      "raw_column_count": 13,
+      "dev_nesna_column_count": 11,
+      "prod_nesna_column_count": 11,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 11,
+      "surplus_raw_column_count": 2
+    },
+    {
+      "raw_table": "rpt910",
+      "status": "MISSING_MAPPING",
+      "errors": [
+        "Expected exactly one mapping; found 0."
+      ],
+      "mapping_candidates": []
+    },
+    {
+      "raw_table": "rpt910_agg",
+      "status": "MISSING_MAPPING",
+      "errors": [
+        "Expected exactly one mapping; found 0."
+      ],
+      "mapping_candidates": []
+    },
+    {
+      "raw_table": "rpt915",
+      "status": "MISSING_MAPPING",
+      "errors": [
+        "Expected exactly one mapping; found 0."
+      ],
+      "mapping_candidates": []
+    },
+    {
+      "raw_table": "rpt915_agg",
+      "status": "MISSING_MAPPING",
+      "errors": [
+        "Expected exactly one mapping; found 0."
+      ],
+      "mapping_candidates": []
+    },
+    {
+      "raw_table": "rpt935",
+      "status": "MISSING_MAPPING",
+      "errors": [
+        "Expected exactly one mapping; found 0."
+      ],
+      "mapping_candidates": []
+    },
+    {
+      "mapping_ms": "ssas.ssasadmincompanydimension",
+      "mapping_pg": "ssasadmincompanydimension",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "AdminCompanyId",
+          "target": "AdminCompanyId",
+          "transform": null,
+          "expression": "AdminCompanyId",
+          "resolved_source": "AdminCompanyId",
+          "resolved_target": "AdminCompanyId"
+        },
+        {
+          "source": "Name",
+          "target": "Name",
+          "transform": null,
+          "expression": "Name",
+          "resolved_source": "Name",
+          "resolved_target": "Name"
+        },
+        {
+          "source": "IsActive",
+          "target": "IsActive",
+          "transform": null,
+          "expression": "IsActive",
+          "resolved_source": "IsActive",
+          "resolved_target": "IsActive"
+        },
+        {
+          "source": "PhysicalAddressLine1",
+          "target": "PhysicalAddressLine1",
+          "transform": null,
+          "expression": "PhysicalAddressLine1",
+          "resolved_source": "PhysicalAddressLine1",
+          "resolved_target": "PhysicalAddressLine1"
+        },
+        {
+          "source": "PhysicalAddressLine2",
+          "target": "PhysicalAddressLine2",
+          "transform": null,
+          "expression": "PhysicalAddressLine2",
+          "resolved_source": "PhysicalAddressLine2",
+          "resolved_target": "PhysicalAddressLine2"
+        },
+        {
+          "source": "PhysicalCity",
+          "target": "PhysicalCity",
+          "transform": null,
+          "expression": "PhysicalCity",
+          "resolved_source": "PhysicalCity",
+          "resolved_target": "PhysicalCity"
+        },
+        {
+          "source": "PhysicalZipCode",
+          "target": "PhysicalZipCode",
+          "transform": null,
+          "expression": "PhysicalZipCode",
+          "resolved_source": "PhysicalZipCode",
+          "resolved_target": "PhysicalZipCode"
+        },
+        {
+          "source": "PhysicalPhone",
+          "target": "PhysicalPhone",
+          "transform": null,
+          "expression": "PhysicalPhone",
+          "resolved_source": "PhysicalPhone",
+          "resolved_target": "PhysicalPhone"
+        },
+        {
+          "source": "PhysicalExtension",
+          "target": "PhysicalExtension",
+          "transform": null,
+          "expression": "PhysicalExtension",
+          "resolved_source": "PhysicalExtension",
+          "resolved_target": "PhysicalExtension"
+        },
+        {
+          "source": "PhysicalFax",
+          "target": "PhysicalFax",
+          "transform": null,
+          "expression": "PhysicalFax",
+          "resolved_source": "PhysicalFax",
+          "resolved_target": "PhysicalFax"
+        },
+        {
+          "source": "PhysicalState",
+          "target": "PhysicalState",
+          "transform": null,
+          "expression": "PhysicalState",
+          "resolved_source": "PhysicalState",
+          "resolved_target": "PhysicalState"
+        },
+        {
+          "source": "BillingAddressLine1",
+          "target": "BillingAddressLine1",
+          "transform": null,
+          "expression": "BillingAddressLine1",
+          "resolved_source": "BillingAddressLine1",
+          "resolved_target": "BillingAddressLine1"
+        },
+        {
+          "source": "BillingAddressLine2",
+          "target": "BillingAddressLine2",
+          "transform": null,
+          "expression": "BillingAddressLine2",
+          "resolved_source": "BillingAddressLine2",
+          "resolved_target": "BillingAddressLine2"
+        },
+        {
+          "source": "BillingCity",
+          "target": "BillingCity",
+          "transform": null,
+          "expression": "BillingCity",
+          "resolved_source": "BillingCity",
+          "resolved_target": "BillingCity"
+        },
+        {
+          "source": "BillingZipCode",
+          "target": "BillingZipCode",
+          "transform": null,
+          "expression": "BillingZipCode",
+          "resolved_source": "BillingZipCode",
+          "resolved_target": "BillingZipCode"
+        },
+        {
+          "source": "BillingPhone",
+          "target": "BillingPhone",
+          "transform": null,
+          "expression": "BillingPhone",
+          "resolved_source": "BillingPhone",
+          "resolved_target": "BillingPhone"
+        },
+        {
+          "source": "BillingExtension",
+          "target": "BillingExtension",
+          "transform": null,
+          "expression": "BillingExtension",
+          "resolved_source": "BillingExtension",
+          "resolved_target": "BillingExtension"
+        },
+        {
+          "source": "BillingFax",
+          "target": "BillingFax",
+          "transform": null,
+          "expression": "BillingFax",
+          "resolved_source": "BillingFax",
+          "resolved_target": "BillingFax"
+        },
+        {
+          "source": "BillingState",
+          "target": "BillingState",
+          "transform": null,
+          "expression": "BillingState",
+          "resolved_source": "BillingState",
+          "resolved_target": "BillingState"
+        }
+      ],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "ssas__ssasadmincompanydimension",
+      "raw_table": "ssas__SSASAdminCompanyDimension",
+      "dev_nesna_table": "ssasadmincompanydimension",
+      "prod_nesna_table": "ssasadmincompanydimension",
+      "raw_column_count": 19,
+      "dev_nesna_column_count": 19,
+      "prod_nesna_column_count": 19,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 19,
+      "surplus_raw_column_count": 0
+    },
+    {
+      "mapping_ms": "ssas.ssasagentdimension",
+      "mapping_pg": "ssasagentdimension",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "AgentId",
+          "target": "AgentId",
+          "transform": null,
+          "expression": "AgentId",
+          "resolved_source": "AgentId",
+          "resolved_target": "AgentId"
+        },
+        {
+          "source": "Name",
+          "target": "Name",
+          "transform": null,
+          "expression": "Name",
+          "resolved_source": "Name",
+          "resolved_target": "Name"
+        },
+        {
+          "source": "Number",
+          "target": "Number",
+          "transform": null,
+          "expression": "Number",
+          "resolved_source": "Number",
+          "resolved_target": "Number"
+        },
+        {
+          "source": "NameNumber",
+          "target": "NameNumber",
+          "transform": null,
+          "expression": "NameNumber",
+          "resolved_source": "NameNumber",
+          "resolved_target": "NameNumber"
+        }
+      ],
+      "surplus_raw_columns": [
+        "FieldName_1",
+        "FieldValue_1",
+        "FieldName_2",
+        "FieldValue_2",
+        "FieldName_3",
+        "FieldValue_3",
+        "FieldName_4",
+        "FieldValue_4",
+        "FieldName_5",
+        "FieldValue_5",
+        "FieldName_6",
+        "FieldValue_6",
+        "FieldName_7",
+        "FieldValue_7",
+        "FieldName_8",
+        "FieldValue_8",
+        "FieldName_9",
+        "FieldValue_9",
+        "FieldName_10",
+        "FieldValue_10",
+        "PhysicalAddressLine1",
+        "PhysicalAddressLine2",
+        "PhysicalCity",
+        "PhysicalZipCode",
+        "PhysicalPhone",
+        "PhysicalExtension",
+        "PhysicalFax",
+        "PhysicalState",
+        "BillingAddressLine1",
+        "BillingAddressLine2",
+        "BillingCity",
+        "BillingZipCode",
+        "BillingPhone",
+        "BillingExtension",
+        "BillingFax",
+        "BillingState"
+      ],
+      "expected_raw_table": "ssas__ssasagentdimension",
+      "raw_table": "ssas__SSASAgentDimension",
+      "dev_nesna_table": "ssasagentdimension",
+      "prod_nesna_table": "ssasagentdimension",
+      "raw_column_count": 40,
+      "dev_nesna_column_count": 4,
+      "prod_nesna_column_count": 4,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 4,
+      "surplus_raw_column_count": 36
+    },
+    {
+      "mapping_ms": "ssas.ssasamendmentdimension",
+      "mapping_pg": "ssasamendmentdimension",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "AmendmentId",
+          "target": "AmendmentId",
+          "transform": null,
+          "expression": "AmendmentId",
+          "resolved_source": "AmendmentId",
+          "resolved_target": "AmendmentId"
+        },
+        {
+          "source": "fxCashTransactionId",
+          "target": "fxCashTransactionId",
+          "transform": null,
+          "expression": "fxCashTransactionId",
+          "resolved_source": "fxCashTransactionId",
+          "resolved_target": "fxCashTransactionId"
+        },
+        {
+          "source": "AmendmentDate",
+          "target": "AmendmentDate",
+          "transform": null,
+          "expression": "AmendmentDate",
+          "resolved_source": "AmendmentDate",
+          "resolved_target": "AmendmentDate"
+        },
+        {
+          "source": "fxContractId",
+          "target": "fxContractId",
+          "transform": null,
+          "expression": "fxContractId",
+          "resolved_source": "fxContractId",
+          "resolved_target": "fxContractId"
+        },
+        {
+          "source": "PostedDate",
+          "target": "PostedDate",
+          "transform": null,
+          "expression": "PostedDate",
+          "resolved_source": "PostedDate",
+          "resolved_target": "PostedDate"
+        },
+        {
+          "source": "EnteredDate",
+          "target": "EnteredDate",
+          "transform": null,
+          "expression": "EnteredDate",
+          "resolved_source": "EnteredDate",
+          "resolved_target": "EnteredDate"
+        }
+      ],
+      "surplus_raw_columns": [
+        "AmendmentYear",
+        "AmendmentMonth",
+        "AmendmentQuarter",
+        "Memo",
+        "PostedYear",
+        "PostedMonth",
+        "PostedQuarter",
+        "EnteredYear",
+        "EnteredMonth",
+        "EnteredQuarter",
+        "AdjCode_1",
+        "AdjCode_2",
+        "AdjCode_3",
+        "AdjCode_4",
+        "AdjCode_5",
+        "AdjCode_6",
+        "AdjCode_7",
+        "AdjCode_8",
+        "AdjCode_9",
+        "AdjCode_10",
+        "AdjCost_1",
+        "AdjCost_2",
+        "AdjCost_3",
+        "AdjCost_4",
+        "AdjCost_5",
+        "AdjCost_6",
+        "AdjCost_7",
+        "AdjCost_8",
+        "AdjCost_9",
+        "AdjCost_10",
+        "SurCode_1",
+        "SurCode_2",
+        "SurCode_3",
+        "SurCode_4",
+        "SurCode_5",
+        "SurCode_6",
+        "SurCode_7",
+        "SurCode_8",
+        "SurCode_9",
+        "SurCode_10",
+        "SurCost_1",
+        "SurCost_2",
+        "SurCost_3",
+        "SurCost_4",
+        "SurCost_5",
+        "SurCost_6",
+        "SurCost_7",
+        "SurCost_8",
+        "SurCost_9",
+        "SurCost_10",
+        "CashTransactionType",
+        "CashTransactionNumber"
+      ],
+      "expected_raw_table": "ssas__ssasamendmentdimension",
+      "raw_table": "ssas__SSASAmendmentDimension",
+      "dev_nesna_table": "ssasamendmentdimension",
+      "prod_nesna_table": "ssasamendmentdimension",
+      "raw_column_count": 58,
+      "dev_nesna_column_count": 6,
+      "prod_nesna_column_count": 6,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 6,
+      "surplus_raw_column_count": 52
+    },
+    {
+      "mapping_ms": "ssas.ssasamendmenttransaction",
+      "mapping_pg": "ssasamendmenttransaction",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "TableId",
+          "target": "TableId",
+          "transform": null,
+          "expression": "TableId",
+          "resolved_source": "TableId",
+          "resolved_target": "TableId"
+        },
+        {
+          "source": "fxAmendmentId",
+          "target": "fxAmendmentId",
+          "transform": null,
+          "expression": "fxAmendmentId",
+          "resolved_source": "fxAmendmentId",
+          "resolved_target": "fxAmendmentId"
+        },
+        {
+          "source": "fxPostingHistoryId",
+          "target": "fxPostingHistoryId",
+          "transform": null,
+          "expression": "fxPostingHistoryId",
+          "resolved_source": "fxPostingHistoryId",
+          "resolved_target": "fxPostingHistoryId"
+        },
+        {
+          "source": "fxTransactionTypeId",
+          "target": "fxTransactionTypeId",
+          "transform": null,
+          "expression": "fxTransactionTypeId",
+          "resolved_source": "fxTransactionTypeId",
+          "resolved_target": "fxTransactionTypeId"
+        },
+        {
+          "source": "fxCashTransactionId",
+          "target": "fxCashTransactionId",
+          "transform": null,
+          "expression": "fxCashTransactionId",
+          "resolved_source": "fxCashTransactionId",
+          "resolved_target": "fxCashTransactionId"
+        },
+        {
+          "source": "Amount",
+          "target": "Amount",
+          "transform": null,
+          "expression": "Amount",
+          "resolved_source": "Amount",
+          "resolved_target": "Amount"
+        }
+      ],
+      "surplus_raw_columns": [
+        "fxContractReportStatusId",
+        "fxPaidFromId",
+        "Count"
+      ],
+      "expected_raw_table": "ssas__ssasamendmenttransaction",
+      "raw_table": "ssas__SSASAmendmentTransaction",
+      "dev_nesna_table": "ssasamendmenttransaction",
+      "prod_nesna_table": "ssasamendmenttransaction",
+      "raw_column_count": 9,
+      "dev_nesna_column_count": 6,
+      "prod_nesna_column_count": 6,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 6,
+      "surplus_raw_column_count": 3
+    },
+    {
+      "mapping_ms": "ssas.ssasccarcaccountholderdimension",
+      "mapping_pg": "ssasccarcaccountholderdimension",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "AccountHolderId",
+          "target": "AccountHolderId",
+          "transform": null,
+          "expression": "AccountHolderId",
+          "resolved_source": "AccountHolderId",
+          "resolved_target": "AccountHolderId"
+        },
+        {
+          "source": "Name",
+          "target": "Name",
+          "transform": null,
+          "expression": "Name",
+          "resolved_source": "Name",
+          "resolved_target": "Name"
+        },
+        {
+          "source": "Number",
+          "target": "Number",
+          "transform": null,
+          "expression": "Number",
+          "resolved_source": "Number",
+          "resolved_target": "Number"
+        },
+        {
+          "source": "NameNumber",
+          "target": "NameNumber",
+          "transform": null,
+          "expression": "NameNumber",
+          "resolved_source": "NameNumber",
+          "resolved_target": "NameNumber"
+        },
+        {
+          "source": "AccountHolderTypeInd",
+          "target": "AccountHolderTypeInd",
+          "transform": null,
+          "expression": "AccountHolderTypeInd",
+          "resolved_source": "AccountHolderTypeInd",
+          "resolved_target": "AccountHolderTypeInd"
+        },
+        {
+          "source": "AccountHolderType",
+          "target": "AccountHolderType",
+          "transform": null,
+          "expression": "AccountHolderType",
+          "resolved_source": "AccountHolderType",
+          "resolved_target": "AccountHolderType"
+        },
+        {
+          "source": "NameType",
+          "target": "NameType",
+          "transform": null,
+          "expression": "NameType",
+          "resolved_source": "NameType",
+          "resolved_target": "NameType"
+        },
+        {
+          "source": "IsActive",
+          "target": "IsActive",
+          "transform": null,
+          "expression": "IsActive",
+          "resolved_source": "IsActive",
+          "resolved_target": "IsActive"
+        },
+        {
+          "source": "DealerGroupName",
+          "target": "DealerGroupName",
+          "transform": null,
+          "expression": "DealerGroupName",
+          "resolved_source": "DealerGroupName",
+          "resolved_target": "DealerGroupName"
+        }
+      ],
+      "surplus_raw_columns": [
+        "FieldName_1",
+        "FieldValue_1",
+        "FieldName_2",
+        "FieldValue_2",
+        "FieldName_3",
+        "FieldValue_3",
+        "FieldName_4",
+        "FieldValue_4",
+        "FieldName_5",
+        "FieldValue_5",
+        "FieldName_6",
+        "FieldValue_6",
+        "FieldName_7",
+        "FieldValue_7",
+        "FieldName_8",
+        "FieldValue_8",
+        "FieldName_9",
+        "FieldValue_9",
+        "FieldName_10",
+        "FieldValue_10"
+      ],
+      "expected_raw_table": "ssas__ssasccarcaccountholderdimension",
+      "raw_table": "ssas__SSASCCARCAccountHolderDimension",
+      "dev_nesna_table": "ssasccarcaccountholderdimension",
+      "prod_nesna_table": "ssasccarcaccountholderdimension",
+      "raw_column_count": 29,
+      "dev_nesna_column_count": 9,
+      "prod_nesna_column_count": 9,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 9,
+      "surplus_raw_column_count": 20
+    },
+    {
+      "mapping_ms": "ssas.ssasccarccashtransactiondimension",
+      "mapping_pg": "ssasccarccashtransactiondimension",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "CashTransactionId",
+          "target": "CashTransactionId",
+          "transform": null,
+          "expression": "CashTransactionId",
+          "resolved_source": "CashTransactionId",
+          "resolved_target": "CashTransactionId"
+        },
+        {
+          "source": "IsAdminPayment",
+          "target": "IsAdminPayment",
+          "transform": null,
+          "expression": "IsAdminPayment",
+          "resolved_source": "IsAdminPayment",
+          "resolved_target": "IsAdminPayment"
+        },
+        {
+          "source": "CurrentStatus",
+          "target": "CurrentStatus",
+          "transform": null,
+          "expression": "CurrentStatus",
+          "resolved_source": "CurrentStatus",
+          "resolved_target": "CurrentStatus"
+        },
+        {
+          "source": "EnteredDate",
+          "target": "EnteredDate",
+          "transform": null,
+          "expression": "EnteredDate",
+          "resolved_source": "EnteredDate",
+          "resolved_target": "EnteredDate"
+        },
+        {
+          "source": "SentDate",
+          "target": "SentDate",
+          "transform": null,
+          "expression": "SentDate",
+          "resolved_source": "SentDate",
+          "resolved_target": "SentDate"
+        },
+        {
+          "source": "ReceivedDate",
+          "target": "ReceivedDate",
+          "transform": null,
+          "expression": "ReceivedDate",
+          "resolved_source": "ReceivedDate",
+          "resolved_target": "ReceivedDate"
+        },
+        {
+          "source": "TransactionNumber",
+          "target": "TransactionNumber",
+          "transform": null,
+          "expression": "TransactionNumber",
+          "resolved_source": "TransactionNumber",
+          "resolved_target": "TransactionNumber"
+        },
+        {
+          "source": "Memo",
+          "target": "Memo",
+          "transform": null,
+          "expression": "Memo",
+          "resolved_source": "Memo",
+          "resolved_target": "Memo"
+        },
+        {
+          "source": "Type",
+          "target": "Type",
+          "transform": null,
+          "expression": "Type",
+          "resolved_source": "Type",
+          "resolved_target": "Type"
+        }
+      ],
+      "surplus_raw_columns": [
+        "fxPostingHistoryId",
+        "fxInsurerId",
+        "fxAdminCompanyId",
+        "fxCurrentAccountHolderId",
+        "EnteredQuarter",
+        "EnteredYear",
+        "EnteredMonth",
+        "SentQuarter",
+        "SentYear",
+        "SentMonth",
+        "ReceivedQuarter",
+        "ReceivedYear",
+        "ReceivedMonth",
+        "VPayTransactionNumber"
+      ],
+      "expected_raw_table": "ssas__ssasccarccashtransactiondimension",
+      "raw_table": "ssas__SSASCCARCCashTransactionDimension",
+      "dev_nesna_table": "ssasccarccashtransactiondimension",
+      "prod_nesna_table": "ssasccarccashtransactiondimension",
+      "raw_column_count": 23,
+      "dev_nesna_column_count": 9,
+      "prod_nesna_column_count": 9,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 9,
+      "surplus_raw_column_count": 14
+    },
+    {
+      "mapping_ms": "ssas.ssascancel",
+      "mapping_pg": "ssascancel",
+      "status": "BLOCKED",
+      "errors": [
+        "ValueError: Unsupported mapping expression: '*'"
+      ],
+      "warnings": [],
+      "selected_columns": [],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "ssas__ssascancel",
+      "raw_table": "ssas__SSASCancel",
+      "dev_nesna_table": "ssascancel",
+      "prod_nesna_table": "ssascancel",
+      "raw_column_count": 27,
+      "dev_nesna_column_count": 27,
+      "prod_nesna_column_count": 27,
+      "dev_prod_column_definition_match": true
+    },
+    {
+      "mapping_ms": "ssas.ssascanceladjustmentcost",
+      "mapping_pg": "ssascanceladjustmentcost",
+      "status": "BLOCKED",
+      "errors": [
+        "ValueError: Unsupported mapping expression: '*'"
+      ],
+      "warnings": [],
+      "selected_columns": [],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "ssas__ssascanceladjustmentcost",
+      "raw_table": "ssas__SSASCancelAdjustmentCost",
+      "dev_nesna_table": "ssascanceladjustmentcost",
+      "prod_nesna_table": "ssascanceladjustmentcost",
+      "raw_column_count": 5,
+      "dev_nesna_column_count": 5,
+      "prod_nesna_column_count": 5,
+      "dev_prod_column_definition_match": true
+    },
+    {
+      "mapping_ms": "ssas.ssascanceldimension",
+      "mapping_pg": "ssascanceldimension",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "CancelId",
+          "target": "CancelId",
+          "transform": null,
+          "expression": "CancelId",
+          "resolved_source": "CancelId",
+          "resolved_target": "CancelId"
+        },
+        {
+          "source": "fxContractId",
+          "target": "fxContractId",
+          "transform": null,
+          "expression": "fxContractId",
+          "resolved_source": "fxContractId",
+          "resolved_target": "fxContractId"
+        },
+        {
+          "source": "fxCashTransactionId",
+          "target": "fxCashTransactionId",
+          "transform": null,
+          "expression": "fxCashTransactionId",
+          "resolved_source": "fxCashTransactionId",
+          "resolved_target": "fxCashTransactionId"
+        },
+        {
+          "source": "CancelDate",
+          "target": "CancelDate",
+          "transform": null,
+          "expression": "CancelDate",
+          "resolved_source": "CancelDate",
+          "resolved_target": "CancelDate"
+        },
+        {
+          "source": "CancelYear",
+          "target": "CancelYear",
+          "transform": null,
+          "expression": "CancelYear",
+          "resolved_source": "CancelYear",
+          "resolved_target": "CancelYear"
+        },
+        {
+          "source": "CancelMethod",
+          "target": "CancelMethod",
+          "transform": null,
+          "expression": "CancelMethod",
+          "resolved_source": "CancelMethod",
+          "resolved_target": "CancelMethod"
+        },
+        {
+          "source": "Odometer",
+          "target": "Odometer",
+          "transform": null,
+          "expression": "Odometer",
+          "resolved_source": "Odometer",
+          "resolved_target": "Odometer"
+        },
+        {
+          "source": "PostedDate",
+          "target": "PostedDate",
+          "transform": null,
+          "expression": "PostedDate",
+          "resolved_source": "PostedDate",
+          "resolved_target": "PostedDate"
+        },
+        {
+          "source": "CancelReason",
+          "target": "CancelReason",
+          "transform": null,
+          "expression": "CancelReason",
+          "resolved_source": "CancelReason",
+          "resolved_target": "CancelReason"
+        },
+        {
+          "source": "RefundPercent",
+          "target": "RefundPercent",
+          "transform": null,
+          "expression": "RefundPercent",
+          "resolved_source": "RefundPercent",
+          "resolved_target": "RefundPercent"
+        },
+        {
+          "source": "EnteredDate",
+          "target": "EnteredDate",
+          "transform": null,
+          "expression": "EnteredDate",
+          "resolved_source": "EnteredDate",
+          "resolved_target": "EnteredDate"
+        },
+        {
+          "source": "CancelType",
+          "target": "CancelType",
+          "transform": null,
+          "expression": "CancelType",
+          "resolved_source": "CancelType",
+          "resolved_target": "CancelType"
+        }
+      ],
+      "surplus_raw_columns": [
+        "CancelMonth",
+        "CancelQuarter",
+        "Deleted",
+        "CancelReasonCode",
+        "PostedYear",
+        "PostedMonth",
+        "PostedQuarter",
+        "EnteredYear",
+        "EnteredMonth",
+        "EnteredQuarter",
+        "AdjCode_1",
+        "AdjCode_2",
+        "AdjCode_3",
+        "AdjCode_4",
+        "AdjCode_5",
+        "AdjCode_6",
+        "AdjCode_7",
+        "AdjCode_8",
+        "AdjCode_9",
+        "AdjCode_10",
+        "AdjCost_1",
+        "AdjCost_2",
+        "AdjCost_3",
+        "AdjCost_4",
+        "AdjCost_5",
+        "AdjCost_6",
+        "AdjCost_7",
+        "AdjCost_8",
+        "AdjCost_9",
+        "AdjCost_10",
+        "SurCode_1",
+        "SurCode_2",
+        "SurCode_3",
+        "SurCode_4",
+        "SurCode_5",
+        "SurCode_6",
+        "SurCode_7",
+        "SurCode_8",
+        "SurCode_9",
+        "SurCode_10",
+        "SurCost_1",
+        "SurCost_2",
+        "SurCost_3",
+        "SurCost_4",
+        "SurCost_5",
+        "SurCost_6",
+        "SurCost_7",
+        "SurCost_8",
+        "SurCost_9",
+        "SurCost_10",
+        "CashTransactionType",
+        "CashTransactionNumber"
+      ],
+      "expected_raw_table": "ssas__ssascanceldimension",
+      "raw_table": "ssas__SSASCancelDimension",
+      "dev_nesna_table": "ssascanceldimension",
+      "prod_nesna_table": "ssascanceldimension",
+      "raw_column_count": 64,
+      "dev_nesna_column_count": 12,
+      "prod_nesna_column_count": 12,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 12,
+      "surplus_raw_column_count": 52
+    },
+    {
+      "mapping_ms": "ssas.ssasclaimdimension",
+      "mapping_pg": "ssasclaimdimension",
+      "status": "BLOCKED",
+      "errors": [
+        "Unmapped destination columns: currentclaimcloseddate"
+      ],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "ClaimId",
+          "target": "ClaimId",
+          "transform": null,
+          "expression": "ClaimId",
+          "resolved_source": "ClaimId",
+          "resolved_target": "ClaimId"
+        },
+        {
+          "source": "fxContractId",
+          "target": "fxContractId",
+          "transform": null,
+          "expression": "fxContractId",
+          "resolved_source": "fxContractId",
+          "resolved_target": "fxContractId"
+        },
+        {
+          "source": "ClaimNumber",
+          "target": "ClaimNumber",
+          "transform": null,
+          "expression": "ClaimNumber",
+          "resolved_source": "ClaimNumber",
+          "resolved_target": "ClaimNumber"
+        },
+        {
+          "source": "CreatedDate",
+          "target": "CreatedDate",
+          "transform": null,
+          "expression": "CreatedDate",
+          "resolved_source": "CreatedDate",
+          "resolved_target": "CreatedDate"
+        },
+        {
+          "source": "CurrentClaimStatus",
+          "target": "CurrentClaimStatus",
+          "transform": null,
+          "expression": "CurrentClaimStatus",
+          "resolved_source": "CurrentClaimStatus",
+          "resolved_target": "CurrentClaimStatus"
+        },
+        {
+          "source": "CurrentClaimSubstatus",
+          "target": "CurrentClaimSubstatus",
+          "transform": null,
+          "expression": "CurrentClaimSubstatus",
+          "resolved_source": "CurrentClaimSubstatus",
+          "resolved_target": "CurrentClaimSubstatus"
+        },
+        {
+          "source": "fxRepairFacilityId",
+          "target": "fxRepairFacilityId",
+          "transform": null,
+          "expression": "fxRepairFacilityId",
+          "resolved_source": "fxRepairFacilityId",
+          "resolved_target": "fxRepairFacilityId"
+        },
+        {
+          "source": "CurrentClaimInceptionDate",
+          "target": "CurrentClaimInceptionDate",
+          "transform": null,
+          "expression": "CurrentClaimInceptionDate",
+          "resolved_source": "CurrentClaimInceptionDate",
+          "resolved_target": "CurrentClaimInceptionDate"
+        },
+        {
+          "source": "ListComplaints",
+          "target": "ListComplaints",
+          "transform": null,
+          "expression": "ListComplaints",
+          "resolved_source": "ListComplaints",
+          "resolved_target": "ListComplaints"
+        },
+        {
+          "source": "ListComponents",
+          "target": "ListComponents",
+          "transform": null,
+          "expression": "ListComponents",
+          "resolved_source": "ListComponents",
+          "resolved_target": "ListComponents"
+        },
+        {
+          "source": "CurrentRepairOrderNumber",
+          "target": "CurrentRepairOrderNumber",
+          "transform": null,
+          "expression": "CurrentRepairOrderNumber",
+          "resolved_source": "CurrentRepairOrderNumber",
+          "resolved_target": "CurrentRepairOrderNumber"
+        },
+        {
+          "source": "CurrentOdometer",
+          "target": "CurrentOdometer",
+          "transform": null,
+          "expression": "CurrentOdometer",
+          "resolved_source": "CurrentOdometer",
+          "resolved_target": "CurrentOdometer"
+        },
+        {
+          "source": "CurrentAdjuster",
+          "target": "CurrentAdjuster",
+          "transform": null,
+          "expression": "CurrentAdjuster",
+          "resolved_source": "CurrentAdjuster",
+          "resolved_target": "CurrentAdjuster"
+        },
+        {
+          "source": "CurrentClaimApprovedDate",
+          "target": "CurrentClaimApprovedDate",
+          "transform": null,
+          "expression": "CurrentClaimApprovedDate",
+          "resolved_source": "CurrentClaimApprovedDate",
+          "resolved_target": "currentclaimapproveddate"
+        },
+        {
+          "source": "CurrentDeniedReason",
+          "target": "CurrentDeniedReason",
+          "transform": null,
+          "expression": "CurrentDeniedReason",
+          "resolved_source": "CurrentDeniedReason",
+          "resolved_target": "CurrentDeniedReason"
+        }
+      ],
+      "surplus_raw_columns": [
+        "CreatedYear",
+        "CreatedMonth",
+        "CreatedQuarter",
+        "CurrentClaimClosedDate",
+        "CurrentRepairFacilityContact",
+        "ListCauses",
+        "ListCorrections",
+        "ListParts",
+        "ListComponentCodes",
+        "IsFirstClaim"
+      ],
+      "expected_raw_table": "ssas__ssasclaimdimension",
+      "raw_table": "ssas__SSASClaimDimension",
+      "dev_nesna_table": "ssasclaimdimension",
+      "prod_nesna_table": "ssasclaimdimension",
+      "raw_column_count": 25,
+      "dev_nesna_column_count": 16,
+      "prod_nesna_column_count": 16,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 15,
+      "surplus_raw_column_count": 10
+    },
+    {
+      "mapping_ms": "ssas.ssasclaimhistorychange",
+      "mapping_pg": "ssasclaimhistorychange",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "TableId",
+          "target": "TableId",
+          "transform": null,
+          "expression": "TableId",
+          "resolved_source": "TableId",
+          "resolved_target": "TableId"
+        },
+        {
+          "source": "fxClaimId",
+          "target": "fxClaimId",
+          "transform": null,
+          "expression": "fxClaimId",
+          "resolved_source": "fxClaimId",
+          "resolved_target": "fxClaimId"
+        },
+        {
+          "source": "fxContractId",
+          "target": "fxContractId",
+          "transform": null,
+          "expression": "fxContractId",
+          "resolved_source": "fxContractId",
+          "resolved_target": "fxContractId"
+        },
+        {
+          "source": "fxPostingHistoryId",
+          "target": "fxPostingHistoryId",
+          "transform": null,
+          "expression": "fxPostingHistoryId",
+          "resolved_source": "fxPostingHistoryId",
+          "resolved_target": "fxPostingHistoryId"
+        },
+        {
+          "source": "PreDeductibleAmountChange",
+          "target": "PreDeductibleAmountChange",
+          "transform": null,
+          "expression": "PreDeductibleAmountChange",
+          "resolved_source": "PreDeductibleAmountChange",
+          "resolved_target": "PreDeductibleAmountChange"
+        },
+        {
+          "source": "CollectedDeductibleAmountChange",
+          "target": "CollectedDeductibleAmountChange",
+          "transform": null,
+          "expression": "CollectedDeductibleAmountChange",
+          "resolved_source": "CollectedDeductibleAmountChange",
+          "resolved_target": "CollectedDeductibleAmountChange"
+        },
+        {
+          "source": "PostDeductibleAmountChange",
+          "target": "PostDeductibleAmountChange",
+          "transform": null,
+          "expression": "PostDeductibleAmountChange",
+          "resolved_source": "PostDeductibleAmountChange",
+          "resolved_target": "PostDeductibleAmountChange"
+        },
+        {
+          "source": "fxClaimReportStatusId",
+          "target": "fxClaimReportStatusId",
+          "transform": null,
+          "expression": "fxClaimReportStatusId",
+          "resolved_source": "fxClaimReportStatusId",
+          "resolved_target": "fxClaimReportStatusId"
+        }
+      ],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "ssas__ssasclaimhistorychange",
+      "raw_table": "ssas__SSASClaimHistoryChange",
+      "dev_nesna_table": "ssasclaimhistorychange",
+      "prod_nesna_table": "ssasclaimhistorychange",
+      "raw_column_count": 8,
+      "dev_nesna_column_count": 8,
+      "prod_nesna_column_count": 8,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 8,
+      "surplus_raw_column_count": 0
+    },
+    {
+      "mapping_ms": "ssas.ssasclaimpaymentchange",
+      "mapping_pg": "ssasclaimpaymentchange",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "TableId",
+          "target": "TableId",
+          "transform": null,
+          "expression": "TableId",
+          "resolved_source": "TableId",
+          "resolved_target": "TableId"
+        },
+        {
+          "source": "fxPostingHistoryId",
+          "target": "fxPostingHistoryId",
+          "transform": null,
+          "expression": "fxPostingHistoryId",
+          "resolved_source": "fxPostingHistoryId",
+          "resolved_target": "fxPostingHistoryId"
+        },
+        {
+          "source": "fxContractId",
+          "target": "fxContractId",
+          "transform": null,
+          "expression": "fxContractId",
+          "resolved_source": "fxContractId",
+          "resolved_target": "fxContractId"
+        },
+        {
+          "source": "fxClaimId",
+          "target": "fxClaimId",
+          "transform": null,
+          "expression": "fxClaimId",
+          "resolved_source": "fxClaimId",
+          "resolved_target": "fxClaimId"
+        },
+        {
+          "source": "InspectionsAmountChange",
+          "target": "InspectionsAmountChange",
+          "transform": null,
+          "expression": "InspectionsAmountChange",
+          "resolved_source": "InspectionsAmountChange",
+          "resolved_target": "InspectionsAmountChange"
+        },
+        {
+          "source": "AuthorizedAmountChange",
+          "target": "AuthorizedAmountChange",
+          "transform": null,
+          "expression": "AuthorizedAmountChange",
+          "resolved_source": "AuthorizedAmountChange",
+          "resolved_target": "AuthorizedAmountChange"
+        },
+        {
+          "source": "InspectionsPaidAmountChange",
+          "target": "InspectionsPaidAmountChange",
+          "transform": null,
+          "expression": "InspectionsPaidAmountChange",
+          "resolved_source": "InspectionsPaidAmountChange",
+          "resolved_target": "InspectionsPaidAmountChange"
+        },
+        {
+          "source": "AuthorizedPaidAmountChange",
+          "target": "AuthorizedPaidAmountChange",
+          "transform": null,
+          "expression": "AuthorizedPaidAmountChange",
+          "resolved_source": "AuthorizedPaidAmountChange",
+          "resolved_target": "AuthorizedPaidAmountChange"
+        },
+        {
+          "source": "PaidAmountChange",
+          "target": "PaidAmountChange",
+          "transform": null,
+          "expression": "PaidAmountChange",
+          "resolved_source": "PaidAmountChange",
+          "resolved_target": "PaidAmountChange"
+        },
+        {
+          "source": "fxClaimReportStatusId",
+          "target": "fxClaimReportStatusId",
+          "transform": null,
+          "expression": "fxClaimReportStatusId",
+          "resolved_source": "fxClaimReportStatusId",
+          "resolved_target": "fxClaimReportStatusId"
+        },
+        {
+          "source": "LastPaymentDate",
+          "target": "LastPaymentDate",
+          "transform": null,
+          "expression": "LastPaymentDate",
+          "resolved_source": "LastPaymentDate",
+          "resolved_target": "LastPaymentDate"
+        },
+        {
+          "source": "fxAccountHolderId",
+          "target": "fxAccountHolderId",
+          "transform": null,
+          "expression": "fxAccountHolderId",
+          "resolved_source": "fxAccountHolderId",
+          "resolved_target": "fxAccountHolderId"
+        },
+        {
+          "source": "fxCashTransactionId",
+          "target": "fxCashTransactionId",
+          "transform": null,
+          "expression": "fxCashTransactionId",
+          "resolved_source": "fxCashTransactionId",
+          "resolved_target": "fxCashTransactionId"
+        }
+      ],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "ssas__ssasclaimpaymentchange",
+      "raw_table": "ssas__SSASClaimPaymentChange",
+      "dev_nesna_table": "ssasclaimpaymentchange",
+      "prod_nesna_table": "ssasclaimpaymentchange",
+      "raw_column_count": 13,
+      "dev_nesna_column_count": 13,
+      "prod_nesna_column_count": 13,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 13,
+      "surplus_raw_column_count": 0
+    },
+    {
+      "mapping_ms": "ssas.ssasclaimpaymenttotal",
+      "mapping_pg": "ssasclaimpaymenttotal",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "fxContractId",
+          "target": "fxContractId",
+          "transform": null,
+          "expression": "fxContractId",
+          "resolved_source": "fxContractId",
+          "resolved_target": "fxContractId"
+        },
+        {
+          "source": "fxClaimId",
+          "target": "fxClaimId",
+          "transform": null,
+          "expression": "fxClaimId",
+          "resolved_source": "fxClaimId",
+          "resolved_target": "fxClaimId"
+        },
+        {
+          "source": "InspectionsAmount",
+          "target": "InspectionsAmount",
+          "transform": null,
+          "expression": "InspectionsAmount",
+          "resolved_source": "InspectionsAmount",
+          "resolved_target": "InspectionsAmount"
+        },
+        {
+          "source": "AuthorizedAmount",
+          "target": "AuthorizedAmount",
+          "transform": null,
+          "expression": "AuthorizedAmount",
+          "resolved_source": "AuthorizedAmount",
+          "resolved_target": "AuthorizedAmount"
+        },
+        {
+          "source": "InspectionsPaidAmount",
+          "target": "InspectionsPaidAmount",
+          "transform": null,
+          "expression": "InspectionsPaidAmount",
+          "resolved_source": "InspectionsPaidAmount",
+          "resolved_target": "InspectionsPaidAmount"
+        },
+        {
+          "source": "AuthorizedPaidAmount",
+          "target": "AuthorizedPaidAmount",
+          "transform": null,
+          "expression": "AuthorizedPaidAmount",
+          "resolved_source": "AuthorizedPaidAmount",
+          "resolved_target": "AuthorizedPaidAmount"
+        },
+        {
+          "source": "PaidAmount",
+          "target": "PaidAmount",
+          "transform": null,
+          "expression": "PaidAmount",
+          "resolved_source": "PaidAmount",
+          "resolved_target": "PaidAmount"
+        },
+        {
+          "source": "LastPaymentDate",
+          "target": "LastPaymentDate",
+          "transform": null,
+          "expression": "LastPaymentDate",
+          "resolved_source": "LastPaymentDate",
+          "resolved_target": "LastPaymentDate"
+        },
+        {
+          "source": "fxAccountHolderId",
+          "target": "fxAccountHolderId",
+          "transform": null,
+          "expression": "fxAccountHolderId",
+          "resolved_source": "fxAccountHolderId",
+          "resolved_target": "fxAccountHolderId"
+        },
+        {
+          "source": "fxCashTransactionId",
+          "target": "fxCashTransactionId",
+          "transform": null,
+          "expression": "fxCashTransactionId",
+          "resolved_source": "fxCashTransactionId",
+          "resolved_target": "fxCashTransactionId"
+        }
+      ],
+      "surplus_raw_columns": [
+        "TableId",
+        "fxPostingHistoryId",
+        "fxClaimReportStatusId"
+      ],
+      "expected_raw_table": "ssas__ssasclaimpaymenttotal",
+      "raw_table": "ssas__SSASClaimPaymentTotal",
+      "dev_nesna_table": "ssasclaimpaymenttotal",
+      "prod_nesna_table": "ssasclaimpaymenttotal",
+      "raw_column_count": 13,
+      "dev_nesna_column_count": 10,
+      "prod_nesna_column_count": 10,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 10,
+      "surplus_raw_column_count": 3
+    },
+    {
+      "mapping_ms": "ssas.ssascomponentdimension",
+      "mapping_pg": "ssascomponentdimension",
+      "status": "BLOCKED",
+      "errors": [
+        "ValueError: Unsupported mapping expression: '*'"
+      ],
+      "warnings": [],
+      "selected_columns": [],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "ssas__ssascomponentdimension",
+      "raw_table": "ssas__SSASComponentDimension",
+      "dev_nesna_table": "ssascomponentdimension",
+      "prod_nesna_table": "ssascomponentdimension",
+      "raw_column_count": 4,
+      "dev_nesna_column_count": 4,
+      "prod_nesna_column_count": 4,
+      "dev_prod_column_definition_match": true
+    },
+    {
+      "mapping_ms": "ssas.ssascomponenthistorychange",
+      "mapping_pg": "ssascomponenthistorychange",
+      "status": "BLOCKED",
+      "errors": [
+        "ValueError: Unsupported mapping expression: '*'"
+      ],
+      "warnings": [],
+      "selected_columns": [],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "ssas__ssascomponenthistorychange",
+      "raw_table": "ssas__SSASComponentHistoryChange",
+      "dev_nesna_table": "ssascomponenthistorychange",
+      "prod_nesna_table": "ssascomponenthistorychange",
+      "raw_column_count": 34,
+      "dev_nesna_column_count": 34,
+      "prod_nesna_column_count": 34,
+      "dev_prod_column_definition_match": true
+    },
+    {
+      "mapping_ms": "ssas.ssascomponenthistorytotal",
+      "mapping_pg": "ssascomponenthistorytotal",
+      "status": "BLOCKED",
+      "errors": [
+        "ValueError: Unsupported mapping expression: '*'"
+      ],
+      "warnings": [],
+      "selected_columns": [],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "ssas__ssascomponenthistorytotal",
+      "raw_table": "ssas__SSASComponentHistoryTotal",
+      "dev_nesna_table": "ssascomponenthistorytotal",
+      "prod_nesna_table": "ssascomponenthistorytotal",
+      "raw_column_count": 34,
+      "dev_nesna_column_count": 34,
+      "prod_nesna_column_count": 34,
+      "dev_prod_column_definition_match": true
+    },
+    {
+      "mapping_ms": "ssas.ssascontractfielddata",
+      "mapping_pg": "ssascontractfielddata",
+      "status": "BLOCKED",
+      "errors": [
+        "Missing DEV/PROD destination column: ContractId",
+        "Missing DEV/PROD destination column: FieldValue_105",
+        "Missing DEV/PROD destination column: FieldValue_106",
+        "Missing DEV/PROD destination column: FieldValue_107",
+        "Missing DEV/PROD destination column: FieldValue_108",
+        "Missing DEV/PROD destination column: FieldValue_124",
+        "Unmapped destination columns: Chassis VIN, contract_id, producer_address, producer_city_state_zip, producer_name, producer_phone"
+      ],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "ContractId",
+          "target": "ContractId",
+          "transform": null,
+          "expression": "ContractId",
+          "resolved_source": "ContractId",
+          "resolved_target": null
+        },
+        {
+          "source": "FieldValue_105",
+          "target": "FieldValue_105",
+          "transform": null,
+          "expression": "FieldValue_105",
+          "resolved_source": "FieldValue_105",
+          "resolved_target": null
+        },
+        {
+          "source": "FieldValue_106",
+          "target": "FieldValue_106",
+          "transform": null,
+          "expression": "FieldValue_106",
+          "resolved_source": "FieldValue_106",
+          "resolved_target": null
+        },
+        {
+          "source": "FieldValue_107",
+          "target": "FieldValue_107",
+          "transform": null,
+          "expression": "FieldValue_107",
+          "resolved_source": "FieldValue_107",
+          "resolved_target": null
+        },
+        {
+          "source": "FieldValue_108",
+          "target": "FieldValue_108",
+          "transform": null,
+          "expression": "FieldValue_108",
+          "resolved_source": "FieldValue_108",
+          "resolved_target": null
+        },
+        {
+          "source": "FieldValue_124",
+          "target": "FieldValue_124",
+          "transform": null,
+          "expression": "FieldValue_124",
+          "resolved_source": "FieldValue_124",
+          "resolved_target": null
+        }
+      ],
+      "surplus_raw_columns": [
+        "TableId",
+        "FieldName_1",
+        "FieldValue_1",
+        "FieldName_2",
+        "FieldValue_2",
+        "FieldName_3",
+        "FieldValue_3",
+        "FieldName_4",
+        "FieldValue_4",
+        "FieldName_5",
+        "FieldValue_5",
+        "FieldName_6",
+        "FieldValue_6",
+        "FieldName_7",
+        "FieldValue_7",
+        "FieldName_8",
+        "FieldValue_8",
+        "FieldName_9",
+        "FieldValue_9",
+        "FieldName_10",
+        "FieldValue_10",
+        "FieldName_11",
+        "FieldValue_11",
+        "FieldName_12",
+        "FieldValue_12",
+        "FieldName_13",
+        "FieldValue_13",
+        "FieldName_14",
+        "FieldValue_14",
+        "FieldName_15",
+        "FieldValue_15",
+        "FieldName_16",
+        "FieldValue_16",
+        "FieldName_17",
+        "FieldValue_17",
+        "FieldName_18",
+        "FieldValue_18",
+        "FieldName_19",
+        "FieldValue_19",
+        "FieldName_20",
+        "FieldValue_20",
+        "FieldName_21",
+        "FieldValue_21",
+        "FieldName_22",
+        "FieldValue_22",
+        "FieldName_23",
+        "FieldValue_23",
+        "FieldName_24",
+        "FieldValue_24",
+        "FieldName_25",
+        "FieldValue_25",
+        "FieldName_26",
+        "FieldValue_26",
+        "FieldName_27",
+        "FieldValue_27",
+        "FieldName_28",
+        "FieldValue_28",
+        "FieldName_29",
+        "FieldValue_29",
+        "FieldName_30",
+        "FieldValue_30",
+        "FieldName_31",
+        "FieldValue_31",
+        "FieldName_32",
+        "FieldValue_32",
+        "FieldName_33",
+        "FieldValue_33",
+        "FieldName_34",
+        "FieldValue_34",
+        "FieldName_35",
+        "FieldValue_35",
+        "FieldName_36",
+        "FieldValue_36",
+        "FieldName_37",
+        "FieldValue_37",
+        "FieldName_38",
+        "FieldValue_38",
+        "FieldName_39",
+        "FieldValue_39",
+        "FieldName_40",
+        "FieldValue_40",
+        "FieldName_41",
+        "FieldValue_41",
+        "FieldName_42",
+        "FieldValue_42",
+        "FieldName_43",
+        "FieldValue_43",
+        "FieldName_44",
+        "FieldValue_44",
+        "FieldName_45",
+        "FieldValue_45",
+        "FieldName_46",
+        "FieldValue_46",
+        "FieldName_47",
+        "FieldValue_47",
+        "FieldName_48",
+        "FieldValue_48",
+        "FieldName_49",
+        "FieldValue_49",
+        "FieldName_50",
+        "FieldValue_50",
+        "FieldName_51",
+        "FieldValue_51",
+        "FieldName_52",
+        "FieldValue_52",
+        "FieldName_53",
+        "FieldValue_53",
+        "FieldName_54",
+        "FieldValue_54",
+        "FieldName_55",
+        "FieldValue_55",
+        "FieldName_56",
+        "FieldValue_56",
+        "FieldName_57",
+        "FieldValue_57",
+        "FieldName_58",
+        "FieldValue_58",
+        "FieldName_59",
+        "FieldValue_59",
+        "FieldName_60",
+        "FieldValue_60",
+        "FieldName_61",
+        "FieldValue_61",
+        "FieldName_62",
+        "FieldValue_62",
+        "FieldName_63",
+        "FieldValue_63",
+        "FieldName_64",
+        "FieldValue_64",
+        "FieldName_65",
+        "FieldValue_65",
+        "FieldName_66",
+        "FieldValue_66",
+        "FieldName_67",
+        "FieldValue_67",
+        "FieldName_68",
+        "FieldValue_68",
+        "FieldName_69",
+        "FieldValue_69",
+        "FieldName_70",
+        "FieldValue_70",
+        "FieldName_71",
+        "FieldValue_71",
+        "FieldName_72",
+        "FieldValue_72",
+        "FieldName_73",
+        "FieldValue_73",
+        "FieldName_74",
+        "FieldValue_74",
+        "FieldName_75",
+        "FieldValue_75",
+        "FieldName_76",
+        "FieldValue_76",
+        "FieldName_77",
+        "FieldValue_77",
+        "FieldName_78",
+        "FieldValue_78",
+        "FieldName_79",
+        "FieldValue_79",
+        "FieldName_80",
+        "FieldValue_80",
+        "FieldName_81",
+        "FieldValue_81",
+        "FieldName_82",
+        "FieldValue_82",
+        "FieldName_83",
+        "FieldValue_83",
+        "FieldName_84",
+        "FieldValue_84",
+        "FieldName_85",
+        "FieldValue_85",
+        "FieldName_86",
+        "FieldValue_86",
+        "FieldName_87",
+        "FieldValue_87",
+        "FieldName_88",
+        "FieldValue_88",
+        "FieldName_89",
+        "FieldValue_89",
+        "FieldName_90",
+        "FieldValue_90",
+        "FieldName_91",
+        "FieldValue_91",
+        "FieldName_92",
+        "FieldValue_92",
+        "FieldName_93",
+        "FieldValue_93",
+        "FieldName_94",
+        "FieldValue_94",
+        "FieldName_95",
+        "FieldValue_95",
+        "FieldName_96",
+        "FieldValue_96",
+        "FieldName_97",
+        "FieldValue_97",
+        "FieldName_98",
+        "FieldValue_98",
+        "FieldName_99",
+        "FieldValue_99",
+        "FieldName_100",
+        "FieldValue_100",
+        "FieldName_101",
+        "FieldValue_101",
+        "FieldName_102",
+        "FieldValue_102",
+        "FieldName_103",
+        "FieldValue_103",
+        "FieldName_104",
+        "FieldValue_104",
+        "FieldName_105",
+        "FieldName_106",
+        "FieldName_107",
+        "FieldName_108",
+        "FieldName_109",
+        "FieldValue_109",
+        "FieldName_110",
+        "FieldValue_110",
+        "FieldName_111",
+        "FieldValue_111",
+        "FieldName_112",
+        "FieldValue_112",
+        "FieldName_113",
+        "FieldValue_113",
+        "FieldName_114",
+        "FieldValue_114",
+        "FieldName_115",
+        "FieldValue_115",
+        "FieldName_116",
+        "FieldValue_116",
+        "FieldName_117",
+        "FieldValue_117",
+        "FieldName_118",
+        "FieldValue_118",
+        "FieldName_119",
+        "FieldValue_119",
+        "FieldName_120",
+        "FieldValue_120",
+        "FieldName_121",
+        "FieldValue_121",
+        "FieldName_122",
+        "FieldValue_122",
+        "FieldName_123",
+        "FieldValue_123",
+        "FieldName_124",
+        "FieldName_125",
+        "FieldValue_125",
+        "FieldName_126",
+        "FieldValue_126",
+        "FieldName_127",
+        "FieldValue_127",
+        "FieldName_128",
+        "FieldValue_128",
+        "FieldName_129",
+        "FieldValue_129",
+        "FieldName_130",
+        "FieldValue_130",
+        "FieldName_131",
+        "FieldValue_131",
+        "FieldName_132",
+        "FieldValue_132",
+        "FieldName_133",
+        "FieldValue_133",
+        "FieldName_134",
+        "FieldValue_134",
+        "FieldName_135",
+        "FieldValue_135",
+        "FieldName_136",
+        "FieldValue_136",
+        "FieldName_137",
+        "FieldValue_137",
+        "FieldName_138",
+        "FieldValue_138",
+        "FieldName_139",
+        "FieldValue_139",
+        "FieldName_140",
+        "FieldValue_140",
+        "FieldName_141",
+        "FieldValue_141",
+        "FieldName_142",
+        "FieldValue_142",
+        "FieldName_143",
+        "FieldValue_143",
+        "FieldName_144",
+        "FieldValue_144",
+        "FieldName_145",
+        "FieldValue_145",
+        "FieldName_146",
+        "FieldValue_146",
+        "FieldName_147",
+        "FieldValue_147",
+        "FieldName_148",
+        "FieldValue_148",
+        "FieldName_149",
+        "FieldValue_149",
+        "FieldName_150",
+        "FieldValue_150",
+        "FieldName_151",
+        "FieldValue_151",
+        "FieldName_152",
+        "FieldValue_152",
+        "FieldName_153",
+        "FieldValue_153",
+        "FieldName_154",
+        "FieldValue_154",
+        "FieldName_155",
+        "FieldValue_155",
+        "FieldName_156",
+        "FieldValue_156",
+        "FieldName_157",
+        "FieldValue_157",
+        "FieldName_158",
+        "FieldValue_158",
+        "FieldName_159",
+        "FieldValue_159",
+        "FieldName_160",
+        "FieldValue_160",
+        "FieldName_161",
+        "FieldValue_161",
+        "FieldName_162",
+        "FieldValue_162",
+        "FieldName_163",
+        "FieldValue_163",
+        "FieldName_164",
+        "FieldValue_164",
+        "FieldName_165",
+        "FieldValue_165",
+        "FieldName_166",
+        "FieldValue_166",
+        "FieldName_167",
+        "FieldValue_167",
+        "FieldName_168",
+        "FieldValue_168",
+        "FieldName_169",
+        "FieldValue_169",
+        "FieldName_170",
+        "FieldValue_170",
+        "FieldName_171",
+        "FieldValue_171",
+        "FieldName_172",
+        "FieldValue_172",
+        "FieldName_173",
+        "FieldValue_173",
+        "FieldName_174",
+        "FieldValue_174",
+        "FieldName_175",
+        "FieldValue_175",
+        "FieldName_176",
+        "FieldValue_176",
+        "FieldName_177",
+        "FieldValue_177",
+        "FieldName_178",
+        "FieldValue_178",
+        "FieldName_179",
+        "FieldValue_179",
+        "FieldName_180",
+        "FieldValue_180",
+        "FieldName_181",
+        "FieldValue_181",
+        "FieldName_182",
+        "FieldValue_182",
+        "FieldName_183",
+        "FieldValue_183",
+        "FieldName_184",
+        "FieldValue_184",
+        "FieldName_185",
+        "FieldValue_185",
+        "FieldName_186",
+        "FieldValue_186",
+        "FieldName_187",
+        "FieldValue_187",
+        "FieldName_188",
+        "FieldValue_188",
+        "FieldName_189",
+        "FieldValue_189",
+        "FieldName_190",
+        "FieldValue_190",
+        "FieldName_191",
+        "FieldValue_191",
+        "FieldName_192",
+        "FieldValue_192",
+        "FieldName_193",
+        "FieldValue_193",
+        "FieldName_194",
+        "FieldValue_194",
+        "FieldName_195",
+        "FieldValue_195",
+        "FieldName_196",
+        "FieldValue_196",
+        "FieldName_197",
+        "FieldValue_197",
+        "FieldName_198",
+        "FieldValue_198",
+        "FieldName_199",
+        "FieldValue_199",
+        "FieldName_200",
+        "FieldValue_200",
+        "FieldName_201",
+        "FieldValue_201",
+        "FieldName_202",
+        "FieldValue_202",
+        "FieldName_203",
+        "FieldValue_203",
+        "FieldName_204",
+        "FieldValue_204",
+        "FieldName_205",
+        "FieldValue_205",
+        "FieldName_206",
+        "FieldValue_206",
+        "FieldName_207",
+        "FieldValue_207",
+        "FieldName_208",
+        "FieldValue_208",
+        "FieldName_209",
+        "FieldValue_209",
+        "FieldName_210",
+        "FieldValue_210",
+        "FieldName_211",
+        "FieldValue_211",
+        "FieldName_212",
+        "FieldValue_212",
+        "FieldName_213",
+        "FieldValue_213",
+        "FieldName_214",
+        "FieldValue_214",
+        "FieldName_215",
+        "FieldValue_215",
+        "FieldName_216",
+        "FieldValue_216",
+        "FieldName_217",
+        "FieldValue_217",
+        "FieldName_218",
+        "FieldValue_218",
+        "FieldName_219",
+        "FieldValue_219",
+        "FieldName_220",
+        "FieldValue_220",
+        "FieldName_221",
+        "FieldValue_221",
+        "FieldName_222",
+        "FieldValue_222",
+        "FieldName_223",
+        "FieldValue_223",
+        "FieldName_224",
+        "FieldValue_224",
+        "FieldName_225",
+        "FieldValue_225"
+      ],
+      "expected_raw_table": "ssas__ssascontractfielddata",
+      "raw_table": "ssas__SSASContractFieldData",
+      "dev_nesna_table": "ssascontractfielddata",
+      "prod_nesna_table": "ssascontractfielddata",
+      "raw_column_count": 452,
+      "dev_nesna_column_count": 6,
+      "prod_nesna_column_count": 6,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 6,
+      "surplus_raw_column_count": 446
+    },
+    {
+      "mapping_ms": "ssas.ssasdealergroupdimension",
+      "mapping_pg": "ssasdealergroupdimension",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "DealerGroupId",
+          "target": "DealerGroupId",
+          "transform": null,
+          "expression": "DealerGroupId",
+          "resolved_source": "DealerGroupId",
+          "resolved_target": "DealerGroupId"
+        },
+        {
+          "source": "Name",
+          "target": "Name",
+          "transform": null,
+          "expression": "Name",
+          "resolved_source": "Name",
+          "resolved_target": "Name"
+        }
+      ],
+      "surplus_raw_columns": [
+        "FieldName_1",
+        "FieldValue_1",
+        "FieldName_2",
+        "FieldValue_2",
+        "FieldName_3",
+        "FieldValue_3",
+        "FieldName_4",
+        "FieldValue_4",
+        "FieldName_5",
+        "FieldValue_5",
+        "FieldName_6",
+        "FieldValue_6",
+        "FieldName_7",
+        "FieldValue_7",
+        "FieldName_8",
+        "FieldValue_8",
+        "FieldName_9",
+        "FieldValue_9",
+        "FieldName_10",
+        "FieldValue_10"
+      ],
+      "expected_raw_table": "ssas__ssasdealergroupdimension",
+      "raw_table": "ssas__SSASDealerGroupDimension",
+      "dev_nesna_table": "ssasdealergroupdimension",
+      "prod_nesna_table": "ssasdealergroupdimension",
+      "raw_column_count": 22,
+      "dev_nesna_column_count": 2,
+      "prod_nesna_column_count": 2,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 2,
+      "surplus_raw_column_count": 20
+    },
+    {
+      "raw_table": "ssas__SSASEarnedDisbursement",
+      "status": "AMBIGUOUS_MAPPING",
+      "errors": [
+        "Expected exactly one mapping; found 3."
+      ],
+      "mapping_candidates": [
+        {
+          "ms": "ssas.ssasearneddisbursement",
+          "pg": "phi_ssasearneddisbursement"
+        },
+        {
+          "ms": "ssas.ssasearneddisbursement",
+          "pg": "ssasearneddisbursement"
+        },
+        {
+          "ms": "ssas.ssasearneddisbursement",
+          "pg": "testing_ssasearneddisbursement"
+        }
+      ]
+    },
+    {
+      "mapping_ms": "ssas.ssasearnedreserve",
+      "mapping_pg": "ssasearnedreserve",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "TableId",
+          "target": "TableId",
+          "transform": null,
+          "expression": "TableId",
+          "resolved_source": "TableId",
+          "resolved_target": "TableId"
+        },
+        {
+          "source": "fxContractId",
+          "target": "fxContractId",
+          "transform": null,
+          "expression": "fxContractId",
+          "resolved_source": "fxContractId",
+          "resolved_target": "fxContractId"
+        },
+        {
+          "source": "fxPostingHistoryId",
+          "target": "fxPostingHistoryId",
+          "transform": null,
+          "expression": "fxPostingHistoryId",
+          "resolved_source": "fxPostingHistoryId",
+          "resolved_target": "fxPostingHistoryId"
+        },
+        {
+          "source": "fxDisbursementMemoId",
+          "target": "fxDisbursementMemoId",
+          "transform": null,
+          "expression": "fxDisbursementMemoId",
+          "resolved_source": "fxDisbursementMemoId",
+          "resolved_target": "fxDisbursementMemoId"
+        },
+        {
+          "source": "fxDisbursementId",
+          "target": "fxDisbursementId",
+          "transform": null,
+          "expression": "fxDisbursementId",
+          "resolved_source": "fxDisbursementId",
+          "resolved_target": "fxDisbursementId"
+        },
+        {
+          "source": "fxDisbursementTypeId",
+          "target": "fxDisbursementTypeId",
+          "transform": null,
+          "expression": "fxDisbursementTypeId",
+          "resolved_source": "fxDisbursementTypeId",
+          "resolved_target": "fxDisbursementTypeId"
+        },
+        {
+          "source": "fxEarningDateId",
+          "target": "fxEarningDateId",
+          "transform": null,
+          "expression": "fxEarningDateId",
+          "resolved_source": "fxEarningDateId",
+          "resolved_target": "fxEarningDateId"
+        },
+        {
+          "source": "fxAccountHolderId",
+          "target": "fxAccountHolderId",
+          "transform": null,
+          "expression": "fxAccountHolderId",
+          "resolved_source": "fxAccountHolderId",
+          "resolved_target": "fxAccountHolderId"
+        },
+        {
+          "source": "EarnedAmount",
+          "target": "EarnedAmount",
+          "transform": null,
+          "expression": "EarnedAmount",
+          "resolved_source": "EarnedAmount",
+          "resolved_target": "EarnedAmount"
+        },
+        {
+          "source": "CurrentEarnedPercent",
+          "target": "CurrentEarnedPercent",
+          "transform": null,
+          "expression": "CurrentEarnedPercent",
+          "resolved_source": "CurrentEarnedPercent",
+          "resolved_target": "CurrentEarnedPercent"
+        }
+      ],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "ssas__ssasearnedreserve",
+      "raw_table": "ssas__SSASEarnedReserve",
+      "dev_nesna_table": "ssasearnedreserve",
+      "prod_nesna_table": "ssasearnedreserve",
+      "raw_column_count": 10,
+      "dev_nesna_column_count": 10,
+      "prod_nesna_column_count": 10,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 10,
+      "surplus_raw_column_count": 0
+    },
+    {
+      "mapping_ms": "ssas.ssasinsurerdimension",
+      "mapping_pg": "ssasinsurerdimension",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "InsurerId",
+          "target": "InsurerId",
+          "transform": null,
+          "expression": "InsurerId",
+          "resolved_source": "InsurerId",
+          "resolved_target": "InsurerId"
+        },
+        {
+          "source": "Type",
+          "target": "Type",
+          "transform": null,
+          "expression": "Type",
+          "resolved_source": "Type",
+          "resolved_target": "Type"
+        },
+        {
+          "source": "Name",
+          "target": "Name",
+          "transform": null,
+          "expression": "Name",
+          "resolved_source": "Name",
+          "resolved_target": "Name"
+        },
+        {
+          "source": "IsActive",
+          "target": "IsActive",
+          "transform": null,
+          "expression": "IsActive",
+          "resolved_source": "IsActive",
+          "resolved_target": "IsActive"
+        }
+      ],
+      "surplus_raw_columns": [
+        "IncludeClaimInspectionsInLossRatio",
+        "PhysicalAddressLine1",
+        "PhysicalAddressLine2",
+        "PhysicalCity",
+        "PhysicalZipCode",
+        "PhysicalPhone",
+        "PhysicalExtension",
+        "PhysicalFax",
+        "PhysicalState",
+        "BillingAddressLine1",
+        "BillingAddressLine2",
+        "BillingCity",
+        "BillingZipCode",
+        "BillingPhone",
+        "BillingExtension",
+        "BillingFax",
+        "BillingState"
+      ],
+      "expected_raw_table": "ssas__ssasinsurerdimension",
+      "raw_table": "ssas__SSASInsurerDimension",
+      "dev_nesna_table": "ssasinsurerdimension",
+      "prod_nesna_table": "ssasinsurerdimension",
+      "raw_column_count": 21,
+      "dev_nesna_column_count": 4,
+      "prod_nesna_column_count": 4,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 4,
+      "surplus_raw_column_count": 17
+    },
+    {
+      "mapping_ms": "ssas.ssaslienholderdimension",
+      "mapping_pg": "ssaslienholderdimension",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "LienHolderId",
+          "target": "LienHolderId",
+          "transform": null,
+          "expression": "LienHolderId",
+          "resolved_source": "LienHolderId",
+          "resolved_target": "LienHolderId"
+        },
+        {
+          "source": "Name",
+          "target": "Name",
+          "transform": null,
+          "expression": "Name",
+          "resolved_source": "Name",
+          "resolved_target": "Name"
+        },
+        {
+          "source": "PhysicalAddressLine1",
+          "target": "PhysicalAddressLine1",
+          "transform": null,
+          "expression": "PhysicalAddressLine1",
+          "resolved_source": "PhysicalAddressLine1",
+          "resolved_target": "PhysicalAddressLine1"
+        },
+        {
+          "source": "PhysicalAddressLine2",
+          "target": "PhysicalAddressLine2",
+          "transform": null,
+          "expression": "PhysicalAddressLine2",
+          "resolved_source": "PhysicalAddressLine2",
+          "resolved_target": "PhysicalAddressLine2"
+        },
+        {
+          "source": "PhysicalCity",
+          "target": "PhysicalCity",
+          "transform": null,
+          "expression": "PhysicalCity",
+          "resolved_source": "PhysicalCity",
+          "resolved_target": "PhysicalCity"
+        },
+        {
+          "source": "PhysicalZipCode",
+          "target": "PhysicalZipCode",
+          "transform": null,
+          "expression": "PhysicalZipCode",
+          "resolved_source": "PhysicalZipCode",
+          "resolved_target": "PhysicalZipCode"
+        },
+        {
+          "source": "PhysicalPhone",
+          "target": "PhysicalPhone",
+          "transform": null,
+          "expression": "PhysicalPhone",
+          "resolved_source": "PhysicalPhone",
+          "resolved_target": "PhysicalPhone"
+        },
+        {
+          "source": "PhysicalFax",
+          "target": "PhysicalFax",
+          "transform": null,
+          "expression": "PhysicalFax",
+          "resolved_source": "PhysicalFax",
+          "resolved_target": "PhysicalFax"
+        },
+        {
+          "source": "PhysicalState",
+          "target": "PhysicalState",
+          "transform": null,
+          "expression": "PhysicalState",
+          "resolved_source": "PhysicalState",
+          "resolved_target": "PhysicalState"
+        }
+      ],
+      "surplus_raw_columns": [
+        "FieldName_1",
+        "FieldValue_1",
+        "FieldName_2",
+        "FieldValue_2",
+        "FieldName_3",
+        "FieldValue_3",
+        "FieldName_4",
+        "FieldValue_4",
+        "FieldName_5",
+        "FieldValue_5",
+        "FieldName_6",
+        "FieldValue_6",
+        "FieldName_7",
+        "FieldValue_7",
+        "FieldName_8",
+        "FieldValue_8",
+        "FieldName_9",
+        "FieldValue_9",
+        "FieldName_10",
+        "FieldValue_10",
+        "PhysicalExtension",
+        "BillingAddressLine1",
+        "BillingAddressLine2",
+        "BillingCity",
+        "BillingZipCode",
+        "BillingPhone",
+        "BillingExtension",
+        "BillingFax",
+        "BillingState"
+      ],
+      "expected_raw_table": "ssas__ssaslienholderdimension",
+      "raw_table": "ssas__SSASLienHolderDimension",
+      "dev_nesna_table": "ssaslienholderdimension",
+      "prod_nesna_table": "ssaslienholderdimension",
+      "raw_column_count": 38,
+      "dev_nesna_column_count": 9,
+      "prod_nesna_column_count": 9,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 9,
+      "surplus_raw_column_count": 29
+    },
+    {
+      "mapping_ms": "ssas.ssaspostinghistorydimension",
+      "mapping_pg": "ssaspostinghistorydimension",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "PostingHistoryId",
+          "target": "PostingHistoryId",
+          "transform": null,
+          "expression": "PostingHistoryId",
+          "resolved_source": "PostingHistoryId",
+          "resolved_target": "PostingHistoryId"
+        },
+        {
+          "source": "PostedDate",
+          "target": "PostedDate",
+          "transform": null,
+          "expression": "PostedDate",
+          "resolved_source": "PostedDate",
+          "resolved_target": "PostedDate"
+        },
+        {
+          "source": "Year",
+          "target": "Year",
+          "transform": null,
+          "expression": "Year",
+          "resolved_source": "Year",
+          "resolved_target": "Year"
+        },
+        {
+          "source": "Month",
+          "target": "Month",
+          "transform": null,
+          "expression": "Month",
+          "resolved_source": "Month",
+          "resolved_target": "Month"
+        },
+        {
+          "source": "Quarter",
+          "target": "Quarter",
+          "transform": null,
+          "expression": "Quarter",
+          "resolved_source": "Quarter",
+          "resolved_target": "Quarter"
+        },
+        {
+          "source": "NextPostedDate",
+          "target": "NextPostedDate",
+          "transform": null,
+          "expression": "NextPostedDate",
+          "resolved_source": "NextPostedDate",
+          "resolved_target": "NextPostedDate"
+        },
+        {
+          "source": "NextNextPostedDate",
+          "target": "NextNextPostedDate",
+          "transform": null,
+          "expression": "NextNextPostedDate",
+          "resolved_source": "NextNextPostedDate",
+          "resolved_target": "NextNextPostedDate"
+        }
+      ],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "ssas__ssaspostinghistorydimension",
+      "raw_table": "ssas__SSASPostingHistoryDimension",
+      "dev_nesna_table": "ssaspostinghistorydimension",
+      "prod_nesna_table": "ssaspostinghistorydimension",
+      "raw_column_count": 7,
+      "dev_nesna_column_count": 7,
+      "prod_nesna_column_count": 7,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 7,
+      "surplus_raw_column_count": 0
+    },
+    {
+      "mapping_ms": "ssas.ssasreinstatement",
+      "mapping_pg": "ssasreinstatement",
+      "status": "BLOCKED",
+      "errors": [
+        "ValueError: Unsupported mapping expression: '*'"
+      ],
+      "warnings": [],
+      "selected_columns": [],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "ssas__ssasreinstatement",
+      "raw_table": "ssas__SSASReinstatement",
+      "dev_nesna_table": "ssasreinstatement",
+      "prod_nesna_table": "ssasreinstatement",
+      "raw_column_count": 17,
+      "dev_nesna_column_count": 17,
+      "prod_nesna_column_count": 17,
+      "dev_prod_column_definition_match": true
+    },
+    {
+      "mapping_ms": "ssas.ssasreinstatementdimension",
+      "mapping_pg": "ssasreinstatementdimension",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "ReinstatementId",
+          "target": "ReinstatementId",
+          "transform": null,
+          "expression": "ReinstatementId",
+          "resolved_source": "ReinstatementId",
+          "resolved_target": "ReinstatementId"
+        },
+        {
+          "source": "fxCashTransactionId",
+          "target": "fxCashTransactionId",
+          "transform": null,
+          "expression": "fxCashTransactionId",
+          "resolved_source": "fxCashTransactionId",
+          "resolved_target": "fxCashTransactionId"
+        },
+        {
+          "source": "RefundCancelFee",
+          "target": "RefundCancelFee",
+          "transform": null,
+          "expression": "RefundCancelFee",
+          "resolved_source": "RefundCancelFee",
+          "resolved_target": "RefundCancelFee"
+        },
+        {
+          "source": "ReinstatementDate",
+          "target": "ReinstatementDate",
+          "transform": null,
+          "expression": "ReinstatementDate",
+          "resolved_source": "ReinstatementDate",
+          "resolved_target": "ReinstatementDate"
+        },
+        {
+          "source": "fxCancelId",
+          "target": "fxCancelId",
+          "transform": null,
+          "expression": "fxCancelId",
+          "resolved_source": "fxCancelId",
+          "resolved_target": "fxCancelId"
+        },
+        {
+          "source": "PostedDate",
+          "target": "PostedDate",
+          "transform": null,
+          "expression": "PostedDate",
+          "resolved_source": "PostedDate",
+          "resolved_target": "PostedDate"
+        },
+        {
+          "source": "EnteredDate",
+          "target": "EnteredDate",
+          "transform": null,
+          "expression": "EnteredDate",
+          "resolved_source": "EnteredDate",
+          "resolved_target": "EnteredDate"
+        }
+      ],
+      "surplus_raw_columns": [
+        "ReinstatementYear",
+        "ReinstatementMonth",
+        "ReinstatementQuarter",
+        "Deleted",
+        "PostedYear",
+        "PostedMonth",
+        "PostedQuarter",
+        "EnteredYear",
+        "EnteredMonth",
+        "EnteredQuarter",
+        "AdjCode_1",
+        "AdjCode_2",
+        "AdjCode_3",
+        "AdjCode_4",
+        "AdjCode_5",
+        "AdjCode_6",
+        "AdjCode_7",
+        "AdjCode_8",
+        "AdjCode_9",
+        "AdjCode_10",
+        "AdjCost_1",
+        "AdjCost_2",
+        "AdjCost_3",
+        "AdjCost_4",
+        "AdjCost_5",
+        "AdjCost_6",
+        "AdjCost_7",
+        "AdjCost_8",
+        "AdjCost_9",
+        "AdjCost_10",
+        "SurCode_1",
+        "SurCode_2",
+        "SurCode_3",
+        "SurCode_4",
+        "SurCode_5",
+        "SurCode_6",
+        "SurCode_7",
+        "SurCode_8",
+        "SurCode_9",
+        "SurCode_10",
+        "SurCost_1",
+        "SurCost_2",
+        "SurCost_3",
+        "SurCost_4",
+        "SurCost_5",
+        "SurCost_6",
+        "SurCost_7",
+        "SurCost_8",
+        "SurCost_9",
+        "SurCost_10",
+        "CashTransactionType",
+        "CashTransactionNumber"
+      ],
+      "expected_raw_table": "ssas__ssasreinstatementdimension",
+      "raw_table": "ssas__SSASReinstatementDimension",
+      "dev_nesna_table": "ssasreinstatementdimension",
+      "prod_nesna_table": "ssasreinstatementdimension",
+      "raw_column_count": 59,
+      "dev_nesna_column_count": 7,
+      "prod_nesna_column_count": 7,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 7,
+      "surplus_raw_column_count": 52
+    },
+    {
+      "mapping_ms": "ssas.ssasreinsurerdimension",
+      "mapping_pg": "ssasreinsurerdimension",
+      "status": "BLOCKED",
+      "errors": [
+        "ValueError: Unsupported mapping expression: '*'"
+      ],
+      "warnings": [],
+      "selected_columns": [],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "ssas__ssasreinsurerdimension",
+      "raw_table": "ssas__SSASReinsurerDimension",
+      "dev_nesna_table": "ssasreinsurerdimension",
+      "prod_nesna_table": "ssasreinsurerdimension",
+      "raw_column_count": 2,
+      "dev_nesna_column_count": 2,
+      "prod_nesna_column_count": 2,
+      "dev_prod_column_definition_match": true
+    },
+    {
+      "mapping_ms": "ssas.ssasrepairfacilitydimension",
+      "mapping_pg": "ssasrepairfacilitydimension",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "RepairFacilityId",
+          "target": "RepairFacilityId",
+          "transform": null,
+          "expression": "RepairFacilityId",
+          "resolved_source": "RepairFacilityId",
+          "resolved_target": "RepairFacilityId"
+        },
+        {
+          "source": "Name",
+          "target": "Name",
+          "transform": null,
+          "expression": "Name",
+          "resolved_source": "Name",
+          "resolved_target": "Name"
+        },
+        {
+          "source": "DefaultLaborTaxRate",
+          "target": "DefaultLaborTaxRate",
+          "transform": null,
+          "expression": "DefaultLaborTaxRate",
+          "resolved_source": "DefaultLaborTaxRate",
+          "resolved_target": "DefaultLaborTaxRate"
+        },
+        {
+          "source": "DefaultPartsTaxRate",
+          "target": "DefaultPartsTaxRate",
+          "transform": null,
+          "expression": "DefaultPartsTaxRate",
+          "resolved_source": "DefaultPartsTaxRate",
+          "resolved_target": "DefaultPartsTaxRate"
+        },
+        {
+          "source": "DefaultLaborRate",
+          "target": "DefaultLaborRate",
+          "transform": null,
+          "expression": "DefaultLaborRate",
+          "resolved_source": "DefaultLaborRate",
+          "resolved_target": "DefaultLaborRate"
+        },
+        {
+          "source": "PhysicalAddressLine1",
+          "target": "PhysicalAddressLine1",
+          "transform": null,
+          "expression": "PhysicalAddressLine1",
+          "resolved_source": "PhysicalAddressLine1",
+          "resolved_target": "PhysicalAddressLine1"
+        },
+        {
+          "source": "PhysicalAddressLine2",
+          "target": "PhysicalAddressLine2",
+          "transform": null,
+          "expression": "PhysicalAddressLine2",
+          "resolved_source": "PhysicalAddressLine2",
+          "resolved_target": "PhysicalAddressLine2"
+        },
+        {
+          "source": "PhysicalCity",
+          "target": "PhysicalCity",
+          "transform": null,
+          "expression": "PhysicalCity",
+          "resolved_source": "PhysicalCity",
+          "resolved_target": "PhysicalCity"
+        },
+        {
+          "source": "PhysicalZipCode",
+          "target": "PhysicalZipCode",
+          "transform": null,
+          "expression": "PhysicalZipCode",
+          "resolved_source": "PhysicalZipCode",
+          "resolved_target": "PhysicalZipCode"
+        },
+        {
+          "source": "PhysicalPhone",
+          "target": "PhysicalPhone",
+          "transform": null,
+          "expression": "PhysicalPhone",
+          "resolved_source": "PhysicalPhone",
+          "resolved_target": "PhysicalPhone"
+        },
+        {
+          "source": "PhysicalState",
+          "target": "PhysicalState",
+          "transform": null,
+          "expression": "PhysicalState",
+          "resolved_source": "PhysicalState",
+          "resolved_target": "PhysicalState"
+        }
+      ],
+      "surplus_raw_columns": [
+        "PhysicalExtension",
+        "PhysicalFax",
+        "BillingAddressLine1",
+        "BillingAddressLine2",
+        "BillingCity",
+        "BillingZipCode",
+        "BillingPhone",
+        "BillingExtension",
+        "BillingFax",
+        "BillingState"
+      ],
+      "expected_raw_table": "ssas__ssasrepairfacilitydimension",
+      "raw_table": "ssas__SSASRepairFacilityDimension",
+      "dev_nesna_table": "ssasrepairfacilitydimension",
+      "prod_nesna_table": "ssasrepairfacilitydimension",
+      "raw_column_count": 21,
+      "dev_nesna_column_count": 11,
+      "prod_nesna_column_count": 11,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 11,
+      "surplus_raw_column_count": 10
+    },
+    {
+      "mapping_ms": "ssas.ssastransaction",
+      "mapping_pg": "ssastransaction",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "TransactionId",
+          "target": "TransactionId",
+          "transform": null,
+          "expression": "TransactionId",
+          "resolved_source": "TransactionId",
+          "resolved_target": "TransactionId"
+        },
+        {
+          "source": "fxPostingHistoryId",
+          "target": "fxPostingHistoryId",
+          "transform": null,
+          "expression": "fxPostingHistoryId",
+          "resolved_source": "fxPostingHistoryId",
+          "resolved_target": "fxPostingHistoryId"
+        },
+        {
+          "source": "fxTransactionTypeId",
+          "target": "fxTransactionTypeId",
+          "transform": null,
+          "expression": "fxTransactionTypeId",
+          "resolved_source": "fxTransactionTypeId",
+          "resolved_target": "fxTransactionTypeId"
+        },
+        {
+          "source": "fxContractId",
+          "target": "fxContractId",
+          "transform": null,
+          "expression": "fxContractId",
+          "resolved_source": "fxContractId",
+          "resolved_target": "fxContractId"
+        },
+        {
+          "source": "fxAmendmentId",
+          "target": "fxAmendmentId",
+          "transform": null,
+          "expression": "fxAmendmentId",
+          "resolved_source": "fxAmendmentId",
+          "resolved_target": "fxAmendmentId"
+        },
+        {
+          "source": "fxCancelId",
+          "target": "fxCancelId",
+          "transform": null,
+          "expression": "fxCancelId",
+          "resolved_source": "fxCancelId",
+          "resolved_target": "fxCancelId"
+        },
+        {
+          "source": "fxReinstatementId",
+          "target": "fxReinstatementId",
+          "transform": null,
+          "expression": "fxReinstatementId",
+          "resolved_source": "fxReinstatementId",
+          "resolved_target": "fxReinstatementId"
+        },
+        {
+          "source": "fxCashTransactionId",
+          "target": "fxCashTransactionId",
+          "transform": null,
+          "expression": "fxCashTransactionId",
+          "resolved_source": "fxCashTransactionId",
+          "resolved_target": "fxCashTransactionId"
+        },
+        {
+          "source": "Amount",
+          "target": "Amount",
+          "transform": null,
+          "expression": "Amount",
+          "resolved_source": "Amount",
+          "resolved_target": "Amount"
+        },
+        {
+          "source": "Count",
+          "target": "Count",
+          "transform": null,
+          "expression": "Count",
+          "resolved_source": "Count",
+          "resolved_target": "Count"
+        },
+        {
+          "source": "fxContractReportStatusId",
+          "target": "fxContractReportStatusId",
+          "transform": null,
+          "expression": "fxContractReportStatusId",
+          "resolved_source": "fxContractReportStatusId",
+          "resolved_target": "fxContractReportStatusId"
+        }
+      ],
+      "surplus_raw_columns": [
+        "TableId",
+        "fxPaidById"
+      ],
+      "expected_raw_table": "ssas__ssastransaction",
+      "raw_table": "ssas__SSASTransaction",
+      "dev_nesna_table": "ssastransaction",
+      "prod_nesna_table": "ssastransaction",
+      "raw_column_count": 13,
+      "dev_nesna_column_count": 11,
+      "prod_nesna_column_count": 11,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 11,
+      "surplus_raw_column_count": 2
+    },
+    {
+      "raw_table": "t_netsuite_obf_export",
+      "status": "MISSING_MAPPING",
+      "errors": [
+        "Expected exactly one mapping; found 0."
+      ],
+      "mapping_candidates": []
+    },
+    {
+      "mapping_ms": "work.ssasclaimhistorychange_bycategory",
+      "mapping_pg": "workssasclaimhistorychange_bycategory",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "TableId",
+          "target": "TableId",
+          "transform": null,
+          "expression": "TableId",
+          "resolved_source": "TableId",
+          "resolved_target": "TableId"
+        },
+        {
+          "source": "fxClaimId",
+          "target": "fxClaimId",
+          "transform": null,
+          "expression": "fxClaimId",
+          "resolved_source": "fxClaimId",
+          "resolved_target": "fxClaimId"
+        },
+        {
+          "source": "fxContractId",
+          "target": "fxContractId",
+          "transform": null,
+          "expression": "fxContractId",
+          "resolved_source": "fxContractId",
+          "resolved_target": "fxContractId"
+        },
+        {
+          "source": "fxPostingHistoryId",
+          "target": "fxPostingHistoryId",
+          "transform": null,
+          "expression": "fxPostingHistoryId",
+          "resolved_source": "fxPostingHistoryId",
+          "resolved_target": "fxPostingHistoryId"
+        },
+        {
+          "source": "PreDeductibleAmountChange",
+          "target": "PreDeductibleAmountChange",
+          "transform": null,
+          "expression": "PreDeductibleAmountChange",
+          "resolved_source": "PreDeductibleAmountChange",
+          "resolved_target": "PreDeductibleAmountChange"
+        },
+        {
+          "source": "CollectedDeductibleAmountChange",
+          "target": "CollectedDeductibleAmountChange",
+          "transform": null,
+          "expression": "CollectedDeductibleAmountChange",
+          "resolved_source": "CollectedDeductibleAmountChange",
+          "resolved_target": "CollectedDeductibleAmountChange"
+        },
+        {
+          "source": "PostDeductibleAmountChange",
+          "target": "PostDeductibleAmountChange",
+          "transform": null,
+          "expression": "PostDeductibleAmountChange",
+          "resolved_source": "PostDeductibleAmountChange",
+          "resolved_target": "PostDeductibleAmountChange"
+        },
+        {
+          "source": "fxClaimReportStatusId",
+          "target": "fxClaimReportStatusId",
+          "transform": null,
+          "expression": "fxClaimReportStatusId",
+          "resolved_source": "fxClaimReportStatusId",
+          "resolved_target": "fxClaimReportStatusId"
+        }
+      ],
+      "surplus_raw_columns": [],
+      "expected_raw_table": "work__ssasclaimhistorychange_bycategory",
+      "raw_table": "work__SSASClaimHistoryChange_ByCategory",
+      "dev_nesna_table": "workssasclaimhistorychange_bycategory",
+      "prod_nesna_table": "workssasclaimhistorychange_bycategory",
+      "raw_column_count": 8,
+      "dev_nesna_column_count": 8,
+      "prod_nesna_column_count": 8,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 8,
+      "surplus_raw_column_count": 0
+    },
+    {
+      "mapping_ms": "work.ssasdisbursements",
+      "mapping_pg": "ssasdisbursements",
+      "status": "MAPPING_CANDIDATE",
+      "errors": [],
+      "warnings": [
+        "Metadata-only discovery. Actual cast compatibility, row values, constraints, foreign keys, and DAG dependencies require separate validation."
+      ],
+      "selected_columns": [
+        {
+          "source": "fxTransactionTypeId",
+          "target": "fxTransactionTypeId",
+          "transform": null,
+          "expression": "fxTransactionTypeId",
+          "resolved_source": "fxTransactionTypeId",
+          "resolved_target": "fxTransactionTypeId"
+        },
+        {
+          "source": "fxContractId",
+          "target": "fxContractId",
+          "transform": null,
+          "expression": "fxContractId",
+          "resolved_source": "fxContractId",
+          "resolved_target": "fxContractId"
+        },
+        {
+          "source": "fxContractDisbursementId",
+          "target": "fxContractDisbursementId",
+          "transform": null,
+          "expression": "fxContractDisbursementId",
+          "resolved_source": "fxContractDisbursementId",
+          "resolved_target": "fxContractDisbursementId"
+        },
+        {
+          "source": "fxDisbursementTypeId",
+          "target": "fxDisbursementTypeId",
+          "transform": null,
+          "expression": "fxDisbursementTypeId",
+          "resolved_source": "fxDisbursementTypeId",
+          "resolved_target": "fxDisbursementTypeId"
+        },
+        {
+          "source": "fxCashTransactionId",
+          "target": "fxCashTransactionId",
+          "transform": null,
+          "expression": "fxCashTransactionId",
+          "resolved_source": "fxCashTransactionId",
+          "resolved_target": "fxCashTransactionId"
+        },
+        {
+          "source": "fxPostingHistoryId",
+          "target": "fxPostingHistoryId",
+          "transform": null,
+          "expression": "fxPostingHistoryId",
+          "resolved_source": "fxPostingHistoryId",
+          "resolved_target": "fxPostingHistoryId"
+        },
+        {
+          "source": "fxCancelId",
+          "target": "fxCancelId",
+          "transform": null,
+          "expression": "fxCancelId",
+          "resolved_source": "fxCancelId",
+          "resolved_target": "fxCancelId"
+        },
+        {
+          "source": "fxPaidToId",
+          "target": "fxPaidToId",
+          "transform": null,
+          "expression": "fxPaidToId",
+          "resolved_source": "fxPaidToId",
+          "resolved_target": "fxPaidToId"
+        },
+        {
+          "source": "TransactionId",
+          "target": "TransactionId",
+          "transform": null,
+          "expression": "TransactionId",
+          "resolved_source": "TransactionId",
+          "resolved_target": "TransactionId"
+        },
+        {
+          "source": "fxAmendmentId",
+          "target": "fxAmendmentId",
+          "transform": null,
+          "expression": "fxAmendmentId",
+          "resolved_source": "fxAmendmentId",
+          "resolved_target": "fxAmendmentId"
+        },
+        {
+          "source": "Amount",
+          "target": "Amount",
+          "transform": null,
+          "expression": "Amount",
+          "resolved_source": "Amount",
+          "resolved_target": "Amount"
+        },
+        {
+          "source": "fxContractReportStatusId",
+          "target": "fxContractReportStatusId",
+          "transform": null,
+          "expression": "fxContractReportStatusId",
+          "resolved_source": "fxContractReportStatusId",
+          "resolved_target": "fxContractReportStatusId"
+        }
+      ],
+      "surplus_raw_columns": [
+        "fxReinstatementId",
+        "Count"
+      ],
+      "expected_raw_table": "work__ssasdisbursements",
+      "raw_table": "work__SSASDisbursements",
+      "dev_nesna_table": "ssasdisbursements",
+      "prod_nesna_table": "ssasdisbursements",
+      "raw_column_count": 14,
+      "dev_nesna_column_count": 12,
+      "prod_nesna_column_count": 12,
+      "dev_prod_column_definition_match": true,
+      "selected_column_count": 12,
+      "surplus_raw_column_count": 2
+    }
+  ],
+  "global_errors": [
+    "Source ssas.ssasearneddisbursement maps to multiple destinations: ['phi_ssasearneddisbursement', 'ssasearneddisbursement', 'testing_ssasearneddisbursement']",
+    "Audited inventory contains 75 tables; expected 66."
+  ],
+  "global_warnings": [
+    "No DAG 1 inventory supplied. Auditing every visible RAW base table. Cannot certify these are exactly the 66 DAG 1 tables."
+  ],
+  "raw_table_count": 75,
+  "dev_nesna_table_count": 89,
+  "prod_nesna_table_count": 141,
+  "masterstaging_mapping_rows": 64,
+  "status_counts": {
+    "MISSING_MAPPING": 17,
+    "BLOCKED": 25,
+    "MAPPING_CANDIDATE": 32,
+    "AMBIGUOUS_MAPPING": 1
+  },
+  "ready_count": 32,
+  "all_66_mapping_candidates": false
+}
