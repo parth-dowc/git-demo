@@ -1,0 +1,10 @@
+{
+  "environment": "NESNA DEV warehouse(1): source schema raw; destination schema public",
+  "tables": [
+    {"source": "perm.Contract", "public": "permcontract", "key": "ContractId", "fields": ["ContractId", "EarningMethodInd", "fxCoBuyerId", "fxCustomerId", "fxSoldByUserId", "ExternalUser"]},
+    {"source": "perm.ContractField", "public": "permcontractfield", "key": null, "fields": ["fxContractId", "fxFieldId", "StringValue"]},
+    {"source": "perm.ContractDisbursement", "public": "permcontractdisbursement", "key": "ContractDisbursementId", "fields": ["ContractDisbursementId", "fxContractId", "DisbursementTypeInd", "DisbursementRefundTypeInd", "fxDisbursementGroupId", "fxDisbursementCodeId", "SourceDescription", "fxDisbursementLabelId"]},
+    {"source": "perm.Ledger", "public": "permledger", "key": "LedgerId", "fields": ["LedgerId", "fxRelatedContractId"]},
+    {"source": "perm.Note", "public": "permnote", "key": "NoteId", "fields": ["NoteId", "CAST(RemovedFromSource AS int) AS RemovedFromSource", "fxAccountHolderId", "fxLedgerId", "fxClaimId", "Note", "fxEnteredById", "EnteredDate", "NoteTypeInd", "WarningNoteLevelInd", "ExpirationDate"]}
+  ]
+}

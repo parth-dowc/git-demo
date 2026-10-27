@@ -20,16 +20,15 @@ from sqlalchemy import create_engine
 
 SQL_USERNAME = "python_user"
 
-# Enter the actual password from your original working code.
-SQL_PASSWORD = "YOUR_ACTUAL_PASSWORD"
+SQL_PASSWORD = "pgpyusr"
 
 # DEV PostgreSQL
-DEV_HOST = "YOUR_DEV_HOST"
+DEV_HOST = "18.210.201.107" 
 DEV_PORT = 5432
 DEV_DATABASE = "warehouse"
 
 # PROD PostgreSQL
-PROD_HOST = "YOUR_PROD_HOST"
+PROD_HOST = "3.221.58.110"
 PROD_PORT = 5432
 PROD_DATABASE = "warehouse"
 
