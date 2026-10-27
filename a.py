@@ -1,185 +1,145 @@
--- ============================================================
--- NESNA DEV — FOUR-TABLE POPULATION
---
--- SOURCE:      DEV raw
--- DESTINATION: DEV nesna
---
--- PROD:        NEVER ACCESSED
---
--- Tables:
---   1. permcontract
---   2. permcontractdisbursement
---   3. permledger
---   4. permnote
---
--- permcontractfield intentionally excluded.
---
--- This script replaces existing DEV destination rows.
--- No destination columns or table definitions are changed.
--- ============================================================
+from sqlalchemy import create_engine, text
+from urllib.parse import quote
+
+# ============================================================
+# CONNECTION CONFIGURATION
+# ============================================================
+
+SQL_USERNAME = "python_user"
+SQL_PASSWORD = "YOUR_PASSWORD"
+
+DEV_HOST = "YOUR_DEV_HOST"
+PROD_HOST = "YOUR_PROD_HOST"
+
+DATABASE = "warehouse"
+
+TABLES = {
+    "permcontract": "perm__Contract",
+    "permcontractdisbursement": "perm__ContractDisbursement",
+    "permledger": "perm__Ledger",
+    "permnote": "perm__Note",
+}
 
 
-BEGIN;
+def connect(host):
+    password = quote(SQL_PASSWORD, safe="")
+    username = quote(SQL_USERNAME, safe="")
 
--- ------------------------------------------------------------
--- SAFETY CHECK: ENSURE WE ARE CONNECTED TO DEV
--- ------------------------------------------------------------
-
-DO $$
-BEGIN
-    IF current_database() <> 'warehouse' THEN
-        RAISE EXCEPTION
-            'ABORTED: Expected warehouse database, connected to %',
-            current_database();
-    END IF;
-
-    IF inet_server_addr() IS DISTINCT FROM
-       '18.210.201.107'::inet THEN
-        RAISE EXCEPTION
-            'ABORTED: This is not the expected DEV PostgreSQL server. Actual: %',
-            inet_server_addr();
-    END IF;
-
-    RAISE NOTICE 'DEV database identity verified.';
-END
-$$;
+    return create_engine(
+        f"postgresql+psycopg2://"
+        f"{username}:{password}@{host}:5432/{DATABASE}"
+    )
 
 
--- ------------------------------------------------------------
--- 1. CONTRACT
--- ------------------------------------------------------------
+def get_columns(conn, schema, table):
+    sql = text("""
+        SELECT
+            column_name,
+            data_type,
+            udt_name,
+            character_maximum_length,
+            numeric_precision,
+            numeric_scale,
+            is_nullable
+        FROM information_schema.columns
+        WHERE table_schema = :schema
+          AND table_name = :table
+        ORDER BY ordinal_position
+    """)
 
-TRUNCATE TABLE nesna.permcontract;
-
-INSERT INTO nesna.permcontract (
-    "ContractId",
-    "EarningMethodInd",
-    "fxCoBuyerId",
-    "fxCustomerId",
-    "fxSoldByUserId",
-    externaluser
-)
-SELECT
-    "ContractId",
-    "EarningMethodInd",
-    "fxCoBuyerId",
-    "fxCustomerId",
-    "fxSoldByUserId",
-    "ExternalUser"
-FROM raw."perm__Contract";
-
-
--- ------------------------------------------------------------
--- 2. CONTRACT DISBURSEMENT
--- ------------------------------------------------------------
-
-TRUNCATE TABLE nesna.permcontractdisbursement;
-
-INSERT INTO nesna.permcontractdisbursement (
-    "ContractDisbursementId",
-    "fxContractId",
-    "DisbursementTypeInd",
-    "DisbursementRefundTypeInd",
-    "fxDisbursementGroupId",
-    "fxDisbursementCodeId",
-    "SourceDescription",
-    "fxDisbursementLabelId"
-)
-SELECT
-    "ContractDisbursementId",
-    "fxContractId",
-    "DisbursementTypeInd",
-    "DisbursementRefundTypeInd",
-    "fxDisbursementGroupId",
-    "fxDisbursementCodeId",
-    "SourceDescription",
-    "fxDisbursementLabelId"
-FROM raw."perm__ContractDisbursement";
+    return [
+        dict(row)
+        for row in conn.execute(
+            sql,
+            {"schema": schema, "table": table},
+        ).mappings()
+    ]
 
 
--- ------------------------------------------------------------
--- 3. LEDGER
--- ------------------------------------------------------------
-
-TRUNCATE TABLE nesna.permledger;
-
-INSERT INTO nesna.permledger (
-    "LedgerId",
-    "fxRelatedContractId"
-)
-SELECT
-    "LedgerId",
-    "fxRelatedContractId"
-FROM raw."perm__Ledger";
+def signature(column):
+    return (
+        column["column_name"].lower(),
+        column["data_type"],
+        column["udt_name"],
+        column["character_maximum_length"],
+        column["numeric_precision"],
+        column["numeric_scale"],
+        column["is_nullable"],
+    )
 
 
--- ------------------------------------------------------------
--- 4. NOTE
--- ------------------------------------------------------------
+def main():
+    dev_engine = connect(DEV_HOST)
+    prod_engine = connect(PROD_HOST)
 
-TRUNCATE TABLE nesna.permnote;
+    try:
+        with dev_engine.connect() as dev:
+            with prod_engine.connect() as prod:
 
-INSERT INTO nesna.permnote (
-    "NoteId",
-    "RemovedFromSource",
-    "fxAccountHolderId",
-    "fxLedgerId",
-    "fxClaimId",
-    "Note",
-    "fxEnteredById",
-    "EnteredDate",
-    "NoteTypeInd",
-    "WarningNoteLevelInd",
-    "ExpirationDate"
-)
-SELECT
-    "NoteId",
-    "RemovedFromSource"::integer,
-    "fxAccountHolderId",
-    "fxLedgerId",
-    "fxClaimId",
-    "Note",
-    "fxEnteredById",
-    "EnteredDate",
-    "NoteTypeInd",
-    "WarningNoteLevelInd",
-    "ExpirationDate"
-FROM raw."perm__Note";
+                print("\n" + "=" * 100)
+                print("NESNA FOUR-TABLE COLUMN VALIDATION")
+                print("=" * 100)
+
+                all_pass = True
+
+                for target, source in TABLES.items():
+                    raw = get_columns(dev, "raw", source)
+                    dev_nesna = get_columns(dev, "nesna", target)
+                    prod_nesna = get_columns(prod, "nesna", target)
+
+                    if not raw or not dev_nesna or not prod_nesna:
+                        print(f"\n{target}: FAIL — Missing table or columns")
+                        all_pass = False
+                        continue
+
+                    raw_names = {
+                        c["column_name"].lower()
+                        for c in raw
+                    }
+
+                    prod_names = {
+                        c["column_name"].lower()
+                        for c in prod_nesna
+                    }
+
+                    surplus = sorted(raw_names - prod_names)
+
+                    dev_sig = [signature(c) for c in dev_nesna]
+                    prod_sig = [signature(c) for c in prod_nesna]
+
+                    match = dev_sig == prod_sig
+
+                    if not match:
+                        all_pass = False
+
+                    print(f"\nTABLE: {target}")
+                    print("-" * 100)
+
+                    print(f"DEV RAW columns:       {len(raw)}")
+                    print(f"DEV NESNA columns:     {len(dev_nesna)}")
+                    print(f"PROD NESNA columns:    {len(prod_nesna)}")
+
+                    print(f"RAW surplus columns:   {len(surplus)}")
+                    print(f"RAW surplus names:     {surplus}")
+
+                    print(
+                        "DEV/PROD NESNA MATCH:  ",
+                        "PASS" if match else "FAIL",
+                    )
+
+                print("\n" + "=" * 100)
+                print(
+                    "FINAL RESULT:",
+                    "PASS — ALL FOUR TABLES MATCH PROD"
+                    if all_pass
+                    else "FAIL — REVIEW DIFFERENCES",
+                )
+                print("=" * 100)
+
+    finally:
+        dev_engine.dispose()
+        prod_engine.dispose()
 
 
--- ------------------------------------------------------------
--- VALIDATION: DISPLAY POPULATED ROW COUNTS
--- ------------------------------------------------------------
-
-SELECT
-    'permcontract' AS table_name,
-    (SELECT COUNT(*) FROM raw."perm__Contract") AS raw_rows,
-    (SELECT COUNT(*) FROM nesna.permcontract) AS nesna_rows
-
-UNION ALL
-
-SELECT
-    'permcontractdisbursement',
-    (SELECT COUNT(*) FROM raw."perm__ContractDisbursement"),
-    (SELECT COUNT(*) FROM nesna.permcontractdisbursement)
-
-UNION ALL
-
-SELECT
-    'permledger',
-    (SELECT COUNT(*) FROM raw."perm__Ledger"),
-    (SELECT COUNT(*) FROM nesna.permledger)
-
-UNION ALL
-
-SELECT
-    'permnote',
-    (SELECT COUNT(*) FROM raw."perm__Note"),
-    (SELECT COUNT(*) FROM nesna.permnote);
-
-
--- ------------------------------------------------------------
--- COMMIT
--- ------------------------------------------------------------
-
-COMMIT;
+if __name__ == "__main__":
+    main()
