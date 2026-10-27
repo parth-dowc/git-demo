@@ -32,6 +32,33 @@ PROD_HOST = "3.221.58.110"
 PROD_PORT = 5432
 PROD_DATABASE = "warehouse"
 
+# ============================================================
+# NESNA MIGRATION CONFIGURATION
+# ============================================================
+
+# DEV source: already ingested SQL Server data
+RAW_SCHEMA = "raw"
+
+# Existing NESNA destination tables
+DEV_TARGET_SCHEMA = "nesna"
+PROD_TARGET_SCHEMA = "nesna"
+
+# Backup location — DEV ONLY
+BACKUP_SCHEMA = "nesna_dev_migration_backup"
+
+# Five-table pilot
+PILOT_TABLES = {
+    "permcontract",
+    "permcontractfield",
+    "permcontractdisbursement",
+    "permledger",
+    "permnote",
+}
+
+# Local comparison reports
+OUTPUT_DIR = Path("results")
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
 
 def make_engine(host, port, database):
     encoded_password = quote(SQL_PASSWORD, safe="")
