@@ -1,3 +1,7 @@
+#New-Item -ItemType Directory -Force -Path results | Out-Null
+
+#python .\nesna_dev_pilot.py compare --output results/01_before_comparison.json
+
 #!/usr/bin/env python3
 """
 NESNA FIVE-TABLE DEV MIGRATION
