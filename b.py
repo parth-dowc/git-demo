@@ -1,64 +1,46 @@
 import argparse
 import csv
-import getpass
 import json
 import re
+from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import quote
 
 from sqlalchemy import create_engine, text
-from sqlalchemy.engine import URL
-
-
-from urllib.parse import quote
-from sqlalchemy import create_engine
 
 # ============================================================
 # POSTGRESQL CONNECTION CONFIGURATION
+# Keep the same working values from your original script.
 # ============================================================
 
 SQL_USERNAME = "python_user"
+SQL_PASSWORD = "PASTE_YOUR_EXISTING_PASSWORD"
 
-SQL_PASSWORD = "pgpyusr"
-
-# DEV PostgreSQL
-DEV_HOST = "18.210.201.107" 
+DEV_HOST = "18.210.201.107"
 DEV_PORT = 5432
 DEV_DATABASE = "warehouse"
 
-# PROD PostgreSQL
 PROD_HOST = "3.221.58.110"
 PROD_PORT = 5432
 PROD_DATABASE = "warehouse"
 
 # ============================================================
-# NESNA MIGRATION CONFIGURATION
+# DISCOVERY CONFIGURATION
 # ============================================================
 
-# DEV source: already ingested SQL Server data
 RAW_SCHEMA = "raw"
-
-# Existing NESNA destination tables
 DEV_TARGET_SCHEMA = "nesna"
 PROD_TARGET_SCHEMA = "nesna"
 
-# Backup location — DEV ONLY
-BACKUP_SCHEMA = "nesna_dev_migration_backup"
+EXPECTED_TABLE_COUNT = 66
 
-# Five-table pilot
-PILOT_TABLES = {
-    "permcontract",
-    "permcontractfield",
-    "permcontractdisbursement",
-    "permledger",
-    "permnote",
-}
-
-# Local comparison reports
 OUTPUT_DIR = Path("results")
-OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
+
+# ============================================================
+# CONNECTIONS — SAME IMPLEMENTATION AS ORIGINAL
+# ============================================================
 
 def make_engine(host, port, database):
     encoded_password = quote(SQL_PASSWORD, safe="")
@@ -78,7 +60,10 @@ def make_engine(host, port, database):
 
 
 def connect_databases():
-    if SQL_PASSWORD == "YOUR_ACTUAL_PASSWORD":
+    if SQL_PASSWORD in (
+        "YOUR_ACTUAL_PASSWORD",
+        "PASTE_YOUR_EXISTING_PASSWORD",
+    ):
         raise RuntimeError("Configure SQL_PASSWORD first.")
 
     if DEV_HOST == "YOUR_DEV_HOST":
@@ -112,650 +97,1106 @@ def connect_databases():
 
 
 # ============================================================
-# SAFE SQL IDENTIFIERS
+# READ-ONLY SQL
 # ============================================================
 
-def identifier(value):
-    if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", value):
-        raise ValueError(f"Unsafe SQL identifier: {value}")
+TABLES_SQL = text("""
+    SELECT table_name
+    FROM information_schema.tables
+    WHERE table_schema = :schema
+      AND table_type = 'BASE TABLE'
+    ORDER BY table_name
+""")
 
-    return '"' + value.replace('"', '""') + '"'
+COLUMNS_SQL = text("""
+    SELECT
+        column_name,
+        data_type,
+        udt_name,
+        character_maximum_length,
+        numeric_precision,
+        numeric_scale,
+        datetime_precision,
+        is_nullable,
+        ordinal_position,
+        column_default,
+        is_identity,
+        is_generated
+    FROM information_schema.columns
+    WHERE table_schema = :schema
+      AND table_name = :table
+    ORDER BY ordinal_position
+""")
 
-
-def table_sql(schema, table):
-    return f"{identifier(schema)}.{identifier(table)}"
+MAPPINGS_SQL = text("""
+    SELECT ms, pg, fields
+    FROM staging.masterstaging
+    ORDER BY ms, pg
+""")
 
 
 # ============================================================
-# DATABASE METADATA
+# METADATA
 # ============================================================
-
-def get_columns(connection, schema, table):
-    query = text("""
-        SELECT
-            column_name,
-            data_type,
-            udt_name,
-            character_maximum_length,
-            numeric_precision,
-            numeric_scale,
-            is_nullable,
-            ordinal_position
-        FROM information_schema.columns
-        WHERE table_schema = :schema
-          AND table_name = :table
-        ORDER BY ordinal_position
-    """)
-
-    rows = connection.execute(
-        query,
-        {"schema": schema, "table": table},
-    ).mappings().all()
-
-    return [dict(row) for row in rows]
-
 
 def get_tables(connection, schema):
-    query = text("""
-        SELECT table_name
-        FROM information_schema.tables
-        WHERE table_schema = :schema
-          AND table_type = 'BASE TABLE'
-    """)
-
-    return {
-        row[0].lower(): row[0]
+    return [
+        row[0]
         for row in connection.execute(
-            query,
+            TABLES_SQL,
             {"schema": schema},
         )
-    }
+    ]
 
 
-def get_count(connection, schema, table):
-    query = text(
-        f"SELECT COUNT(*) FROM {table_sql(schema, table)}"
-    )
-
-    return connection.execute(query).scalar_one()
-
-
-def schema_signature(columns):
+def get_columns(connection, schema, table):
     return [
-        (
-            column["column_name"].lower(),
-            column["data_type"],
-            column["udt_name"],
-            column["character_maximum_length"],
-            column["numeric_precision"],
-            column["numeric_scale"],
-            column["is_nullable"],
-        )
-        for column in columns
+        dict(row)
+        for row in connection.execute(
+            COLUMNS_SQL,
+            {"schema": schema, "table": table},
+        ).mappings()
     ]
 
 
-# ============================================================
-# INDIA'S MASTERSTAGING MAPPINGS
-# ============================================================
+def unique_casefold(items, description):
+    lookup = defaultdict(list)
 
-def get_mappings(connection):
-    query = text("""
-        SELECT ms, pg, fields
-        FROM staging.masterstaging
-        WHERE LOWER(pg) IN (
-            'permcontract',
-            'permcontractfield',
-            'permcontractdisbursement',
-            'permledger',
-            'permnote'
-        )
-    """)
+    for item in items:
+        lookup[item.casefold()].append(item)
 
-    rows = connection.execute(query).mappings().all()
-
-    mappings = {}
-
-    for row in rows:
-        destination = row["pg"].lower()
-
-        if destination in mappings:
-            raise RuntimeError(
-                f"Duplicate masterstaging mapping: {destination}"
-            )
-
-        mappings[destination] = {
-            "source": row["ms"],
-            "fields": row["fields"],
-        }
-
-    missing = PILOT_TABLES - set(mappings)
-
-    if missing:
-        raise RuntimeError(
-            f"Missing masterstaging mappings: {sorted(missing)}"
-        )
-
-    return mappings
-
-
-# ============================================================
-# SOURCE DISCOVERY
-# ============================================================
-
-def normalize_name(name):
-    return re.sub(r"[^a-z0-9]", "", name.lower())
-
-
-def discover_source_table(connection, source_name):
-    raw_tables = get_tables(connection, RAW_SCHEMA)
-
-    source_parts = (
-        source_name.replace("[", "")
-        .replace("]", "")
-        .split(".")
-    )
-
-    candidates = [
-        source_name,
-        source_name.replace(".", "_"),
-        source_name.replace(".", ""),
-        source_parts[-1],
-    ]
-
-    for candidate in candidates:
-        actual = raw_tables.get(candidate.lower())
-
-        if actual:
-            return actual
-
-    normalized = {
-        normalize_name(candidate)
-        for candidate in candidates
+    duplicates = {
+        key: values
+        for key, values in lookup.items()
+        if len(values) != 1
     }
 
-    matches = [
-        actual
-        for actual in raw_tables.values()
-        if normalize_name(actual) in normalized
-    ]
+    if duplicates:
+        raise ValueError(
+            f"Ambiguous {description}: {duplicates}"
+        )
 
-    if len(matches) == 1:
-        return matches[0]
+    return {
+        key: values[0]
+        for key, values in lookup.items()
+    }
 
-    raise RuntimeError(
-        f"Cannot uniquely identify DEV raw table "
-        f"for {source_name}. Matches: {matches}"
+
+def column_signature(column):
+    keys = (
+        "column_name",
+        "data_type",
+        "udt_name",
+        "character_maximum_length",
+        "numeric_precision",
+        "numeric_scale",
+        "datetime_precision",
+        "is_nullable",
+        "ordinal_position",
+        "column_default",
+        "is_identity",
+        "is_generated",
     )
+
+    return tuple(column.get(key) for key in keys)
 
 
 # ============================================================
-# MAPPING FIELD PARSER
+# STRICT SOURCE TABLE RESOLUTION
+# ============================================================
+
+def sqlserver_parts(name):
+    """
+    Accept only schema.table SQL Server names.
+
+    Example:
+        perm.Contract
+
+    Do not guess using table names alone.
+    """
+
+    if not isinstance(name, str):
+        raise ValueError("Mapping ms must be text.")
+
+    cleaned = (
+        name.strip()
+        .replace("[", "")
+        .replace("]", "")
+        .replace('"', "")
+    )
+
+    parts = cleaned.split(".")
+
+    valid = all(
+        re.fullmatch(
+            r"[A-Za-z_][A-Za-z0-9_]*",
+            part,
+        )
+        for part in parts
+    )
+
+    if len(parts) != 2 or not valid:
+        raise ValueError(
+            f"Expected schema.table, got {name!r}"
+        )
+
+    return parts
+
+
+def resolve_raw(source_name, raw_lookup):
+    """
+    Strictly map:
+
+        perm.Contract
+            ->
+        raw."perm__Contract"
+
+    Never fall back to an unrelated Contract table.
+    """
+
+    schema, table = sqlserver_parts(source_name)
+
+    expected = f"{schema}__{table}"
+
+    actual = raw_lookup.get(expected.casefold())
+
+    return actual, expected
+
+
+# ============================================================
+# MAPPING EXPRESSION PARSER
 # ============================================================
 
 def split_fields(fields):
-    if not fields:
-        raise ValueError("Empty mapping fields.")
+    """
+    Split comma-separated SQL projections without splitting
+    commas inside functions, parentheses, or quoted strings.
+    """
+
+    if not isinstance(fields, str) or not fields.strip():
+        raise ValueError(
+            "Mapping fields must be a nonempty string."
+        )
 
     result = []
-    buffer = []
+    current = []
+
     depth = 0
+    quote_char = None
+    bracket = False
 
-    for character in fields:
-        if character == "(":
+    i = 0
+
+    while i < len(fields):
+        ch = fields[i]
+
+        if quote_char:
+            current.append(ch)
+
+            if ch == quote_char:
+                if (
+                    i + 1 < len(fields)
+                    and fields[i + 1] == quote_char
+                ):
+                    current.append(fields[i + 1])
+                    i += 1
+                else:
+                    quote_char = None
+
+        elif bracket:
+            current.append(ch)
+
+            if ch == "]":
+                bracket = False
+
+        elif ch in ('"', "'"):
+            quote_char = ch
+            current.append(ch)
+
+        elif ch == "[":
+            bracket = True
+            current.append(ch)
+
+        elif ch == "(":
             depth += 1
+            current.append(ch)
 
-        elif character == ")":
+        elif ch == ")":
             depth -= 1
 
-        if depth < 0:
-            raise ValueError("Invalid mapping parentheses.")
+            if depth < 0:
+                raise ValueError(
+                    "Unbalanced mapping parentheses."
+                )
 
-        if character == "," and depth == 0:
-            result.append("".join(buffer).strip())
-            buffer = []
+            current.append(ch)
+
+        elif ch == "," and depth == 0:
+            item = "".join(current).strip()
+
+            if not item:
+                raise ValueError(
+                    "Empty mapping projection."
+                )
+
+            result.append(item)
+            current = []
+
         else:
-            buffer.append(character)
+            current.append(ch)
 
-    if depth != 0:
-        raise ValueError("Invalid mapping parentheses.")
+        i += 1
 
-    result.append("".join(buffer).strip())
+    if depth or quote_char or bracket:
+        raise ValueError(
+            "Unbalanced mapping expression."
+        )
+
+    item = "".join(current).strip()
+
+    if not item:
+        raise ValueError(
+            "Empty final mapping projection."
+        )
+
+    result.append(item)
 
     return result
 
 
-def parse_field(expression):
+def parse_projection(expression):
+    """
+    Supported:
+      ColumnName
+      [ColumnName]
+      "ColumnName"
+      ColumnName AS Alias
+      CAST(ColumnName AS INT) AS Alias
+
+    Unsupported expressions are BLOCKED, not guessed.
+    """
+
     expression = expression.strip()
 
-    # Simple column, optionally bracketed.
+    ident = (
+        r'(?:'
+        r'\[([A-Za-z_][A-Za-z0-9_]*)\]'
+        r'|"([A-Za-z_][A-Za-z0-9_]*)"'
+        r'|([A-Za-z_][A-Za-z0-9_]*)'
+        r')'
+    )
+
     simple = re.fullmatch(
-        r"\[?([A-Za-z_][A-Za-z0-9_]*)\]?",
+        rf"\s*{ident}"
+        rf"(?:\s+(?:AS\s+)?{ident})?"
+        rf"\s*",
         expression,
+        flags=re.IGNORECASE,
     )
 
     if simple:
-        name = simple.group(1)
+        source = next(
+            value
+            for value in simple.group(1, 2, 3)
+            if value is not None
+        )
+
+        target = next(
+            (
+                value
+                for value in simple.group(4, 5, 6)
+                if value is not None
+            ),
+            source,
+        )
 
         return {
-            "source": name,
-            "target": name,
-            "cast": None,
+            "source": source,
+            "target": target,
+            "transform": None,
+            "expression": expression,
         }
 
-    # CAST(RemovedFromSource AS INT) AS RemovedFromSource
     cast = re.fullmatch(
-        r"CAST\s*\(\s*"
-        r"\[?([A-Za-z_][A-Za-z0-9_]*)\]?"
-        r"\s+AS\s+INT(?:EGER)?\s*\)"
-        r"\s+(?:AS\s+)?"
-        r"\[?([A-Za-z_][A-Za-z0-9_]*)\]?",
+        rf"\s*CAST\s*\(\s*{ident}"
+        rf"\s+AS\s+(INT|INTEGER)\s*\)"
+        rf"(?:\s+(?:AS\s+)?{ident})?"
+        rf"\s*",
         expression,
         flags=re.IGNORECASE,
     )
 
     if cast:
+        source = next(
+            value
+            for value in cast.group(1, 2, 3)
+            if value is not None
+        )
+
+        target = next(
+            (
+                value
+                for value in cast.group(5, 6, 7)
+                if value is not None
+            ),
+            source,
+        )
+
         return {
-            "source": cast.group(1),
-            "target": cast.group(2),
-            "cast": "integer",
+            "source": source,
+            "target": target,
+            "transform": "integer",
+            "expression": expression,
         }
 
-    raise RuntimeError(
-        f"Unsupported mapping expression: {expression}. "
-        "Refusing to guess."
+    raise ValueError(
+        f"Unsupported mapping expression: {expression!r}"
     )
-
-
-def parse_mapping(fields):
-    return [
-        parse_field(field)
-        for field in split_fields(fields)
-    ]
 
 
 # ============================================================
-# COMPARE
+# INSPECT ONE MAPPING
 # ============================================================
 
-def inspect_table(dev_connection, prod_connection, target, mapping):
-    source = discover_source_table(
-        dev_connection,
-        mapping["source"],
-    )
-
-    raw_columns = get_columns(
-        dev_connection,
-        RAW_SCHEMA,
-        source,
-    )
-
-    dev_columns = get_columns(
-        dev_connection,
-        DEV_TARGET_SCHEMA,
-        target,
-    )
-
-    prod_columns = get_columns(
-        prod_connection,
-        PROD_TARGET_SCHEMA,
-        target,
-    )
-
-    if not raw_columns:
-        raise RuntimeError(f"Missing DEV raw table: {source}")
-
-    if not dev_columns:
-        raise RuntimeError(f"Missing DEV nesna table: {target}")
-
-    if not prod_columns:
-        raise RuntimeError(f"Missing PROD nesna table: {target}")
-
-    parsed_fields = parse_mapping(mapping["fields"])
-
-    raw_lookup = {
-        column["column_name"].lower(): column["column_name"]
-        for column in raw_columns
+def inspect_mapping(
+    mapping,
+    raw_lookup,
+    dev_lookup,
+    prod_lookup,
+    dev_connection,
+    prod_connection,
+):
+    result = {
+        "mapping_ms": mapping["ms"],
+        "mapping_pg": mapping["pg"],
+        "status": "BLOCKED",
+        "errors": [],
+        "warnings": [],
+        "selected_columns": [],
+        "surplus_raw_columns": [],
     }
 
-    target_lookup = {
-        column["column_name"].lower(): column["column_name"]
-        for column in dev_columns
-    }
+    try:
+        source_name = mapping["ms"]
+        target_name = mapping["pg"]
 
-    selected = []
-
-    for field in parsed_fields:
-        source_column = raw_lookup.get(
-            field["source"].lower()
-        )
-
-        target_column = target_lookup.get(
-            field["target"].lower()
-        )
-
-        if not source_column:
-            raise RuntimeError(
-                f"{target}: source column missing: "
-                f"{field['source']}"
+        if (
+            not isinstance(target_name, str)
+            or not re.fullmatch(
+                r"[A-Za-z_][A-Za-z0-9_]*",
+                target_name.strip(),
+            )
+        ):
+            raise ValueError(
+                f"Invalid destination name: {target_name!r}"
             )
 
-        if not target_column:
-            raise RuntimeError(
-                f"{target}: destination column missing: "
-                f"{field['target']}"
+        target_name = target_name.strip()
+
+        raw_name, expected_raw = resolve_raw(
+            source_name,
+            raw_lookup,
+        )
+
+        dev_target = dev_lookup.get(
+            target_name.casefold()
+        )
+
+        prod_target = prod_lookup.get(
+            target_name.casefold()
+        )
+
+        result["expected_raw_table"] = expected_raw
+        result["raw_table"] = raw_name
+        result["dev_nesna_table"] = dev_target
+        result["prod_nesna_table"] = prod_target
+
+        if not raw_name:
+            result["errors"].append(
+                f"Missing exact RAW table: {expected_raw}"
             )
 
-        selected.append({
-            "source": source_column,
-            "target": target_column,
-            "cast": field["cast"],
-        })
+        if not dev_target:
+            result["errors"].append(
+                f"Missing DEV NESNA table: {target_name}"
+            )
 
-    selected_sources = {
-        field["source"].lower()
-        for field in selected
-    }
+        if not prod_target:
+            result["errors"].append(
+                f"Missing PROD NESNA table: {target_name}"
+            )
 
-    surplus = [
-        column["column_name"]
-        for column in raw_columns
-        if column["column_name"].lower()
-        not in selected_sources
-    ]
+        if result["errors"]:
+            return result
 
-    schema_matches_prod = (
-        schema_signature(dev_columns)
-        == schema_signature(prod_columns)
-    )
-
-    return {
-        "target": target,
-        "source": source,
-        "mapping_source": mapping["source"],
-        "selected_columns": selected,
-        "surplus_raw_columns": surplus,
-        "raw_column_count": len(raw_columns),
-        "required_column_count": len(selected),
-        "dev_nesna_column_count": len(dev_columns),
-        "prod_nesna_column_count": len(prod_columns),
-        "dev_prod_schema_match": schema_matches_prod,
-        "raw_rows": get_count(
+        raw_columns = get_columns(
             dev_connection,
             RAW_SCHEMA,
-            source,
-        ),
-        "dev_nesna_rows": get_count(
+            raw_name,
+        )
+
+        dev_columns = get_columns(
             dev_connection,
             DEV_TARGET_SCHEMA,
-            target,
-        ),
-        "prod_nesna_rows": get_count(
+            dev_target,
+        )
+
+        prod_columns = get_columns(
             prod_connection,
             PROD_TARGET_SCHEMA,
-            target,
-        ),
+            prod_target,
+        )
+
+        result["raw_column_count"] = len(raw_columns)
+        result["dev_nesna_column_count"] = len(dev_columns)
+        result["prod_nesna_column_count"] = len(prod_columns)
+
+        dev_signature = [
+            column_signature(column)
+            for column in dev_columns
+        ]
+
+        prod_signature = [
+            column_signature(column)
+            for column in prod_columns
+        ]
+
+        schema_match = dev_signature == prod_signature
+
+        result[
+            "dev_prod_column_definition_match"
+        ] = schema_match
+
+        if not schema_match:
+            result["errors"].append(
+                "DEV/PROD NESNA column definitions differ."
+            )
+
+        raw_column_lookup = unique_casefold(
+            [
+                column["column_name"]
+                for column in raw_columns
+            ],
+            "RAW columns",
+        )
+
+        dev_column_lookup = unique_casefold(
+            [
+                column["column_name"]
+                for column in dev_columns
+            ],
+            "DEV NESNA columns",
+        )
+
+        prod_column_lookup = unique_casefold(
+            [
+                column["column_name"]
+                for column in prod_columns
+            ],
+            "PROD NESNA columns",
+        )
+
+        projections = [
+            parse_projection(expression)
+            for expression in split_fields(
+                mapping["fields"]
+            )
+        ]
+
+        seen_targets = set()
+        selected_sources = set()
+
+        for projection in projections:
+            source_key = projection["source"].casefold()
+            target_key = projection["target"].casefold()
+
+            source_column = raw_column_lookup.get(
+                source_key
+            )
+
+            dev_column = dev_column_lookup.get(
+                target_key
+            )
+
+            prod_column = prod_column_lookup.get(
+                target_key
+            )
+
+            if not source_column:
+                result["errors"].append(
+                    f"Missing RAW column: "
+                    f"{projection['source']}"
+                )
+
+            if not dev_column or not prod_column:
+                result["errors"].append(
+                    f"Missing DEV/PROD destination column: "
+                    f"{projection['target']}"
+                )
+
+            if target_key in seen_targets:
+                result["errors"].append(
+                    f"Duplicate destination projection: "
+                    f"{projection['target']}"
+                )
+
+            seen_targets.add(target_key)
+
+            if source_column:
+                selected_sources.add(
+                    source_column.casefold()
+                )
+
+            projection[
+                "resolved_source"
+            ] = source_column
+
+            projection[
+                "resolved_target"
+            ] = dev_column
+
+            result["selected_columns"].append(
+                projection
+            )
+
+        # Every destination column must have a mapping.
+        missing_targets = (
+            set(dev_column_lookup) - seen_targets
+        )
+
+        if missing_targets:
+            names = sorted(
+                dev_column_lookup[key]
+                for key in missing_targets
+            )
+
+            result["errors"].append(
+                "Unmapped destination columns: "
+                + ", ".join(names)
+            )
+
+        surplus = [
+            column["column_name"]
+            for column in raw_columns
+            if column["column_name"].casefold()
+            not in selected_sources
+        ]
+
+        result["surplus_raw_columns"] = surplus
+
+        result["selected_column_count"] = len(
+            projections
+        )
+
+        result["surplus_raw_column_count"] = len(
+            surplus
+        )
+
+        # No actual data conversion or loading is attempted.
+        result["warnings"].append(
+            "Metadata-only discovery. Actual cast compatibility, "
+            "row values, constraints, foreign keys, and DAG "
+            "dependencies require separate validation."
+        )
+
+        if not result["errors"]:
+            result["status"] = "MAPPING_CANDIDATE"
+
+    except Exception as exc:
+        result["errors"].append(
+            f"{type(exc).__name__}: {exc}"
+        )
+
+    return result
+
+
+# ============================================================
+# OPTIONAL EXACT DAG 1 INVENTORY
+# ============================================================
+
+def load_inventory(path):
+    data = json.loads(
+        Path(path).read_text(encoding="utf-8")
+    )
+
+    if (
+        not isinstance(data, list)
+        or not all(
+            isinstance(value, str)
+            for value in data
+        )
+    ):
+        raise ValueError(
+            "Inventory must be a JSON array "
+            "of exact RAW table names."
+        )
+
+    normalized = [
+        name.casefold()
+        for name in data
+    ]
+
+    if len(normalized) != len(set(normalized)):
+        raise ValueError(
+            "Inventory contains duplicate table names."
+        )
+
+    if len(data) != EXPECTED_TABLE_COUNT:
+        raise ValueError(
+            f"Inventory contains {len(data)} tables; "
+            f"expected {EXPECTED_TABLE_COUNT}."
+        )
+
+    return data
+
+
+# ============================================================
+# MAIN DISCOVERY
+# ============================================================
+
+def compare(args):
+    OUTPUT_DIR.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    dev_engine, prod_engine = connect_databases()
+
+    report = {
+        "generated_at": datetime.now(
+            timezone.utc
+        ).isoformat(),
+        "mode": "READ_ONLY_DISCOVERY",
+        "expected_table_count": EXPECTED_TABLE_COUNT,
+        "inventory_provided": bool(args.inventory),
+        "tables": [],
+        "global_errors": [],
+        "global_warnings": [],
     }
 
+    try:
+        with (
+            dev_engine.connect() as dev,
+            prod_engine.connect() as prod,
+        ):
+            # Enforce read-only transactions.
+            dev.execute(
+                text("SET TRANSACTION READ ONLY")
+            )
 
-def compare(dev, prod):
-    with dev.connect() as dev_connection:
-        with prod.connect() as prod_connection:
+            prod.execute(
+                text("SET TRANSACTION READ ONLY")
+            )
 
-            mappings = get_mappings(dev_connection)
+            raw_names = get_tables(
+                dev,
+                RAW_SCHEMA,
+            )
 
-            report = {
-                "generated_at": datetime.now(
-                    timezone.utc
-                ).isoformat(),
-                "tables": [],
-            }
+            dev_names = get_tables(
+                dev,
+                DEV_TARGET_SCHEMA,
+            )
 
-            for target in sorted(PILOT_TABLES):
-                print(f"\nInspecting {target}...")
+            prod_names = get_tables(
+                prod,
+                PROD_TARGET_SCHEMA,
+            )
 
-                result = inspect_table(
-                    dev_connection,
-                    prod_connection,
-                    target,
-                    mappings[target],
+            raw_lookup = unique_casefold(
+                raw_names,
+                "RAW tables",
+            )
+
+            dev_lookup = unique_casefold(
+                dev_names,
+                "DEV NESNA tables",
+            )
+
+            prod_lookup = unique_casefold(
+                prod_names,
+                "PROD NESNA tables",
+            )
+
+            report["raw_table_count"] = len(
+                raw_names
+            )
+
+            report["dev_nesna_table_count"] = len(
+                dev_names
+            )
+
+            report["prod_nesna_table_count"] = len(
+                prod_names
+            )
+
+            mappings = [
+                dict(row)
+                for row in dev.execute(
+                    MAPPINGS_SQL
+                ).mappings()
+            ]
+
+            report[
+                "masterstaging_mapping_rows"
+            ] = len(mappings)
+
+            if not mappings:
+                report["global_errors"].append(
+                    "staging.masterstaging returned "
+                    "zero mappings."
+                )
+
+            by_destination = defaultdict(list)
+            by_source = defaultdict(list)
+
+            for mapping in mappings:
+                ms = mapping["ms"]
+                pg = mapping["pg"]
+
+                if (
+                    not isinstance(ms, str)
+                    or not isinstance(pg, str)
+                ):
+                    report["global_errors"].append(
+                        f"Invalid mapping row: {mapping!r}"
+                    )
+                    continue
+
+                by_destination[
+                    pg.strip().casefold()
+                ].append(mapping)
+
+                by_source[
+                    ms.strip().casefold()
+                ].append(mapping)
+
+            # Detect duplicate destination mappings.
+            for key, group in by_destination.items():
+                if len(group) > 1:
+                    report["global_errors"].append(
+                        f"Duplicate destination mapping "
+                        f"{key}: {len(group)} rows."
+                    )
+
+            # Detect one source mapped to multiple targets.
+            for key, group in by_source.items():
+                if len(group) > 1:
+                    destinations = [
+                        str(row["pg"])
+                        for row in group
+                    ]
+
+                    report["global_errors"].append(
+                        f"Source {key} maps to multiple "
+                        f"destinations: {destinations}"
+                    )
+
+            # Prefer the actual DAG 1 inventory.
+            if args.inventory:
+                inventory = load_inventory(
+                    args.inventory
+                )
+            else:
+                inventory = raw_names
+
+                report["global_warnings"].append(
+                    "No DAG 1 inventory supplied. "
+                    "Auditing every visible RAW base table. "
+                    "Cannot certify these are exactly "
+                    "the 66 DAG 1 tables."
+                )
+
+            if len(inventory) != EXPECTED_TABLE_COUNT:
+                report["global_errors"].append(
+                    f"Audited inventory contains "
+                    f"{len(inventory)} tables; "
+                    f"expected {EXPECTED_TABLE_COUNT}."
+                )
+
+            inventory_lookup = unique_casefold(
+                inventory,
+                "inventory tables",
+            )
+
+            for name in inventory:
+                if name.casefold() not in raw_lookup:
+                    report["global_errors"].append(
+                        f"Inventory RAW table missing: {name}"
+                    )
+
+            # Associate mapping rows with exact RAW names.
+            matching_rows = defaultdict(list)
+
+            for mapping in mappings:
+                try:
+                    _, expected = resolve_raw(
+                        mapping["ms"],
+                        raw_lookup,
+                    )
+
+                    if (
+                        expected.casefold()
+                        in inventory_lookup
+                    ):
+                        matching_rows[
+                            expected.casefold()
+                        ].append(mapping)
+
+                except Exception as exc:
+                    report["global_warnings"].append(
+                        f"Unresolvable mapping "
+                        f"{mapping['ms']!r}: {exc}"
+                    )
+
+            # Inspect every inventory table.
+            for name in inventory:
+                candidates = matching_rows.get(
+                    name.casefold(),
+                    [],
+                )
+
+                if len(candidates) != 1:
+                    status = (
+                        "MISSING_MAPPING"
+                        if not candidates
+                        else "AMBIGUOUS_MAPPING"
+                    )
+
+                    report["tables"].append({
+                        "raw_table": name,
+                        "status": status,
+                        "errors": [
+                            f"Expected exactly one mapping; "
+                            f"found {len(candidates)}."
+                        ],
+                        "mapping_candidates": [
+                            {
+                                "ms": row["ms"],
+                                "pg": row["pg"],
+                            }
+                            for row in candidates
+                        ],
+                    })
+
+                    continue
+
+                result = inspect_mapping(
+                    candidates[0],
+                    raw_lookup,
+                    dev_lookup,
+                    prod_lookup,
+                    dev,
+                    prod,
                 )
 
                 report["tables"].append(result)
 
-                print(
-                    "DEV/PROD schema match:",
-                    result["dev_prod_schema_match"],
-                )
+    finally:
+        dev_engine.dispose()
+        prod_engine.dispose()
 
-                print(
-                    "RAW columns:",
-                    result["raw_column_count"],
-                )
+    # ========================================================
+    # FINAL STATUS
+    # ========================================================
 
-                print(
-                    "Required columns:",
-                    result["required_column_count"],
-                )
+    statuses = Counter(
+        row["status"]
+        for row in report["tables"]
+    )
 
-                print(
-                    "Surplus RAW columns:",
-                    result["surplus_raw_columns"],
-                )
+    report["status_counts"] = dict(statuses)
 
-                print(
-                    "Rows:",
-                    {
-                        "raw": result["raw_rows"],
-                        "dev_nesna": result["dev_nesna_rows"],
-                        "prod_nesna": result["prod_nesna_rows"],
-                    },
-                )
+    report["ready_count"] = statuses[
+        "MAPPING_CANDIDATE"
+    ]
 
-    output = OUTPUT_DIR / "comparison.json"
+    report["all_66_mapping_candidates"] = (
+        len(report["tables"]) == EXPECTED_TABLE_COUNT
+        and report["ready_count"] == EXPECTED_TABLE_COUNT
+        and not report["global_errors"]
+        and bool(args.inventory)
+    )
 
-    output.write_text(
-        json.dumps(report, indent=2, default=str),
+    # ========================================================
+    # JSON REPORT
+    # ========================================================
+
+    json_path = (
+        OUTPUT_DIR / "nesna_66_discovery.json"
+    )
+
+    json_path.write_text(
+        json.dumps(
+            report,
+            indent=2,
+            default=str,
+        ),
         encoding="utf-8",
     )
 
-    print(f"\nComparison saved: {output}")
+    # ========================================================
+    # CSV REPORT
+    # ========================================================
 
-    return report
+    csv_path = (
+        OUTPUT_DIR / "nesna_66_summary.csv"
+    )
 
+    fieldnames = [
+        "raw_table",
+        "mapping_ms",
+        "mapping_pg",
+        "status",
+        "raw_column_count",
+        "selected_column_count",
+        "surplus_raw_column_count",
+        "dev_nesna_column_count",
+        "prod_nesna_column_count",
+        "dev_prod_column_definition_match",
+        "errors",
+        "surplus_raw_columns",
+    ]
 
-# ============================================================
-# DEV-ONLY LOAD
-# ============================================================
-
-def load_one(dev, prod, target):
-    if target not in PILOT_TABLES:
-        raise RuntimeError("Target is not in the pilot allowlist.")
-
-    # Explicit guard against pointing DEV at the PROD endpoint.
-    if (
-        DEV_HOST.strip().lower() == PROD_HOST.strip().lower()
-        and DEV_PORT == PROD_PORT
-        and DEV_DATABASE == PROD_DATABASE
-    ):
-        raise RuntimeError(
-            "DEV and PROD point to the same database endpoint."
+    with csv_path.open(
+        "w",
+        newline="",
+        encoding="utf-8-sig",
+    ) as file:
+        writer = csv.DictWriter(
+            file,
+            fieldnames=fieldnames,
         )
 
-    # Read-only preflight before any DEV modification.
-    with dev.connect() as dev_connection:
-        with prod.connect() as prod_connection:
-            mappings = get_mappings(dev_connection)
+        writer.writeheader()
 
-            inspection = inspect_table(
-                dev_connection,
-                prod_connection,
-                target,
-                mappings[target],
-            )
+        for row in report["tables"]:
+            output_row = {}
 
-    if not inspection["dev_prod_schema_match"]:
-        raise RuntimeError(
-            "DEV nesna does not match PROD nesna. "
-            "Load blocked."
+            for key in fieldnames:
+                value = row.get(key, "")
+
+                if isinstance(value, list):
+                    value = " | ".join(
+                        str(item)
+                        for item in value
+                    )
+
+                output_row[key] = value
+
+            writer.writerow(output_row)
+
+    # ========================================================
+    # CONSOLE OUTPUT
+    # ========================================================
+
+    print("\n" + "=" * 100)
+    print("NESNA 66-TABLE DISCOVERY — READ ONLY")
+    print("=" * 100)
+
+    print(
+        f"RAW tables visible: "
+        f"{report['raw_table_count']}"
+    )
+
+    print(
+        f"Masterstaging mappings: "
+        f"{report['masterstaging_mapping_rows']}"
+    )
+
+    print(
+        f"Mapping candidates: "
+        f"{report['ready_count']}/{EXPECTED_TABLE_COUNT}"
+    )
+
+    print(
+        f"Status counts: "
+        f"{report['status_counts']}"
+    )
+
+    print(
+        f"DAG 1 inventory supplied: "
+        f"{report['inventory_provided']}"
+    )
+
+    print(
+        f"All 66 mapping candidates: "
+        f"{report['all_66_mapping_candidates']}"
+    )
+
+    print("\n" + "-" * 100)
+
+    for row in report["tables"]:
+        raw_table = str(
+            row.get("raw_table", "?")
         )
 
-    selected = inspection["selected_columns"]
-
-    if not selected:
-        raise RuntimeError("No mapped columns. Load blocked.")
-
-    if len({
-        field["target"].lower()
-        for field in selected
-    }) != len(selected):
-        raise RuntimeError(
-            "Duplicate destination columns. Load blocked."
+        target = str(
+            row.get("mapping_pg", "?")
         )
 
-    source = inspection["source"]
-
-    source_table = table_sql(RAW_SCHEMA, source)
-    target_table = table_sql(DEV_TARGET_SCHEMA, target)
-
-    projections = []
-
-    for field in selected:
-        source_name = identifier(field["source"])
-        target_name = identifier(field["target"])
-
-        if field["cast"] == "integer":
-            expression = f"{source_name}::integer"
-        else:
-            expression = source_name
-
-        projections.append(
-            f"{expression} AS {target_name}"
-        )
-
-    target_columns = ", ".join(
-        identifier(field["target"])
-        for field in selected
-    )
-
-    select_columns = ", ".join(
-        identifier(field["target"])
-        for field in selected
-    )
-
-    projection_sql = ", ".join(projections)
-
-    backup_name = (
-        f"{target}_"
-        f"{datetime.now(timezone.utc):%Y%m%d_%H%M%S}"
-    )
-
-    backup_table = table_sql(
-        BACKUP_SCHEMA,
-        backup_name,
-    )
-
-    print("\nDEV LOAD PLAN")
-    print("Source:", source_table)
-    print("Destination:", target_table)
-    print("Backup:", backup_table)
-    print("Selected columns:", target_columns)
-    print("Source rows:", inspection["raw_rows"])
-    print("Existing DEV rows:", inspection["dev_nesna_rows"])
-
-    confirmation = input(
-        "\nType REPLACE_DEV_NESNA to continue: "
-    )
-
-    if confirmation != "REPLACE_DEV_NESNA":
-        print("Cancelled. No changes made.")
-        return
-
-    # All changes happen in a single DEV transaction.
-    # Failure rolls back the replacement.
-    with dev.begin() as connection:
-
-        connection.execute(text(
-            f"CREATE SCHEMA IF NOT EXISTS "
-            f"{identifier(BACKUP_SCHEMA)}"
-        ))
-
-        connection.execute(text(
-            f"CREATE TABLE {backup_table} AS "
-            f"SELECT * FROM {target_table}"
-        ))
-
-        connection.execute(text(
-            f"CREATE TEMP TABLE nesna_pilot_stage AS "
-            f"SELECT {projection_sql} "
-            f"FROM {source_table}"
-        ))
-
-        staged_rows = connection.execute(
-            text(
-                "SELECT COUNT(*) "
-                "FROM nesna_pilot_stage"
-            )
-        ).scalar_one()
-
-        connection.execute(text(
-            f"TRUNCATE TABLE {target_table}"
-        ))
-
-        connection.execute(text(
-            f"INSERT INTO {target_table} "
-            f"({target_columns}) "
-            f"SELECT {select_columns} "
-            f"FROM nesna_pilot_stage"
-        ))
-
-        loaded_rows = connection.execute(
-            text(
-                f"SELECT COUNT(*) FROM {target_table}"
-            )
-        ).scalar_one()
-
-        if staged_rows != loaded_rows:
-            raise RuntimeError(
-                "Row-count verification failed. "
-                "Transaction will roll back."
-            )
-
-        # Exact multiset comparison, including duplicate rows.
-                # Verify every loaded row, including duplicate occurrences.
-        difference = connection.execute(text(
-            f"""
-            SELECT EXISTS (
-                SELECT {target_columns}
-                FROM {target_table}
-                EXCEPT ALL
-                SELECT {select_columns}
-                FROM nesna_pilot_stage
-            )
-            OR EXISTS (
-                SELECT {select_columns}
-                FROM nesna_pilot_stage
-                EXCEPT ALL
-                SELECT {target_columns}
-                FROM {target_table}
-            )
-            """
-        )).scalar_one()
-
-        if difference:
-            raise RuntimeError(
-                "Exact data verification failed. "
-                "Transaction will roll back."
-            )
+        status = row["status"]
 
         print(
-            f"\nSUCCESS: {loaded_rows} rows "
-            f"loaded into DEV {target_table}"
+            f"\nRAW: {raw_table}"
+            f"\nNESNA: {target}"
+            f"\nSTATUS: {status}"
         )
 
-        print("Backup:", backup_table)
+        print(
+            "Columns:",
+            {
+                "raw": row.get(
+                    "raw_column_count"
+                ),
+                "selected": row.get(
+                    "selected_column_count"
+                ),
+                "surplus": row.get(
+                    "surplus_raw_column_count"
+                ),
+                "dev_nesna": row.get(
+                    "dev_nesna_column_count"
+                ),
+                "prod_nesna": row.get(
+                    "prod_nesna_column_count"
+                ),
+            },
+        )
 
-    print("DEV transaction committed.")
+        print(
+            "DEV/PROD definitions match:",
+            row.get(
+                "dev_prod_column_definition_match"
+            ),
+        )
+
+        for error in row.get("errors", []):
+            print("ERROR:", error)
+
+    print("\n" + "=" * 100)
+
+    for error in report["global_errors"]:
+        print("GLOBAL ERROR:", error)
+
+    for warning in report["global_warnings"]:
+        print("WARNING:", warning)
+
+    print("\nReports generated:")
+    print(json_path)
+    print(csv_path)
+
+    print(
+        "\nNOTE: MAPPING_CANDIDATE means the "
+        "metadata checks passed. It does not "
+        "authorize loading."
+    )
+
+    return (
+        0
+        if report["all_66_mapping_candidates"]
+        else 2
+    )
 
 
 # ============================================================
@@ -763,46 +1204,24 @@ def load_one(dev, prod, target):
 # ============================================================
 
 def main():
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument(
-        "command",
-        choices=["compare", "load"],
+    parser = argparse.ArgumentParser(
+        description=(
+            "Read-only NESNA 66-table mapping discovery"
+        )
     )
 
     parser.add_argument(
-        "--table",
-        choices=sorted(PILOT_TABLES),
+        "--inventory",
+        help=(
+            "Optional JSON file containing the exact "
+            "66 RAW table names from DAG 1."
+        ),
     )
 
     args = parser.parse_args()
 
-    if args.command == "load" and not args.table:
-        parser.error("load requires --table")
-
-    dev, prod = connect_databases()
-
-    try:
-        if args.command == "compare":
-            compare(dev, prod)
-
-        elif args.command == "load":
-            load_one(dev, prod, args.table)
-
-    finally:
-        dev.dispose()
-        prod.dispose()
+    raise SystemExit(compare(args))
 
 
 if __name__ == "__main__":
     main()
-    
-    
-    
-    #python .\nesna_dev_pilot.py compare
-    
-    
-    
-    #python .\nesna_dev_pilot.py load --table permcontract
-    
-    
